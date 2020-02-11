@@ -29,11 +29,19 @@ solution "scrabble"
     buildoptions {"-g"}
     linkoptions {"-g"}
 
+-- Ajoutez ici les fichiers supplémentaires que vous créez qui ne contiennent
+-- pas de main.
+
 common_files = {
   "src/board.hpp", "src/board.cpp",
   "src/spot.hpp", "src/spot.cpp",
   "src/bonus.hpp", "src/bonus.cpp",
 }
+
+-- Pour chaque exécutable que vous souhaitez générer, ajoutez un nouveau projet
+-- comme ci-dessous en mentionnant les fichiers supplémentaires nécessaires qui
+-- ne sont pas dans la liste common_files, en particulier celui contenant le
+-- main.
 
 project "test_board"
   language "c++"
