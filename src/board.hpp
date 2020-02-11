@@ -10,6 +10,10 @@ struct Board {
   //default initialization of a scrabble board
   Board() ;
 
+  //i/o to files
+  void save(std::ostream& out) ;
+  void load(std::istream& in) ;
+
   //access to the spots by coordinates
   Spot operator()(unsigned char l, unsigned char c) const ;
   Spot& operator()(unsigned char l, unsigned char c) ;

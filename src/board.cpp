@@ -1,5 +1,7 @@
 #include "board.hpp"
 
+#include <fstream>
+
 //default initialization
 Board::Board() {
   //Triple word spots
@@ -65,6 +67,38 @@ Board::Board() {
     } ;
     for(unsigned char i = 0; i < sz; ++i) {
       spots[double_letters[i]] = s ;
+    }
+  }
+}
+
+//i/o to files
+void Board::save(std::ostream& out) {
+  //write the grid of chars
+  for(unsigned char i = 0; i < 225; ++i) {
+    if( i%15 == 0) {
+      out << std::endl ;
+    }
+    if(spots[i].letter) {
+      //a letter is present, write it
+      out << spots[i].letter ;
+    } else {
+      //no letter, put a dot
+      out << "." ;
+    }
+  }
+}
+
+void Board::load(std::istream& in) {
+  char c ;
+  //read a char for each spot
+  for(unsigned char i = 0; i < 225; ++i) {
+    in >> c ;
+    if(c != '.') {
+      //a letter is provided, save it
+      spots[i].letter = c ;
+    } else {
+      //no letter, set to 0
+      spots[i].letter = 0 ;
     }
   }
 }

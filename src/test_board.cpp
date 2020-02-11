@@ -1,17 +1,31 @@
 #include "board.hpp"
 
 #include <iostream>
+#include <sstream>
 
 int main() {
   Board b ;
 
   std::cout << b << std::endl ;
 
-  b.spots[123].letter = 'A' ;
-  b.spots[124].letter = 'B' ;
-  b.spots[138].letter = 'C' ;
-  b.spots[140].letter = 'D' ;
-  b.spots[168].letter = 'E' ;
+  std::stringstream ss ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "....PROJET....." << std::endl ;
+  ss << ".......O......." << std::endl ;
+  ss << ".......U......." << std::endl ;
+  ss << ".......E......." << std::endl ;
+  ss << ".......U......." << std::endl ;
+  ss << ".....SCRABBLE.." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+
+  b.load(ss) ;
 
   std::cout << b << std::endl ;
 
