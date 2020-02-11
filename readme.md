@@ -40,7 +40,7 @@ La configuration de Premake est réalisée dans le fichier `premake4.lua`. Vous 
 trouverez en commentaire comment ajouter de nouveaux fichiers à votre projet, et
 comment compiler de multiples exécutables.
 
-#### Générer un Makefile (premake 4 ou 5)
+### Générer un Makefile (premake 4 ou 5)
 ```
 premake4 gmake
 ```
@@ -48,7 +48,7 @@ premake4 gmake
 Une fois le `Makefile` créé, utilisez make comme d'habitude pour lancer la
 compilation.
 
-#### Générer un projet Codeblocks (premake 4 uniquement)
+### Générer un projet Codeblocks (premake 4 uniquement)
 ```
 premake4 codeblocks
 ```
@@ -77,7 +77,10 @@ suivants :
 |Nombre| 6 | 6 | 2 | 3 | 6 | 6 | 6 | 6 | 2 | 1 | 1 | 1 | 1 |
 |Points| 1 | 1 | 3 | 2 | 1 | 1 | 1 | 1 | 4 | 10| 10| 10| 10|
 
-#### Sac de lettres
+**Notez que pour l'instant, on ne traite pas les jokers qui pourront être
+ajoutés en bonus.**
+
+### Sac de lettres
 
 Créez une structure de données matérialisant le sac de lettres. Cette structures
 sera initialisée avec les lettres dans les quantités données ci-dessus. Cette
@@ -88,7 +91,7 @@ de tirage proportionnelle au nombre d'exemplaires restant dans le sac.
 En terme de complexité, une structure bien réalisée devra permettre de piocher
 une lettre en temps constant.
 
-#### Lettres du joueur
+### Lettres du joueur
 
 Créez une structure de données pour matérialiser les lettre d'un joueur. Sauf
 quand il n'y en a plus dans le sac pur recharger, un joueur a toujours 7 lettres
@@ -96,7 +99,53 @@ quand il n'y en a plus dans le sac pur recharger, un joueur a toujours 7 lettres
 ferez par la suite des mots qui sont jouable sur un plateau. Prévoyez également
 de pouvoir recharcger les lettres d'un joueur depuis le sac de lettres.
 
-#### Points des lettres
+### Points des lettres
 
 Fournissez une fonction qui étant donné une lettre fournit le nombre de points
 associés.
+
+## GADDAG
+
+Le Gaddag simplifié est une structure de données pour encoder le dictionnaire,
+et déterminer rapidement si des mots sont dedans ou non. Nous simplifions ici
+cette structure de données pour faciliter son implémentation, en retirant la
+minimisation du nombre de nœuds. Votre Gaddag sera dont plus simplement un
+arbre.
+
+### Arbre dictionnaire
+
+#### Principe
+
+Un arbre dictionnaire est un arbre dans lequel les arêtes sont étiquetées par
+des lettres, et les noeuds sont doté d'un marqueur indiquant s'ils sont
+terminaux ou non. Étant donné un mot, on débute la recherche à la racine. Pour
+chaque lettre du mot, on avance le long de l'arête portant cette lettre vers un
+enfant. La recherche se termine dès qu'il n'y a pas d'arête étiquetée avec la
+lettre souhaitée, ou lorsqu'il n'y a plus de lettres dans le mot, on peut alors
+vérifier :
+
+* s'il n'y avait pas d'arête pour une lettre, le mot n'est pas dans le
+  dictionnaire ;
+* le mot est dans le dictionnaire si et seulement si le nœud sur lequel le
+  parcours a abouti est terminal.
+
+Par exemple, sur l'arbre suivant, sur lequel les noeuds terminaux sont marqués
+par un double cercle :
+
+![Todo](data/arbre_dictionnaire.png)
+
+Le mot ... est dans le dictionnaire car en partant de la racine, puis en suivant
+les arêtes ... on arrive sur un nœud terminal.
+
+Le mot ... n'est pas dans le dictionnaire, car après avoir suivi les arêtes
+correspondant aux premières lettres, on aboutit sur un nœud depuis lequel aucune
+arête ne part correspondant à la lettre ...
+
+Le mot ... n'est pas dans le dictionnaire car après avoir suivi les arêtes
+correspondant à toutes ses lettres, on aboutit à un nœud qui n'est pas terminal.
+
+#### Insertion
+
+#### Recherche
+
+#### Rechercher des mots par le milieu
