@@ -117,7 +117,7 @@ arbre.
 #### Principe
 
 Un arbre dictionnaire est un arbre dans lequel les arêtes sont étiquetées par
-des lettres, et les noeuds sont doté d'un marqueur indiquant s'ils sont
+des lettres, et les nœuds sont doté d'un marqueur indiquant s'ils sont
 terminaux ou non. Étant donné un mot, on débute la recherche à la racine. Pour
 chaque lettre du mot, on avance le long de l'arête portant cette lettre vers un
 enfant. La recherche se termine dès qu'il n'y a pas d'arête étiquetée avec la
@@ -129,19 +129,54 @@ vérifier :
 * le mot est dans le dictionnaire si et seulement si le nœud sur lequel le
   parcours a abouti est terminal.
 
-Par exemple, sur l'arbre suivant, sur lequel les noeuds terminaux sont marqués
-par un double cercle :
+Par exemple, sur l'arbre suivant, sur lequel les nœuds non terminaux sont
+vides, et les nœuds terminaux contiennent OK.
 
-![Todo](data/arbre_dictionnaire.png)
+```mermaid
 
-Le mot ... est dans le dictionnaire car en partant de la racine, puis en suivant
-les arêtes ... on arrive sur un nœud terminal.
+graph LR
+	0(( ))
+  B(( ))
+  BA(( ))
+  BAT((ok))
+  BAL((ok))
+  BALL(( ))
+  BALLE((ok))
+  BAC((ok))
+  BACH(( ))
+  BACHE((ok))
+  L(( ))
+  LE((ok))
+  LES((ok))
+  LA((ok))
+  LAM(( ))
+  LAME((ok))
+  0 -->|B|B
+  B -->|A|BA
+  BA -->|L|BAL
+  BAL -->|L|BALL
+  BALL -->|E|BALLE
+  BA -->|T|BAT
+  BA -->|C|BAC
+  BAC-->|H|BACH
+  BACH -->|E|BACHE
+  0 -->|L|L
+  L -->|E|LE
+  L -->|A|LA
+  LA -->|M| LAM
+  LAM -->|E| LAME
+  LE -->|S|LES[Todo](data/arbre_dictionnaire.png)
 
-Le mot ... n'est pas dans le dictionnaire, car après avoir suivi les arêtes
-correspondant aux premières lettres, on aboutit sur un nœud depuis lequel aucune
-arête ne part correspondant à la lettre ...
+```
 
-Le mot ... n'est pas dans le dictionnaire car après avoir suivi les arêtes
+Le mot `BAL` est dans le dictionnaire car en partant de la racine, puis en suivant
+les arêtes `B` puis `A` puis `L` on arrive sur un nœud terminal.
+
+Le mot `BATTE` n'est pas dans le dictionnaire, car après avoir suivi les arêtes
+correspondant aux premières lettres `BAT` , on aboutit sur un nœud depuis lequel
+aucune arête ne part correspondant à la lettre `T`.
+
+Le mot `BACH` n'est pas dans le dictionnaire car après avoir suivi les arêtes
 correspondant à toutes ses lettres, on aboutit à un nœud qui n'est pas terminal.
 
 #### Insertion
