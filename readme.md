@@ -129,58 +129,96 @@ vérifier :
 * le mot est dans le dictionnaire si et seulement si le nœud sur lequel le
   parcours a abouti est terminal.
 
-Par exemple, sur l'arbre suivant, sur lequel les nœuds non terminaux sont
-vides, et les nœuds terminaux contiennent OK.
+Par exemple, sur l'arbre suivant, sur lequel les nœuds terminaux xont colorés en
+noir :
 
-```mermaid
+![exemple arbre](data/exemple_arbre.png)
 
-graph LR
-	0(( ))
-  B(( ))
-  BA(( ))
-  BAT((ok))
-  BAL((ok))
-  BALL(( ))
-  BALLE((ok))
-  BAC((ok))
-  BACH(( ))
-  BACHE((ok))
-  L(( ))
-  LE((ok))
-  LES((ok))
-  LA((ok))
-  LAM(( ))
-  LAME((ok))
-  0 -->|B|B
-  B -->|A|BA
-  BA -->|L|BAL
-  BAL -->|L|BALL
-  BALL -->|E|BALLE
-  BA -->|T|BAT
-  BA -->|C|BAC
-  BAC-->|H|BACH
-  BACH -->|E|BACHE
-  0 -->|L|L
-  L -->|E|LE
-  L -->|A|LA
-  LA -->|M| LAM
-  LAM -->|E| LAME
-  LE -->|S|LES[Todo](data/arbre_dictionnaire.png)
+Le mot `AMI` est dans le dictionnaire car en partant de la racine, puis en suivant
+les arêtes `A` puis `M` puis `I` on arrive sur un nœud terminal. Plus
+généralement, les mots reconnus par cet arbre sont `A`, `ARC`, `ART`, `AMI`,
+`LE`, `LES`, `LA`, `ET`, `EN`, `ERG`
 
-```
+Le mot `LAS` n'est pas dans le dictionnaire, car après avoir suivi les arêtes
+correspondant aux premières lettres `LA` , on aboutit sur un nœud depuis lequel
+aucune arête ne part correspondant à la lettre `S`.
 
-Le mot `BAL` est dans le dictionnaire car en partant de la racine, puis en suivant
-les arêtes `B` puis `A` puis `L` on arrive sur un nœud terminal.
-
-Le mot `BATTE` n'est pas dans le dictionnaire, car après avoir suivi les arêtes
-correspondant aux premières lettres `BAT` , on aboutit sur un nœud depuis lequel
-aucune arête ne part correspondant à la lettre `T`.
-
-Le mot `BACH` n'est pas dans le dictionnaire car après avoir suivi les arêtes
+Le mot `AM` n'est pas dans le dictionnaire car après avoir suivi les arêtes
 correspondant à toutes ses lettres, on aboutit à un nœud qui n'est pas terminal.
 
 #### Insertion
 
+Étant donné un mot à ajouter, le principe consiste à itérer sur les lettres du
+mot dans l'ordre de gauche à droite, et à suivre le chemin correspondant dans
+l'arbre. Si aucune arête n'existe pour correspondre à une lettre, de nouvelles
+arêtes vers de nouveaux nœuds sont créées. Le dernier nœud créé est marqué comme
+terminal. Si toutes les arêtes existent, le nœud sur lequel on arrive est marqué
+comme terminal.
+
 #### Recherche
 
-#### Rechercher des mots par le milieu
+La recherche consiste à suivre le chemin dans l'arbre, et à vérifier au fur et à
+mesure qu'on peut continuer, puis que le nœud final sur lequel on est arrivé est
+bien terminal.
+
+#### Liste de mots
+
+Vous trouverez la liste des mots actuellement autorisés au Scrabble dans le
+fichier [data/dico.txt](data/dico.txt).
+
+### Rechercher des mots par le milieu, le Gaddag
+
+Les arbres dictionnaires ne sont pas totalement adaptés pour le Scrabble, car
+lorsqu'on cherche à ajouter un mot, il faut l'ajouter à partir des lettres déjà
+présentes sur le plateau. On identifie donc une case à partir de laquelle
+construire notre mot de part et d'autre, verticalement ou horizontalement. Dans
+l'exemple suivant, le mot `BATEAU` est placé en travers du mot `BLATTE` :
+
+```
+        B
+        L
+        A
+    B A T E A U
+        T
+        E
+```
+
+Pour permettre de chercher des mots *en partant du milieu*, nous allons rajouter
+une nouvelle lettre `+`, et pour chaque mot du dictionnaire nous allons créer un
+ensemble de mots selon le modèle suivant : pour le mot initial `BATEAU`, nous
+allons créer l'ensemble :
+
+```
+B+ATEAU
+AB+TEAU
+TAB+EAU
+ETAB+AU
+AETAB+U
+UAETAB+
+```
+
+Avant le `+`, les premières lettres du mot sont renversées, et après le `+` on
+retrouve la fin normale du mot.
+
+À partir de la lettre `T` du mot `BLATTE`, on peut chercher dans notre
+dictionnaire les mots pouvant se mettre en travers, en suivant un chemin
+commençant par `T`. On trouve `TAB+EAU`, ce qui signifie qu'en partant de `T` et
+en allant vers la gauche, on peut rajouter `A` puis `B`, ensuite le `+` nous
+indique de revenir au `T` initial et de partir vers la droite, pour rajouter les
+lettres `E` puis `A`, puis `U`.
+
+Modifiez donc votre arbre dictionnaire pour faire en sorte que pour chaque mot
+du dictionnaire, l'ensemble de mots créé avec le `+` selon le modèle précédent
+soit ajouté.
+
+## Exploitation du Gaddag
+
+Explications à venir
+
+## Jeu de test
+
+Explications à venir
+
+## Bonus
+
+Explications à venir
