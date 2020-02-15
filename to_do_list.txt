@@ -1,1 +1,1 @@
-1- QUESTION : deux tableaux pour stocker le nombre de lettre et de points?
+1) QUESTION : deux tableaux pour stocker le nombre de lettre et de points?
