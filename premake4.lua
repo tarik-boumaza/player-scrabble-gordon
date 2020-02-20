@@ -37,6 +37,7 @@ common_files = {
   "src/spot.hpp", "src/spot.cpp",
   "src/bonus.hpp", "src/bonus.cpp",
   "src/map.hpp", "src/map.cpp",
+  "src/main.cpp",
 }
 
 -- Pour chaque exécutable que vous souhaitez générer, ajoutez un nouveau projet
@@ -50,3 +51,11 @@ project "test_board"
   targetdir "bin"
   files ( common_files )
   files {"src/test_board.cpp"}
+
+
+project "main"
+  language "c++"
+  kind "ConsoleApp"
+  targetdir "bin"
+  files ( common_files )
+  files {"src/main.cpp"}

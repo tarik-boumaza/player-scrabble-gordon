@@ -1,3 +1,20 @@
+#include "map.hpp"
+#include <iostream>
+
+int main() {
+  Noeud * n = new Noeud();
+  n->addNode("etudiant");
+  n->addNode("etudiante");
+  n->addNode("scrabble");
+  n->addNode("bonsoir");
+  n->addNode("scrabb");
+  n->print();
+}
+
+
+
+
+/*
 #include "board.hpp"
 
 #include <iostream>
@@ -31,3 +48,4 @@ int main() {
 
   return 0 ;
 }
+*/

@@ -2,46 +2,60 @@
 #include <cstring>
 #include <string>
 #include "map.hpp"
+#include <unistd.h>
 
-using mapit = std::unordered_map<char,Noeud*>::const_iterator;
+using namespace std;
 
 Noeud::Noeud() {
-  is_final = false;
-  this->node = std::unordered_map<char,Noeud*> {{'0',nullptr}};
+  for (unsigned int i = 0; i < 27; i++) {
+    this->tab[i] = nullptr;
+  };
+  this->is_final = false;
 }
 
 
-void Noeud:: addNode(const char & c, const bool & b) {
-  this->node.insert({c,nullptr});
-  node[c]->is_final = b;
+Noeud* Noeud:: addNode(const char & c, const bool & b) {
+  Noeud * ptr = new Noeud();
+  ptr->letter = c;
+  ptr->is_final = b;
+  for (unsigned int i = 0 ; i < 27; i++) {
+      ptr->tab[i] = nullptr;
+  }
+  return ptr;
 }
 
 
 void Noeud:: addNode(const std::string & s) {
-  unsigned int i = 0;
-  unsigned int size = s.size();
-  Noeud * temp = this;
-
+  unsigned int i = 0, size = s.size();
+  short unsigned int c;
+  Noeud * tmp = this;
   char cstr[size + 1];
   strcpy(cstr, s.c_str());
+  bool f;
 
-  std::unordered_map<char, Noeud*> :: const_iterator got ;
-  while (i < size) {
-    got = temp->node.find(cstr[i]);
-    if (got == temp->node.end()) {
-      temp->addNode(cstr[i], (i == size - 1));
-    }
-    temp = temp->node[cstr[i]];
-    i++;
+  for (i = 0; i < size; i++) {
+    f = (i == size - 1);
+    c = cstr[i] - 'a';
+    if (tmp->tab[c] == nullptr)
+      tmp->tab[c] = addNode(cstr[i],f);
+
+    tmp = tmp->tab[c];
   }
+  if (tmp->tab[c] != nullptr)
+    tmp->tab[c]->is_final = true;
 }
 
-//void Noeud::print_hashmap(const std::unordered_map<char,Noeud*> & m) const {}
-
-
 void Noeud::print() const {
-  std::cout << "Affichage de l'arbre..." << std::endl;
-  for(mapit it = this->node.begin(); it != this->node.end(); ++it){
-    std::cout << it->first;
+  char c;
+  for (unsigned int i = 0 ; i < 27; i++) {
+    if (tab[i] != nullptr) {
+      c = 'a' + i;
+      cout << c << " ";
+      if (tab[i]->is_final)
+        cout << "F ";
+      tab[i]->print();
+    }
+
   }
+  cout << endl;
 }
