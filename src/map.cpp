@@ -7,10 +7,10 @@
 using namespace std;
 
 Noeud::Noeud() {
+  this->is_final = false;
   for (unsigned int i = 0; i < 27; i++) {
     this->tab[i] = nullptr;
-  };
-  this->is_final = false;
+  }
 }
 
 
@@ -31,19 +31,16 @@ void Noeud:: addNode(const std::string & s) {
   Noeud * tmp = this;
   char cstr[size + 1];
   strcpy(cstr, s.c_str());
-  bool f;
 
   for (i = 0; i < size; i++) {
-    f = (i == size - 1);
     c = cstr[i] - 'a';
     if (tmp->tab[c] == nullptr)
-      tmp->tab[c] = addNode(cstr[i],f);
+      tmp->tab[c] = addNode(cstr[i],(i == size - 1));
 
     tmp = tmp->tab[c];
   }
-  if (tmp->tab[c] != nullptr)
-    tmp->tab[c]->is_final = true;
 }
+
 
 void Noeud::print() const {
   char c;
@@ -55,7 +52,6 @@ void Noeud::print() const {
         cout << "F ";
       tab[i]->print();
     }
-
   }
   cout << endl;
 }
