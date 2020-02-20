@@ -2,9 +2,15 @@
 
 #include <iostream>
 #include <sstream>
-
+#include "map.hpp"
 int main() {
-  Board b ;
+
+  Noeud arbre;
+  arbre.addNode("hana");
+  arbre.addNode("tarik");
+  arbre.addNode("table");
+  arbre.print();
+  /*Board b ;
 
   std::cout << b << std::endl ;
 
@@ -27,7 +33,7 @@ int main() {
 
   b.load(ss) ;
 
-  std::cout << b << std::endl ;
+  std::cout << b << std::endl ;*/
 
   return 0 ;
 }
