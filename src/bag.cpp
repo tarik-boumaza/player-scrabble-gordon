@@ -1,5 +1,7 @@
 #include "bag.hpp"
+#include <iostream>
 
+using namespace std;
 
 Bag:: Bag() {
   letters[0] = 9;
@@ -56,7 +58,7 @@ Bag:: Bag() {
   points[24] = 10;
   points[25] = 10;
 
-  nb_letters = 107;
+  nb_letters = 102;
 
 }
 
@@ -83,30 +85,22 @@ unsigned short int Bag::getPoints(const unsigned short int & c) const {
 
 
 char Bag::randomDraw() {
-  m.lock();
-  char i = 'A';
-  int temp = rand()%(nb_letters + 1);
-  char last = temp;
-  while (temp > 0 && i < 'Z') {
-    temp -= letters[static_cast<unsigned short int>(i)];
-    if (temp != 0)
-      last = temp;
-    i++;
+  char res,i;
+  i = 'Z';
+  short int temp = rand()%nb_letters;
+  res = 'Z' + temp;
+  while(temp >= 0 && i >= 'A') {
+    if (letters[static_cast<short int>(i - 'A')] != 0)
+      temp -= letters[static_cast<short int>(i - 'A')];
+    res = i;
+    i--;
   }
-  if (i == 'Z') {
-    if (temp == 0)
-      return 'Z';
-    else
-      return last;
-  }
-  else
-    return letters[static_cast<unsigned short int>(i)];
-  letters[static_cast<unsigned short int>(i)]--;
+  if (letters[static_cast<short int>(res - 'A')] > 0)
+    letters[static_cast<short int>(res - 'A')]--;
   nb_letters--;
-  return i;
-  m.unlock();
-}
+  return res;
 
+}
 
 
 Bag& Bag::operator=(const Bag & _bag) {
@@ -116,4 +110,11 @@ Bag& Bag::operator=(const Bag & _bag) {
     letters[i] = _bag.letters[i];
   }
   return *this;
+}
+
+
+void Bag::printLetters() const {
+  for(unsigned int i = 0; i < 26; i++) {
+    std::cout << 'a' + i << " : " << letters[i] << std::endl;
+  }
 }

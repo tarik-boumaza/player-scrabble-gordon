@@ -18,7 +18,11 @@ private:
 
 public:
 
+  Game();
+
   Game(const char & nb_players);
+
+  Player getPlayer(const unsigned int & n) const;
 
   void initBag();
 

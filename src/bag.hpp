@@ -28,6 +28,8 @@ public:
 
   Bag& operator=(const Bag & _bag);
 
+  void printLetters() const;
+
 
 
 };
