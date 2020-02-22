@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <queue>
 #include <stack>
+#include <thread>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ Noeud::Noeud() {
 }
 
 
-Noeud* Noeud:: addNode(const char & c, const bool & b) {
+Noeud* Noeud:: addNode1(const char & c, const bool & b) {
   Noeud * ptr = new Noeud();
   ptr->letter = c;
   ptr->is_final = b;
@@ -31,15 +32,18 @@ Noeud* Noeud:: addNode(const char & c, const bool & b) {
 
 void Noeud:: addNode(const std::string & s) {
   unsigned int i = 0, size = s.size();
-  short unsigned int c;
+  unsigned short int c;
   Noeud * tmp = this;
   char cstr[size + 1];
   strcpy(cstr, s.c_str());
 
   for (i = 0; i < size; i++) {
-    c = cstr[i] - 'A';
+    if (cstr[i] > 'Z' || cstr[i] < 'A')
+      c = 'Z' - 'A' + 1;
+    else
+      c = cstr[i] - 'A';
     if (tmp->tab[c] == nullptr)
-      tmp->tab[c] = addNode(cstr[i],(i == size - 1));
+      tmp->tab[c] = addNode1(cstr[i],(i == size - 1));
 
     tmp = tmp->tab[c];
   }
@@ -89,8 +93,63 @@ void Noeud::print_letters(Noeud* node, queue<Noeud*> & fifo){
 void Noeud::print() {
   queue<Noeud*> f;
   print_letters(this,f);
-
 }
+
+
+vector<string> Noeud::mirror(const string & word ){
+  vector<string> table;
+  string temp(word);
+
+  stack<char> beginning;
+  queue<char> end;
+  string result;
+
+  for (unsigned int i = 0; i < temp.size(); i++){
+    result = "";
+    for (unsigned int j = 0; j <= i; j++){
+      beginning.push(temp[j]);
+    }
+    for(unsigned int j = i + 1; j < temp.size(); j++){
+      end.push(temp[j]);
+    }
+    while(!beginning.empty()){
+      result += beginning.top();
+      beginning.pop();
+    }
+    result += "+";
+    while(!end.empty()){
+      result += end.front();
+      end.pop();
+    }
+    table.push_back(result);
+  }
+  return table;
+}
+
+
+void Noeud:: addNodePlus(const std::string & s) {
+  vector<string> tab(mirror(s));
+  addNode(s);
+  for(unsigned int i = 0; i < tab.size();i++){
+    addNode(tab[i]);
+  }
+}
+
+
+/*
+void Noeud:: addNodePlus(const std::string & s) {
+  vector<string> tab(mirror(s));
+  vector<thread> thread_tab;
+  thread_tab.push_back(thread(&Noeud::addNode,this,s));
+  for(unsigned int i = 0; i < tab.size();i++){
+    thread_tab.push_back(thread(&Noeud::addNode,this,tab[i]));
+  }
+  for(unsigned int i = 0; i < thread_tab.size(); i++) {
+    thread_tab[i].join();
+  }
+
+}*/
+
 
 void Noeud::addDictionnary(const std::string & filename){
 
@@ -106,7 +165,7 @@ void Noeud::addDictionnary(const std::string & filename){
   while(!file.eof())
   {
     file >> word;
-    addNode(word);
+    addNodePlus(word);
   }
 
   file.close();
