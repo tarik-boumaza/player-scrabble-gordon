@@ -1,14 +1,14 @@
 #include "map.hpp"
 #include <iostream>
+#include <time.h>
+#include <stdio.h>
+
+using namespace std;
 
 int main() {
-  Noeud * n = new Noeud();
-  n->addNode("etudiant");
-  n->addNode("etudiante");
-  n->addNode("scrabble");
-  n->addNode("bonsoir");
-  n->addNode("scrabb");
-  n->print();
+  Noeud n;
+  n.addDictionnary("./data/dico.txt");
+  n.print();
 }
 
 

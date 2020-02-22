@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <queue>
 
 class Noeud {
 
@@ -19,7 +20,11 @@ public:
 
   void addNode(const std::string & s);
 
-  void print() const;
+  void print_letters(Noeud* node, std::queue<Noeud*> & fifo);
+
+  void print();
+
+  void addDictionnary(const std::string & filename);
 
 
 };
