@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <queue>
 
 class Noeud {
 
@@ -15,10 +16,18 @@ public:
 
   Noeud();
 
-  Noeud* addNode(const char & c, const bool & b);
+  Noeud* addNode1(const char & c, const bool & b);
 
   void addNode(const std::string & s);
 
-  void print() const;
+  void addNodePlus(const std::string & s);
+
+  void print_letters(Noeud* node, std::queue<Noeud*> & fifo);
+
+  void print();
+
+  std::vector<std::string> mirror(const std::string & word);
+
+  void addDictionnary(const std::string & filename);
 
 };
