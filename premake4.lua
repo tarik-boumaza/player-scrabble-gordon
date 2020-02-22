@@ -37,6 +37,9 @@ common_files = {
   "src/spot.hpp", "src/spot.cpp",
   "src/bonus.hpp", "src/bonus.cpp",
   "src/map.hpp", "src/map.cpp",
+  "src/sac.hpp", "src/sac.cpp",
+  "src/player.hpp", "src/player.cpp",
+  "src/game.hpp", "src/game.cpp",
   "src/main.cpp",
 }
 
@@ -51,11 +54,3 @@ project "test_board"
   targetdir "bin"
   files ( common_files )
   files {"src/test_board.cpp"}
-
-
-project "main"
-  language "c++"
-  kind "ConsoleApp"
-  targetdir "bin"
-  files ( common_files )
-  files {"src/main.cpp"}

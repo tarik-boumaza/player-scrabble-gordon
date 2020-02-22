@@ -21,5 +21,4 @@ public:
 
   void print() const;
 
-
 };

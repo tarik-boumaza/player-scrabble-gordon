@@ -44,6 +44,15 @@ void Noeud:: addNode(const std::string & s) {
 
 void Noeud::print() const {
   char c;
+  for (unsigned int i = 0; i < 27; i++) {
+    if (tab[i] != nullptr) {
+      c = 'a' + i;
+      cout << c << " ";
+      if (tab[i]->is_final)
+        cout << "F ";
+    }
+  }
+  cout << endl;
   for (unsigned int i = 0 ; i < 27; i++) {
     if (tab[i] != nullptr) {
       c = 'a' + i;
@@ -52,6 +61,7 @@ void Noeud::print() const {
         cout << "F ";
       tab[i]->print();
     }
+    usleep(100000);
   }
   cout << endl;
 }

@@ -1,1 +1,5 @@
-1) QUESTION : deux tableaux pour stocker le nombre de lettre et de points?
+1) void Bag::print();
+
+2) void Bag::addDictionnary()
+
+3) Bag::Bag(const std::string & filename)
