@@ -4,6 +4,7 @@
 
 Game::Game() {
   this->players.push_back(Player(1));
+  this->filename = "./data/dico.txt";
 }
 
 
@@ -30,8 +31,9 @@ Player Game::getPlayer(const unsigned int & n) const {
 
 
 void Game::initBag() {
-  Bag b("../data/bag.txt");
-  //bag = b;
+  //Bag b("../data/bag.txt");
+  Bag b;
+  bag = b;
 }
 
 
@@ -49,7 +51,7 @@ void Game::initPlayers() {
 
 
 void Game::initMap() {
-  //node.addDictionnary();
+  node.addDictionnary(filename);
 }
 
 
@@ -57,4 +59,17 @@ void Game::init() {
   initBag();
   initPlayers();
   initMap();
+}
+
+
+void Game::printDico(){
+  node.print();
+}
+
+
+void Game::printHands() const{
+  for(unsigned int i = 0; i < players.size(); i++) {
+    players[i].printHand();
+    std::cout << std::endl;
+  }
 }

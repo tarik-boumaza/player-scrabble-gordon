@@ -30,4 +30,6 @@ public:
 
   void addDictionnary(const std::string & filename);
 
+  const bool exist(const std::string & s) const;
+
 };

@@ -40,7 +40,6 @@ common_files = {
   "src/bag.hpp", "src/bag.cpp",
   "src/player.hpp", "src/player.cpp",
   "src/game.hpp", "src/game.cpp",
-  "src/main.cpp",
 }
 
 -- Pour chaque exécutable que vous souhaitez générer, ajoutez un nouveau projet
@@ -54,10 +53,3 @@ project "test_board"
   targetdir "bin"
   files ( common_files )
   files {"src/test_board.cpp"}
-
-project "main"
-  language "c++"
-  kind "ConsoleApp"
-  targetdir "bin"
-  files ( common_files )
-  files {"src/main.cpp"}

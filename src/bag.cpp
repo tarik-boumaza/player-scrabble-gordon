@@ -64,13 +64,13 @@ Bag:: Bag() {
 
 
 Bag::Bag(const unsigned int * p[26], const unsigned int * l[26]) {
-  unsigned short int nb = 0;
+  unsigned short int nb_l = 0;
   for (unsigned int i = 0; i < 26; i++) {
     points[i] = *p[i];
     letters[i] = *l[i];
-    nb += points[i];
+    nb_l += letters[i];
   }
-  nb_letters = nb;
+  nb_letters = nb_l;
 }
 
 
@@ -87,8 +87,9 @@ unsigned short int Bag::getPoints(const unsigned short int & c) const {
 char Bag::randomDraw() {
   char res,i;
   i = 'Z';
-  short int temp = rand()%nb_letters;
-  res = 'Z' + temp;
+  int temp = rand()%nb_letters;
+  res = 'Z';
+  //cout << "Random : " << temp << endl;
   while(temp >= 0 && i >= 'A') {
     if (letters[static_cast<short int>(i - 'A')] != 0)
       temp -= letters[static_cast<short int>(i - 'A')];
@@ -98,6 +99,7 @@ char Bag::randomDraw() {
   if (letters[static_cast<short int>(res - 'A')] > 0)
     letters[static_cast<short int>(res - 'A')]--;
   nb_letters--;
+  //cout << "je vais retourner " << i << endl;
   return res;
 
 }

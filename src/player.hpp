@@ -21,4 +21,6 @@ public:
 
   void setLetter(const unsigned short int & n, const char & c);
 
+  void printHand() const;
+
 };

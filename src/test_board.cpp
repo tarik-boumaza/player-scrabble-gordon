@@ -1,4 +1,4 @@
-#include "map.hpp"
+#include "game.hpp"
 #include <iostream>
 #include <time.h>
 #include <stdio.h>
@@ -6,15 +6,19 @@
 using namespace std;
 
 int main() {
-  Noeud n;
+  Game g;
   double temps;
   clock_t t1,t2;
   t1 = clock();
-  n.addDictionnary("./data/dico.txt");
-  //n.print();
+  g.init();
   t2 = clock();
   temps = (t2 - t1) / 1000;
   cout << "temps d'exécution : " << temps << " ms" <<  endl;
+
+  g.printHands();
+
+
+  return 0;
 }
 
 
@@ -26,7 +30,7 @@ int main() {
 #include <iostream>
 #include <sstream>
 
-/*
+
 int main() {
   Board b ;
 

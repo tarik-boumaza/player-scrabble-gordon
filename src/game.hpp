@@ -14,6 +14,7 @@ private:
   std::vector<Player> players;
   Bag bag;
   Noeud node;
+  std::string filename;
 
 
 public:
@@ -31,6 +32,10 @@ public:
   void initMap();
 
   void init();
+
+  void printDico();
+
+  void printHands() const;
 
 
 

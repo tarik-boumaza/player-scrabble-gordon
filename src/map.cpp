@@ -2,11 +2,11 @@
 #include <cstring>
 #include <fstream>
 #include <string>
-#include "map.hpp"
 #include <unistd.h>
 #include <queue>
 #include <stack>
 #include <thread>
+#include "map.hpp"
 
 using namespace std;
 
@@ -169,6 +169,12 @@ void Noeud::addDictionnary(const std::string & filename){
   }
 
   file.close();
+}
 
 
+const bool Noeud::exist(const string & s) const {
+  bool res = false;
+
+
+  return false;
 }
