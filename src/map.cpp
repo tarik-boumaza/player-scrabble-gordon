@@ -5,12 +5,12 @@
 #include <unistd.h>
 #include <queue>
 #include <stack>
-#include <thread>
+
 #include "map.hpp"
 
 using namespace std;
 
-Noeud::Noeud() {
+Node::Node() {
   this->is_final = false;
   this->letter = ' ';
   for (unsigned int i = 0; i < 27; i++) {
@@ -19,8 +19,8 @@ Noeud::Noeud() {
 }
 
 
-Noeud* Noeud:: addNode1(const char & c, const bool & b) {
-  Noeud * ptr = new Noeud();
+Node* Node:: addNode1(const char & c, const bool & b) {
+  Node * ptr = new Node();
   ptr->letter = c;
   ptr->is_final = b;
   for (unsigned int i = 0 ; i < 27; i++) {
@@ -30,10 +30,10 @@ Noeud* Noeud:: addNode1(const char & c, const bool & b) {
 }
 
 
-void Noeud:: addNode(const std::string & s) {
+void Node:: addNode(const std::string & s) {
   unsigned int i = 0, size = s.size();
   unsigned short int c;
-  Noeud * tmp = this;
+  Node * tmp = this;
   char cstr[size + 1];
   strcpy(cstr, s.c_str());
 
@@ -50,7 +50,7 @@ void Noeud:: addNode(const std::string & s) {
 }
 
 
-void Noeud::print_letters(Noeud* node, queue<Noeud*> & fifo){
+void Node::print_letters(Node* node, queue<Node*> & fifo){
   string letters ="";
 
   if(node != nullptr){
@@ -59,7 +59,7 @@ void Noeud::print_letters(Noeud* node, queue<Noeud*> & fifo){
     }
     else {
       fifo.push(node);
-      queue<Noeud*> newfifo(fifo);
+      queue<Node*> newfifo(fifo);
       while(!newfifo.empty()){
         letters = letters +  newfifo.front()->letter;
         newfifo.pop();
@@ -74,7 +74,7 @@ void Noeud::print_letters(Noeud* node, queue<Noeud*> & fifo){
 
   }
 
-  stack<Noeud*> pile1,pile2;
+  stack<Node*> pile1,pile2;
   while(!fifo.empty()){
     pile1.push(fifo.front());
     fifo.pop();
@@ -90,13 +90,13 @@ void Noeud::print_letters(Noeud* node, queue<Noeud*> & fifo){
   }
 }
 
-void Noeud::print() {
-  queue<Noeud*> f;
+void Node::print() {
+  queue<Node*> f;
   print_letters(this,f);
 }
 
 
-vector<string> Noeud::mirror(const string & word ){
+vector<string> Node::mirror(const string & word ){
   vector<string> table;
   string temp(word);
 
@@ -126,38 +126,37 @@ vector<string> Noeud::mirror(const string & word ){
   return table;
 }
 
-
-void Noeud:: addNodePlus(const std::string & s) {
+/*
+void Node:: addNodePlus(const std::string & s) {
   vector<string> tab(mirror(s));
   addNode(s);
   for(unsigned int i = 0; i < tab.size();i++){
     addNode(tab[i]);
   }
-}
+}*/
 
 
-/*
-void Noeud:: addNodePlus(const std::string & s) {
+
+void Node:: addNodePlus(const std::string & s) {
   vector<string> tab(mirror(s));
   vector<thread> thread_tab;
-  thread_tab.push_back(thread(&Noeud::addNode,this,s));
+  thread_tab.push_back(thread(&Node::addNode,this,s));
   for(unsigned int i = 0; i < tab.size();i++){
-    thread_tab.push_back(thread(&Noeud::addNode,this,tab[i]));
+    thread_tab.push_back(thread(&Node::addNode,this,tab[i]));
   }
   for(unsigned int i = 0; i < thread_tab.size(); i++) {
     thread_tab[i].join();
   }
+}
 
-}*/
 
-
-void Noeud::addDictionnary(const std::string & filename){
+void Node::addDictionnary(const std::string & filename){
 
   ifstream file (filename.c_str());
 
   if(!file.is_open())
   {
-    cout << "Erreur lors de la lecture du fichier \nVeuillez vérifier le chemin du fichier" << endl;
+    cerr << "Erreur lors de la lecture du fichier \nVeuillez vérifier le chemin du fichier" << endl;
   }
 
   string word;
@@ -172,9 +171,9 @@ void Noeud::addDictionnary(const std::string & filename){
 }
 
 
-const bool Noeud::exist(const string & s) const {
+const bool Node::exist(const string & s) const {
   bool res = false;
 
 
-  return false;
+  return res;
 }

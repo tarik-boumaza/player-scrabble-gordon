@@ -13,7 +13,7 @@ private:
   Board board;
   std::vector<Player> players;
   Bag bag;
-  Noeud node;
+  Node node;
   std::string filename;
 
 

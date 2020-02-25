@@ -1,28 +1,29 @@
 #pragma once
 
 #include <string>
+#include <thread>
 #include <queue>
 
-class Noeud {
+class Node {
 
-public:
+private:
 
   char letter;
-  Noeud * tab[27];
+  Node * tab[27];
   bool is_final;
 
 
 public:
 
-  Noeud();
+  Node();
 
-  Noeud* addNode1(const char & c, const bool & b);
+  Node* addNode1(const char & c, const bool & b);
 
   void addNode(const std::string & s);
 
   void addNodePlus(const std::string & s);
 
-  void print_letters(Noeud* node, std::queue<Noeud*> & fifo);
+  void print_letters(Node* node, std::queue<Node*> & fifo);
 
   void print();
 
