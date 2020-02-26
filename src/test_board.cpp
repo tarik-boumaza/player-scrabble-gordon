@@ -15,9 +15,6 @@ int main() {
   Node m;
 
 
-  //m.addDictionnary("./data/dico.txt");
-  //m.print();
-
   g.init();
 
 

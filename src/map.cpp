@@ -4,6 +4,7 @@
 #include <string>
 #include <unistd.h>
 #include <queue>
+#include <utility>
 #include <stack>
 
 #include "map.hpp"
@@ -12,16 +13,21 @@ using namespace std;
 
 Node::Node() {
   this->is_final = false;
-  this->letter = '/';
   for (unsigned int i = 0; i < 27; i++) {
     this->tab[i] = nullptr;
   }
 }
 
 
-Node* Node:: addNode(const char & c, const bool & b) {
+char Node::getLetter(const unsigned short int & n) const {
+  if (n < 26)
+    return ('A' + n);
+  return ('+');
+}
+
+
+Node* Node:: addNode(const bool & b) {
   Node * ptr = new Node();
-  ptr->letter = c;
   ptr->is_final = b;
   for (unsigned int i = 0 ; i < 27; i++) {
       ptr->tab[i] = nullptr;
@@ -43,38 +49,38 @@ void Node:: addNode(const std::string & s) {
     else
       c = cstr[i] - 'A';
     if (tmp->tab[c] == nullptr)
-      tmp->tab[c] = addNode(cstr[i],(i == size - 1));
+      tmp->tab[c] = addNode( (i == size - 1) );
 
     tmp = tmp->tab[c];
   }
 }
 
 
-void Node::print_letters(Node* node, queue<Node*> & fifo){
+void Node::print_letters(Node* node,
+                          queue<pair<char,Node*>> & fifo,
+                          const char & c){
   string letters ="";
-
+  pair<char,Node*> p(c,node);
   if(node != nullptr){
-    if(!node->is_final){
-      fifo.push(node);
-    }
-    else {
-      fifo.push(node);
-      queue<Node*> newfifo(fifo);
+    fifo.push(p);
+    if(node->is_final){
+      queue<pair<char,Node*>> newfifo(fifo);
       while(!newfifo.empty()){
-        letters = letters +  newfifo.front()->letter;
+        letters = letters +  newfifo.front().first;
+        //cout << atoi(&newfifo.front().first) << endl;
         newfifo.pop();
       }
       cout << letters << endl;
     }
-    for (unsigned int i = 0 ; i < 27; i++) {
+    for (unsigned short int i = 0 ; i < 27; i++) {
       if (node->tab[i] != nullptr) {
-          print_letters(node->tab[i],fifo);
+          print_letters(node->tab[i],fifo,getLetter(static_cast<char>(i)));
       }
     }
 
   }
 
-  stack<Node*> pile1,pile2;
+  stack<pair<char,Node*>> pile1,pile2;
   while(!fifo.empty()){
     pile1.push(fifo.front());
     fifo.pop();
@@ -91,8 +97,8 @@ void Node::print_letters(Node* node, queue<Node*> & fifo){
 }
 
 void Node::print() {
-  queue<Node*> f;
-  print_letters(this,f);
+  queue<pair<char,Node*>> f;
+  print_letters(this,f,' ');
 }
 
 

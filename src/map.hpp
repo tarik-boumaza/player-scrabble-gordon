@@ -8,7 +8,6 @@ class Node {
 
 private:
 
-  char letter;
   Node * tab[27];
   bool is_final;
 
@@ -17,13 +16,17 @@ public:
 
   Node();
 
-  Node* addNode(const char & c, const bool & b);
+  Node* addNode(const bool & b);
+
+  char getLetter(const unsigned short int & n) const;
 
   void addNode(const std::string & s);
 
   void addNodePlus(const std::string & s);
 
-  void print_letters(Node* node, std::queue<Node*> & fifo);
+  void print_letters(Node* node,
+                    std::queue<std::pair<char,Node*>> & fifo,
+                    const char & c);
 
   void print();
 
