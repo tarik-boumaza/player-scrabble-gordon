@@ -6,17 +6,29 @@
 using namespace std;
 
 int main() {
-  Game g;
   double temps;
   clock_t t1,t2;
   t1 = clock();
+
+
+  Game g;
+  Node m;
+
+
+  //m.addDictionnary("./data/dico.txt");
+  //m.print();
+
   g.init();
+
+
+
+
+
+
+
   t2 = clock();
   temps = (t2 - t1) / 1000;
   cout << "temps d'exécution : " << temps << " ms" <<  endl;
-
-  g.printHands();
-
 
   return 0;
 }

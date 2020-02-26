@@ -1,3 +1,9 @@
 1) Bag::Bag(const std::string & filename)
 
 2) const Bag::exist(const std::string & s) const;
+
+3) Node::~Node()
+
+4) Fonction de recherche de mot
+
+5) remplacer vector<string> par array (tableau de taille fixe) dans la fonction Node::mirror

@@ -17,7 +17,7 @@ public:
 
   Node();
 
-  Node* addNode1(const char & c, const bool & b);
+  Node* addNode(const char & c, const bool & b);
 
   void addNode(const std::string & s);
 

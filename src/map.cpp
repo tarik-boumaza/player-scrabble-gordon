@@ -12,14 +12,14 @@ using namespace std;
 
 Node::Node() {
   this->is_final = false;
-  this->letter = ' ';
+  this->letter = '/';
   for (unsigned int i = 0; i < 27; i++) {
     this->tab[i] = nullptr;
   }
 }
 
 
-Node* Node:: addNode1(const char & c, const bool & b) {
+Node* Node:: addNode(const char & c, const bool & b) {
   Node * ptr = new Node();
   ptr->letter = c;
   ptr->is_final = b;
@@ -43,7 +43,7 @@ void Node:: addNode(const std::string & s) {
     else
       c = cstr[i] - 'A';
     if (tmp->tab[c] == nullptr)
-      tmp->tab[c] = addNode1(cstr[i],(i == size - 1));
+      tmp->tab[c] = addNode(cstr[i],(i == size - 1));
 
     tmp = tmp->tab[c];
   }
@@ -126,26 +126,11 @@ vector<string> Node::mirror(const string & word ){
   return table;
 }
 
-/*
+
 void Node:: addNodePlus(const std::string & s) {
   vector<string> tab(mirror(s));
-  addNode(s);
   for(unsigned int i = 0; i < tab.size();i++){
     addNode(tab[i]);
-  }
-}*/
-
-
-
-void Node:: addNodePlus(const std::string & s) {
-  vector<string> tab(mirror(s));
-  vector<thread> thread_tab;
-  thread_tab.push_back(thread(&Node::addNode,this,s));
-  for(unsigned int i = 0; i < tab.size();i++){
-    thread_tab.push_back(thread(&Node::addNode,this,tab[i]));
-  }
-  for(unsigned int i = 0; i < thread_tab.size(); i++) {
-    thread_tab[i].join();
   }
 }
 
