@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "board.hpp"
 #include "player.hpp"
 #include "bag.hpp"
@@ -11,7 +10,7 @@ class Game {
 
 private:
   Board board;
-  std::vector<Player> players;
+  Player player;
   Bag bag;
   Node node;
   std::string filename;
@@ -27,7 +26,7 @@ public:
 
   void initBag();
 
-  void initPlayers();
+  void initPlayer();
 
   void initMap();
 

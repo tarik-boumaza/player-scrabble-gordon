@@ -3,30 +3,7 @@
 
 
 Game::Game() {
-  this->players.push_back(Player(1));
   this->filename = "./data/dico.txt";
-}
-
-
-Game::Game(const char & nb_players) {
-  for (unsigned short int i = 0; i < nb_players; i++) {
-    this->players.push_back(Player(i));
-  }
-}
-
-
-Player Game::getPlayer(const unsigned int & n) const {
-  try {
-    if (n < players.size())
-      throw "Attention, case non déclarée";
-    else
-      return players[n];
-  }
-  catch (const std::string & s) {
-    std::cerr << s;
-  }
-  Player p(0);
-  return p;
 }
 
 
@@ -36,16 +13,13 @@ void Game::initBag() {
 }
 
 
-void Game::initPlayers() {
+void Game::initPlayer() {
   unsigned short int i,j;
   char c;
-  for (i = 0; i < players.size(); i++) {
-    for (j = 0; j < 7; j++) {
-      c = bag.randomDraw();
-      this->players[i].setLetter(j,c);
-    }
-    std::cout << std::endl;
+  for (j = 0; j < 7; j++) {
+    this->player.setLetter(j,bag.randomDraw());
   }
+  std::cout << std::endl;
 }
 
 
@@ -56,7 +30,7 @@ void Game::initMap() {
 
 void Game::init() {
   initBag();
-  initPlayers();
+  initPlayer();
   initMap();
 }
 
@@ -67,7 +41,5 @@ void Game::printDico() {
 
 
 void Game::printHands() const {
-  for(unsigned int i = 0; i < players.size(); i++) {
-    players[i].printHand();
-  }
+  player.printHand();
 }
