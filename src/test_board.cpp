@@ -12,11 +12,8 @@ int main() {
 
 
   Game g;
-  Node m;
-
 
   g.init();
-
 
 
 

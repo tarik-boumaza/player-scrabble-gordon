@@ -1,9 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-#include <string>
 #include <unistd.h>
-#include <queue>
 #include <utility>
 #include <stack>
 
@@ -56,9 +54,66 @@ void Node:: addNode(const std::string & s) {
 }
 
 
+vector<string> Node::mirror(const string & word ){
+  vector<string> table;
+  string temp(word);
+  unsigned int i,j;
+  stack<char> beginning;
+  queue<char> end;
+  string result;
+
+  for (i = 0; i < temp.size(); i++){
+    result = "";
+    for (j = 0; j <= i; j++){
+      beginning.push(temp[j]);
+    }
+    for(j = i + 1; j < temp.size(); j++){
+      end.push(temp[j]);
+    }
+    while(!beginning.empty()){
+      result += beginning.top();
+      beginning.pop();
+    }
+    result += "+";
+    while(!end.empty()){
+      result += end.front();
+      end.pop();
+    }
+    table.push_back(result);
+  }
+  return table;
+}
+
+
+void Node:: addNodePlus(const std::string & s) {
+  vector<string> tab(mirror(s));
+  for(unsigned int i = 0; i < tab.size();i++){
+    addNode(tab[i]);
+  }
+}
+
+
+void Node::addDictionnary(const std::string & filename){
+  ifstream file (filename.c_str());
+  if(!file.is_open()) {
+    cerr << "Erreur lors de la lecture du fichier" << filename <<
+            "\nVeuillez vérifier le chemin du fichier" << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  string word;
+  while(!file.eof()) {
+    file >> word;
+    addNodePlus(word);
+  }
+
+  file.close();
+}
+
+
 void Node::print_letters(Node* node,
                           queue<pair<char,Node*>> & fifo,
-                          const char & c){
+                          const char & c) {
   string letters ="";
   pair<char,Node*> p(c,node);
   if(node != nullptr){
@@ -67,7 +122,6 @@ void Node::print_letters(Node* node,
       queue<pair<char,Node*>> newfifo(fifo);
       while(!newfifo.empty()){
         letters = letters +  newfifo.front().first;
-        //cout << atoi(&newfifo.front().first) << endl;
         newfifo.pop();
       }
       cout << letters << endl;
@@ -96,75 +150,8 @@ void Node::print_letters(Node* node,
   }
 }
 
+
 void Node::print() {
   queue<pair<char,Node*>> f;
   print_letters(this,f,' ');
-}
-
-
-vector<string> Node::mirror(const string & word ){
-  vector<string> table;
-  string temp(word);
-
-  stack<char> beginning;
-  queue<char> end;
-  string result;
-
-  for (unsigned int i = 0; i < temp.size(); i++){
-    result = "";
-    for (unsigned int j = 0; j <= i; j++){
-      beginning.push(temp[j]);
-    }
-    for(unsigned int j = i + 1; j < temp.size(); j++){
-      end.push(temp[j]);
-    }
-    while(!beginning.empty()){
-      result += beginning.top();
-      beginning.pop();
-    }
-    result += "+";
-    while(!end.empty()){
-      result += end.front();
-      end.pop();
-    }
-    table.push_back(result);
-  }
-  return table;
-}
-
-
-void Node:: addNodePlus(const std::string & s) {
-  vector<string> tab(mirror(s));
-  for(unsigned int i = 0; i < tab.size();i++){
-    addNode(tab[i]);
-  }
-}
-
-
-void Node::addDictionnary(const std::string & filename){
-
-  ifstream file (filename.c_str());
-
-  if(!file.is_open())
-  {
-    cerr << "Erreur lors de la lecture du fichier \nVeuillez vérifier le chemin du fichier" << endl;
-  }
-
-  string word;
-
-  while(!file.eof())
-  {
-    file >> word;
-    addNodePlus(word);
-  }
-
-  file.close();
-}
-
-
-const bool Node::exist(const string & s) const {
-  bool res = false;
-
-
-  return res;
 }

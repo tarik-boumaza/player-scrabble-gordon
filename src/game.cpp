@@ -31,9 +31,8 @@ Player Game::getPlayer(const unsigned int & n) const {
 
 
 void Game::initBag() {
-  //Bag b("../data/bag.txt");
-  Bag b;
-  bag = b;
+  Bag b("./data/letters.txt","./data/points.txt");
+  this->bag = b;
 }
 
 
@@ -43,7 +42,7 @@ void Game::initPlayers() {
   for (i = 0; i < players.size(); i++) {
     for (j = 0; j < 7; j++) {
       c = bag.randomDraw();
-      players[i].setLetter(j,c);
+      this->players[i].setLetter(j,c);
     }
     std::cout << std::endl;
   }
@@ -62,14 +61,13 @@ void Game::init() {
 }
 
 
-void Game::printDico(){
+void Game::printDico() {
   node.print();
 }
 
 
-void Game::printHands() const{
+void Game::printHands() const {
   for(unsigned int i = 0; i < players.size(); i++) {
     players[i].printHand();
-    std::cout << std::endl;
   }
 }

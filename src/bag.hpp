@@ -20,7 +20,7 @@ public:
 
   Bag(const unsigned int * p[26], const unsigned int * l[26]);
 
-  Bag(const std::string & filename);
+  Bag(const std::string & file_l, const std::string & file_p);
 
   unsigned short int getPoints(const unsigned short int & c) const;
 
@@ -29,6 +29,8 @@ public:
   Bag& operator=(const Bag & _bag);
 
   void printLetters() const;
+
+  void printPoints() const;
 
 
 

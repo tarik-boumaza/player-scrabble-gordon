@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <thread>
 #include <queue>
 
 class Node {
@@ -16,24 +15,22 @@ public:
 
   Node();
 
-  Node* addNode(const bool & b);
-
   char getLetter(const unsigned short int & n) const;
+
+  Node* addNode(const bool & b);
 
   void addNode(const std::string & s);
 
+  std::vector<std::string> mirror(const std::string & word);
+
   void addNodePlus(const std::string & s);
+
+  void addDictionnary(const std::string & filename);
 
   void print_letters(Node* node,
                     std::queue<std::pair<char,Node*>> & fifo,
                     const char & c);
 
   void print();
-
-  std::vector<std::string> mirror(const std::string & word);
-
-  void addDictionnary(const std::string & filename);
-
-  const bool exist(const std::string & s) const;
 
 };
