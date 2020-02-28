@@ -3,7 +3,7 @@
 
 
 Game::Game() {
-  this->filename = "./data/dico.txt";
+  this->filename = "./data/dico_test.txt";
 }
 
 

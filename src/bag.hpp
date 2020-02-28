@@ -1,13 +1,11 @@
 #pragma once
 
 #include <string>
-#include <mutex>
 
 class Bag {
 
 private:
 
-  std::mutex m;
   unsigned int points[26];
   unsigned int letters[26];
   unsigned int nb_letters;

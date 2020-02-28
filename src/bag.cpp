@@ -1,6 +1,6 @@
-#include "bag.hpp"
 #include <iostream>
 #include <fstream>
+#include "bag.hpp"
 
 using namespace std;
 

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <queue>
+#include <memory>
 
 class Node {
 
@@ -14,6 +15,8 @@ private:
 public:
 
   Node();
+
+  ~Node();
 
   char getLetter(const unsigned short int & n) const;
 

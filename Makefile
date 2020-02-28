@@ -7,8 +7,8 @@ SRC_DIR = src
 CC = g++
 LD = g++
 
-CC_FLAGS = -g -Wextra -std=c++11 -c
-LD_FLAGS = -g -Wextra -std=c++11
+CC_FLAGS = -g -Wextra -std=c++11 -pg -c
+LD_FLAGS = -g -Wextra -std=c++11 -pg
 
 CLEAN_FLAGS = -v -r -f
 

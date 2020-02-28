@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-#include <unistd.h>
 #include <utility>
 #include <stack>
 
@@ -13,6 +12,13 @@ Node::Node() {
   this->is_final = false;
   for (unsigned int i = 0; i < 27; i++) {
     this->tab[i] = nullptr;
+  }
+}
+
+
+Node::~Node() {
+  for (unsigned int i = 0; i < 27; i++) {
+    delete tab[i];
   }
 }
 
