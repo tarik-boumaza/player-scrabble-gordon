@@ -1,11 +1,9 @@
 #include <stack>
-#include <cstring>
+#include <string>
 #include <iostream>
 #include <fstream>
 
 #include "gaddag.hpp"
-
-using namespace std;
 
 
 Gaddag::Gaddag() {
@@ -17,20 +15,20 @@ Gaddag::Gaddag() {
 
 
 Gaddag::~Gaddag() {
-  std::stack<Node*> stack({first});
+  std::stack<Node*> s({first});
   Node * current;
   unsigned int i;
   do {
-    current = stack.top();
-    stack.pop();
+    current = s.top();
+    s.pop();
 
     for(i = 0; i < 27; i++) {
       if (current->tab[i] != nullptr) {
-        stack.push(current->tab[i]);
+        s.push(current->tab[i]);
       }
     }
     delete current;
-  } while (!stack.empty());
+  } while (!s.empty());
 }
 
 
@@ -44,13 +42,13 @@ char Gaddag::getLetter(const unsigned short int & n) const {
 
 
 
-vector<string> Gaddag::mirror(const string & word ){
-  vector<string> table;
-  string temp(word);
+std::list<std::string> Gaddag::mirror(const std::string & word ){
+  std::list<std::string> l;
+  std::string temp(word);
   unsigned int i,j;
-  stack<char> beginning;
-  queue<char> end;
-  string result;
+  std::stack<char> beginning;
+  std::queue<char> end;
+  std::string result;
 
   for (i = 0; i < temp.size(); i++){
     result = "";
@@ -69,29 +67,30 @@ vector<string> Gaddag::mirror(const string & word ){
       result += end.front();
       end.pop();
     }
-    table.push_back(result);
+    l.push_back(result);
   }
-  return table;
+  return l;
 }
 
 
 void Gaddag::addNodePlus(const std::string & s) {
-  vector<string> tab(mirror(s));
-  for(unsigned int i = 0; i < tab.size();i++){
-    first->addNode(tab[i]);
+  std::list<std::string> l(mirror(s));
+  while(!l.empty()){
+    first->addNode(l.back());
+    l.pop_back();
   }
 }
 
 
 void Gaddag::addDictionnary(const std::string & filename){
-  ifstream file (filename.c_str());
+  std::ifstream file (filename.c_str());
   if(!file.is_open()) {
-    cerr << "Erreur lors de la lecture du fichier" << filename <<
-            "\nVeuillez vérifier le chemin du fichier" << endl;
+    std::cerr << "Erreur lors de la lecture du fichier" << filename <<
+            "\nVeuillez vérifier le chemin du fichier" << std::endl;
     exit(EXIT_FAILURE);
   }
 
-  string word;
+  std::string word;
   while(!file.eof()) {
     file >> word;
     addNodePlus(word);
@@ -102,19 +101,19 @@ void Gaddag::addDictionnary(const std::string & filename){
 
 
 void Gaddag::print_letters(Node* node,
-                          queue<pair<char,Node*>> & fifo,
+                          std::queue<std::pair<char,Node*>> & fifo,
                           const char & c) {
-  string letters ="";
-  pair<char,Node*> p(c,node);
+  std::string letters ="";
+  std::pair<char,Node*> p(c,node);
   if(node != nullptr){
     fifo.push(p);
     if(node->is_final){
-      queue<pair<char,Node*>> newfifo(fifo);
+      std::queue<std::pair<char,Node*>> newfifo(fifo);
       while(!newfifo.empty()){
         letters = letters +  newfifo.front().first;
         newfifo.pop();
       }
-      cout << letters << endl;
+      std::cout << letters << std::endl;
     }
     for (unsigned short int i = 0 ; i < 27; i++) {
       if (node->tab[i] != nullptr) {
@@ -124,7 +123,7 @@ void Gaddag::print_letters(Node* node,
 
   }
 
-  stack<pair<char,Node*>> pile1,pile2;
+  std::stack<std::pair<char,Node*>> pile1,pile2;
   while(!fifo.empty()){
     pile1.push(fifo.front());
     fifo.pop();
@@ -142,6 +141,6 @@ void Gaddag::print_letters(Node* node,
 
 
 void Gaddag::print() {
-  queue<pair<char,Node*>> f;
+  std::queue<std::pair<char,Node*>> f;
   print_letters(this->first,f,' ');
 }

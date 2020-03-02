@@ -1,10 +1,12 @@
 #pragma once
 
-#include "map.hpp"
-#include <vector>
+#include <list>
 #include <string>
 #include <queue>
 #include <utility>
+
+#include "map.hpp"
+
 
 class Gaddag {
 
@@ -23,7 +25,7 @@ public:
 
   void addNode(const std::string & s);
 
-  std::vector<std::string> mirror(const std::string & word) ;
+  std::list<std::string> mirror(const std::string & word) ;
 
   void addNodePlus(const std::string & s);
 
