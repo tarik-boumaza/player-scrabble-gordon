@@ -2,7 +2,6 @@
 #include <fstream>
 #include "bag.hpp"
 
-using namespace std;
 
 Bag:: Bag() {
   letters[0] = 9;
@@ -76,14 +75,14 @@ Bag::Bag(const unsigned int * p[26], const unsigned int * l[26]) {
 
 
 Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
-    ifstream file_l (filename_l.c_str());
+    std::ifstream file_l (filename_l.c_str());
     if (!file_l.is_open()) {
       std::cerr << "Erreur lors de la lecture du fichier " << filename_l <<
-                    "\nVeuillez vérifier le chemin du fichier" << endl;
+                    "\nVeuillez vérifier le chemin du fichier" << std::endl;
       exit(EXIT_FAILURE);
     }
     else {
-      string word, temp;
+      std::string word, temp;
       unsigned int i = 0, nb = 0;
       while(!file_l.eof() && i < 26) {
         file_l >> word;
@@ -95,10 +94,10 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
       this->nb_letters = nb;
       file_l.close();
 
-      ifstream file_p (filename_p.c_str());
+      std::ifstream file_p (filename_p.c_str());
       if (!file_p.is_open()) {
         std::cerr << "Erreur lors de la lecture du fichier " << filename_p <<
-                      "\nVeuillez vérifier le chemin du fichier" << endl;
+                      "\nVeuillez vérifier le chemin du fichier" << std::endl;
         exit(EXIT_FAILURE);
       }
       else {
@@ -120,10 +119,17 @@ unsigned short int Bag::getPoints(const unsigned short int & c) const {
 }
 
 
+bool Bag::isEmpty() const {
+  return (nb_letters == 0);
+}
+
+
 char Bag::randomDraw() {
+  if (isEmpty())
+    return '/';
   char res,i;
   i = 'Z';
-  int temp = rand()%nb_letters;
+  int temp = rand() % nb_letters;
   res = 'Z';
   while(temp >= 0 && i >= 'A') {
     if (letters[static_cast<short int>(i - 'A')] != 0)

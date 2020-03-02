@@ -36,6 +36,8 @@ public:
 
   void printHands() const;
 
+  void draw();
+
 
 
 

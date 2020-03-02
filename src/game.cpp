@@ -14,10 +14,8 @@ void Game::initBag() {
 
 
 void Game::initPlayer() {
-  unsigned short int i,j;
-  char c;
-  for (j = 0; j < 7; j++) {
-    this->player.setLetter(j,bag.randomDraw());
+  for (unsigned int i = 0;  i < 7; i++) {
+    player.setLetter(i,bag.randomDraw());
   }
 }
 
@@ -41,4 +39,13 @@ void Game::printDico() {
 
 void Game::printHands() const {
   player.printHand();
+}
+
+
+void Game::draw() {
+  unsigned int i = 0;
+  while (i < 7 && !bag.isEmpty() ) {
+    if (player.getLetter(i) == '/')
+      player.setLetter(i,bag.randomDraw());
+  }
 }

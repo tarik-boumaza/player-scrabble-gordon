@@ -22,6 +22,8 @@ public:
 
   unsigned short int getPoints(const unsigned short int & c) const;
 
+  bool isEmpty() const;
+
   char randomDraw();
 
   Bag& operator=(const Bag & _bag);
