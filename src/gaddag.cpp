@@ -8,9 +8,6 @@
 
 Gaddag::Gaddag() {
   this->first = new Node();
-  for (unsigned int i = 0; i < 27; i++) {
-    this->first->tab[i] = nullptr;
-  }
 }
 
 
@@ -23,8 +20,8 @@ Gaddag::~Gaddag() {
     s.pop();
 
     for(i = 0; i < 27; i++) {
-      if (current->tab[i] != nullptr) {
-        s.push(current->tab[i]);
+      if (current->getNode(i) != nullptr) {
+        s.push(current->getNode(i));
       }
     }
     delete current;
@@ -37,9 +34,6 @@ char Gaddag::getLetter(const unsigned short int & n) const {
     return ('A' + n);
   return ('+');
 }
-
-
-
 
 
 std::list<std::string> Gaddag::mirror(const std::string & word ){
@@ -107,7 +101,7 @@ void Gaddag::print_letters(Node* node,
   std::pair<char,Node*> p(c,node);
   if(node != nullptr){
     fifo.push(p);
-    if(node->is_final){
+    if(node->isFinal()){
       std::queue<std::pair<char,Node*>> newfifo(fifo);
       while(!newfifo.empty()){
         letters = letters +  newfifo.front().first;
@@ -116,8 +110,8 @@ void Gaddag::print_letters(Node* node,
       std::cout << letters << std::endl;
     }
     for (unsigned short int i = 0 ; i < 27; i++) {
-      if (node->tab[i] != nullptr) {
-          print_letters(node->tab[i],fifo,getLetter(static_cast<char>(i)));
+      if (node->getNode(i) != nullptr) {
+          print_letters(node->getNode(i),fifo,getLetter(static_cast<char>(i)));
       }
     }
 

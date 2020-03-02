@@ -10,6 +10,17 @@ Node::Node() {
 }
 
 
+Node* Node::getNode(const unsigned short int & i) const {
+  return tab[i];
+}
+
+
+bool Node::isFinal() const {
+  return is_final;
+}
+
+
+
 Node* Node::addNode(const bool & b) {
   Node * ptr = new Node();
   ptr->is_final = b;

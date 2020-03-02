@@ -16,6 +16,16 @@ private:
   std::string filename;
 
 
+private:
+
+  void initBag();
+
+  void initPlayer();
+
+  void initGaddag();
+
+
+
 public:
 
   Game();
@@ -23,12 +33,6 @@ public:
   Game(const char & nb_players);
 
   Player getPlayer(const unsigned int & n) const;
-
-  void initBag();
-
-  void initPlayer();
-
-  void initGaddag();
 
   void init();
 
