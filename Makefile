@@ -12,14 +12,23 @@ LD_FLAGS = -g -Wextra -std=c++11 -pedantic
 
 CLEAN_FLAGS = -v -r -f
 
-all : test_board
+all : main
+
+
+main: bin/main
 
 test_board : bin/test_board
 
 
+bin/main : obj/main.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/map.o obj/spot.o obj/game.o obj/board.o
+	$(LD) $(LD_FLAGS) $^ -o $@
+
 bin/test_board : obj/test_board.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/map.o obj/spot.o obj/game.o obj/board.o
 	$(LD) $(LD_FLAGS) $^ -o $@
 
+
+obj/main.o : src/main.cpp src/game.hpp
+	$(CC) $(CC_FLAGS) $< -o $@
 
 obj/test_board.o : src/test_board.cpp src/game.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
