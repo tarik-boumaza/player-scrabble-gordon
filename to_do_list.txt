@@ -1,9 +1,3 @@
-1) Bag::Bag(const std::string & filename)
+1) Fonction qui retourne le score avec bonus
 
-2) const Bag::exist(const std::string & s) const;
-
-3) Node::~Node()
-
-4) Fonction de recherche de mot
-
-5) remplacer vector<string> par array (tableau de taille fixe) dans la fonction Node::mirror
+2) Fonction qui trouve les coups jouables
