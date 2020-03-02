@@ -16,11 +16,24 @@ Node::Node() {
 }
 
 
+/*
 Node::~Node() {
-  for (unsigned int i = 0; i < 27; i++) {
-    delete tab[i];
-  }
+  freeMemory();
 }
+
+
+void Node::freeMemory() {
+  std::stack<Node> lifo;
+  bool b = false;
+  for (unsigned int i = 0; i < 27; i++) {
+    if (tab[i] != nullptr) {
+      tab[i]->freeMemory();
+      b = true;
+    }
+    if (b)
+      delete [] tab;
+  }
+}*/
 
 
 char Node::getLetter(const unsigned short int & n) const {
@@ -30,7 +43,7 @@ char Node::getLetter(const unsigned short int & n) const {
 }
 
 
-Node* Node:: addNode(const bool & b) {
+Node* Node::addNode(const bool & b) {
   Node * ptr = new Node();
   ptr->is_final = b;
   for (unsigned int i = 0 ; i < 27; i++) {
@@ -40,7 +53,7 @@ Node* Node:: addNode(const bool & b) {
 }
 
 
-void Node:: addNode(const std::string & s) {
+void Node::addNode(const std::string & s) {
   unsigned int i = 0, size = s.size();
   unsigned short int c;
   Node * tmp = this;
@@ -59,70 +72,13 @@ void Node:: addNode(const std::string & s) {
   }
 }
 
-
-vector<string> Node::mirror(const string & word ){
-  vector<string> table;
-  string temp(word);
-  unsigned int i,j;
-  stack<char> beginning;
-  queue<char> end;
-  string result;
-
-  for (i = 0; i < temp.size(); i++){
-    result = "";
-    for (j = 0; j <= i; j++){
-      beginning.push(temp[j]);
-    }
-    for(j = i + 1; j < temp.size(); j++){
-      end.push(temp[j]);
-    }
-    while(!beginning.empty()){
-      result += beginning.top();
-      beginning.pop();
-    }
-    result += "+";
-    while(!end.empty()){
-      result += end.front();
-      end.pop();
-    }
-    table.push_back(result);
-  }
-  return table;
-}
-
-
-void Node:: addNodePlus(const std::string & s) {
-  vector<string> tab(mirror(s));
-  for(unsigned int i = 0; i < tab.size();i++){
-    addNode(tab[i]);
-  }
-}
-
-
-void Node::addDictionnary(const std::string & filename){
-  ifstream file (filename.c_str());
-  if(!file.is_open()) {
-    cerr << "Erreur lors de la lecture du fichier" << filename <<
-            "\nVeuillez vérifier le chemin du fichier" << endl;
-    exit(EXIT_FAILURE);
-  }
-
-  string word;
-  while(!file.eof()) {
-    file >> word;
-    addNodePlus(word);
-  }
-
-  file.close();
-}
-
-
+/*
 void Node::print_letters(Node* node,
                           queue<pair<char,Node*>> & fifo,
                           const char & c) {
   string letters ="";
   pair<char,Node*> p(c,node);
-  if(node != nullptr){
+  if(node != nullptr) {
     fifo.push(p);
     if(node->is_final){
       queue<pair<char,Node*>> newfifo(fifo);
@@ -160,4 +116,4 @@ void Node::print_letters(Node* node,
 void Node::print() {
   queue<pair<char,Node*>> f;
   print_letters(this,f,' ');
-}
+}*/

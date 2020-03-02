@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "game.hpp"
 
 using namespace std;
@@ -14,8 +15,6 @@ int main() {
   Game g;
   g.init();
   g.printDico();
-
-
 
 
 

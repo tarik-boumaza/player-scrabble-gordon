@@ -3,7 +3,7 @@
 #include "board.hpp"
 #include "player.hpp"
 #include "bag.hpp"
-#include "map.hpp"
+#include "gaddag.hpp"
 
 
 class Game {
@@ -12,7 +12,7 @@ private:
   Board board;
   Player player;
   Bag bag;
-  Node node;
+  Gaddag gad;
   std::string filename;
 
 
@@ -28,7 +28,7 @@ public:
 
   void initPlayer();
 
-  void initMap();
+  void initGaddag();
 
   void init();
 

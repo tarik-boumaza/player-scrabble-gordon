@@ -3,7 +3,7 @@
 
 
 Game::Game() {
-  this->filename = "./data/dico_test.txt";
+  this->filename = "./data/dico.txt";
 }
 
 
@@ -19,24 +19,23 @@ void Game::initPlayer() {
   for (j = 0; j < 7; j++) {
     this->player.setLetter(j,bag.randomDraw());
   }
-  std::cout << std::endl;
 }
 
 
-void Game::initMap() {
-  node.addDictionnary(filename);
+void Game::initGaddag() {
+  gad.addDictionnary(filename);
 }
 
 
 void Game::init() {
   initBag();
   initPlayer();
-  initMap();
+  initGaddag();
 }
 
 
 void Game::printDico() {
-  node.print();
+  gad.print();
 }
 
 

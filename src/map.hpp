@@ -2,11 +2,11 @@
 
 #include <string>
 #include <queue>
-#include <memory>
+
 
 class Node {
 
-private:
+public:
 
   Node * tab[27];
   bool is_final;
@@ -16,7 +16,9 @@ public:
 
   Node();
 
-  ~Node();
+  //~Node();
+
+  //void freeMemory();
 
   char getLetter(const unsigned short int & n) const;
 
@@ -24,11 +26,6 @@ public:
 
   void addNode(const std::string & s);
 
-  std::vector<std::string> mirror(const std::string & word);
-
-  void addNodePlus(const std::string & s);
-
-  void addDictionnary(const std::string & filename);
 
   void print_letters(Node* node,
                     std::queue<std::pair<char,Node*>> & fifo,
