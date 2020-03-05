@@ -32,15 +32,21 @@ public:
 
   Game(const char & nb_players);
 
-  Player getPlayer(const unsigned int & n) const;
-
   void init();
 
   void printDico();
 
   void printHands() const;
 
+  void printBag() const;
+
   void draw();
+
+  bool isFinished() const;
+
+  void useLetter(const std::list<unsigned int> & l);
+
+
 
 
 

@@ -6,7 +6,7 @@
 
 Player:: Player() {
   for (unsigned int i = 0; i < 7; i++) {
-    this->hand[i] = '_';
+    this->hand[i] = '/';
   }
 }
 
@@ -32,6 +32,6 @@ void Player::setLetter(const unsigned short int & n, const char & c) {
 
 void Player::printHand() const {
   for(unsigned int i = 0; i < 7; i++) {
-    std::cout << hand[i] << " ";
+    std::cout << hand[i] << std::flush;
   }
 }
