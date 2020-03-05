@@ -1,29 +1,19 @@
 #pragma once
 
-#include "board.hpp"
-#include "player.hpp"
-#include "bag.hpp"
-#include "gaddag.hpp"
+#include<list>
 
+class Board;
+class Player;
+class Bag;
+class Gaddag;
 
 class Game {
 
 private:
-  Board board;
-  Player player;
-  Bag bag;
-  Gaddag gad;
-  std::string filename;
-
-
-private:
-
-  void initBag();
-
-  void initPlayer();
-
-  void initGaddag();
-
+  Board * board;
+  Player * player;
+  Bag * bag;
+  Gaddag * gad;
 
 
 public:

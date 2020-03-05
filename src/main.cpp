@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "bag.hpp"
 #include "game.hpp"
 
 using namespace std;
