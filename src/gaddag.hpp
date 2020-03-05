@@ -15,7 +15,7 @@ private:
 
 
 
-private:
+public:
 
   std::list<std::string> mirror(const std::string & word) ;
 
