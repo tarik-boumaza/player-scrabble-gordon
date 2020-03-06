@@ -1,3 +1,7 @@
 1) Fonction qui retourne le score avec bonus
 
 2) Fonction qui trouve les coups jouables
+
+3) Améliorer la fonction de l'affichage du dictionnaire
+
+4) Algorithme du Gaddag  
