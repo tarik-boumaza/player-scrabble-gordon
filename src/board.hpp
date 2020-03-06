@@ -6,8 +6,11 @@
 
 /* Scrabble board */
 
-struct Board {
+class Board {
   //default initialization of a scrabble board
+
+public:
+
   Board() ;
 
   //i/o to files
@@ -18,8 +21,14 @@ struct Board {
   Spot operator()(unsigned char l, unsigned char c) const ;
   Spot& operator()(unsigned char l, unsigned char c) ;
 
-  //spots are public, and can therefore also be accessed b index
+  unsigned char getWordFactor(const unsigned int & id) const;
+
+  unsigned char getLetterFactor(const unsigned int & id) const;
+
+
+private:
   Spot spots[225] ;
+  
 } ;
 
 //board display on the console

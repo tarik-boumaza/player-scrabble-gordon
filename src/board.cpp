@@ -4,6 +4,7 @@
 
 //default initialization
 Board::Board() {
+
   //Triple word spots
   {
     Spot s(1, 3) ;
@@ -71,6 +72,18 @@ Board::Board() {
   }
 }
 
+
+unsigned char Board::getLetterFactor(const unsigned int & id) const {
+  return spots[id].getLetterFactor();
+}
+
+
+unsigned char Board::getWordFactor(const unsigned int & id) const {
+  return spots[id].getWordFactor();
+}
+
+
+
 //i/o to files
 void Board::save(std::ostream& out) {
   //write the grid of chars
@@ -78,9 +91,9 @@ void Board::save(std::ostream& out) {
     if( i%15 == 0) {
       out << std::endl ;
     }
-    if(spots[i].letter) {
+    if(spots[i].getLetter()) {
       //a letter is present, write it
-      out << spots[i].letter ;
+      out << spots[i].getLetter() ;
     } else {
       //no letter, put a dot
       out << "." ;
@@ -95,10 +108,10 @@ void Board::load(std::istream& in) {
     in >> c ;
     if(c != '.') {
       //a letter is provided, save it
-      spots[i].letter = c ;
+      spots[i].setLetter(c);
     } else {
       //no letter, set to 0
-      spots[i].letter = 0 ;
+      spots[i].setLetter(0);
     }
   }
 }
@@ -131,10 +144,10 @@ std::ostream& operator<<(std::ostream& out, const Board& b) {
     //columns first line
     for(unsigned char j = 0; j < 15; ++j) {
       //type of the top left corner
-      bool above = (i > 0 && (b(i-1,j).letter != 0)) ;
-      bool weak_above = (above || (i > 0 && j > 0 && b(i-1,j-1).letter != 0)) ;
-      bool below = (b(i,j).letter != 0) ;
-      bool weak_below = (below || (j > 0 && b(i, j-1).letter != 0)) ;
+      bool above = (i > 0 && (b(i-1,j).getLetter() != 0)) ;
+      bool weak_above = (above || (i > 0 && j > 0 && b(i-1,j-1).getLetter() != 0)) ;
+      bool below = (b(i,j).getLetter() != 0) ;
+      bool weak_below = (below || (j > 0 && b(i, j-1).getLetter() != 0)) ;
       if (weak_above && weak_below) {
         //a letter is placed on both sides
         out << ":" ;
@@ -181,8 +194,8 @@ std::ostream& operator<<(std::ostream& out, const Board& b) {
     //columns second line
     for(unsigned char j = 0; j < 15; ++j) {
       //type of the left vertical edge
-      bool left = (j > 0 && b(i,j-1).letter != 0) ;
-      bool right = b(i,j).letter != 0 ;
+      bool left = (j > 0 && b(i,j-1).getLetter() != 0) ;
+      bool right = b(i,j).getLetter() != 0 ;
       if(left || right) {
         //a letter is present at least on one side
         out << "| " ;
@@ -210,8 +223,8 @@ std::ostream& operator<<(std::ostream& out, const Board& b) {
   out << "#  " ;
   for(unsigned char j = 0; j < 15; ++j) {
     //corner type
-    bool above = (b(14,j).letter != 0) ;
-    bool weak_above = (above || (j > 0 && b(14,j-1).letter != 0)) ;
+    bool above = (b(14,j).getLetter() != 0) ;
+    bool weak_above = (above || (j > 0 && b(14,j-1).getLetter() != 0)) ;
 
     if (weak_above) {
       //a letter is above

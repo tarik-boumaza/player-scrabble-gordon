@@ -10,6 +10,7 @@ Game::Game() {
   bag = new Bag("./data/letters.txt","./data/points.txt");
   player = new Player;
   gad = new Gaddag;
+  board = new Board;
 }
 
 
