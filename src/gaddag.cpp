@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
+#include "map.hpp"
 #include "gaddag.hpp"
 
 
@@ -71,7 +71,8 @@ void Gaddag::addNodePlus(const std::string & s) {
 }
 
 
-void Gaddag::addDictionnary(const std::string & filename){
+void Gaddag::addDictionnary() {
+  std::string filename = "./data/dico.txt";
   std::ifstream file (filename.c_str());
   if(!file.is_open()) {
     std::cerr << "Erreur lors de la lecture du fichier" << filename <<

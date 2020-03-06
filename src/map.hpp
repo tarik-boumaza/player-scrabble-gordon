@@ -10,7 +10,7 @@ private:
 
 
 private:
-  
+
   Node* addNode(const bool & b);
 
 

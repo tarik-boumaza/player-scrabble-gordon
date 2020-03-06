@@ -5,8 +5,8 @@
 #include <queue>
 #include <utility>
 
-#include "map.hpp"
 
+class Node;
 
 class Gaddag {
 
@@ -34,7 +34,7 @@ public:
 
   void addNodePlus(const std::string & s);
 
-  void addDictionnary(const std::string & filename);
+  void addDictionnary();
 
   void print();
 
