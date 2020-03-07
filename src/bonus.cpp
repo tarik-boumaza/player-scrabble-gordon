@@ -1,5 +1,15 @@
 #include "bonus.hpp"
 
+
+unsigned char Bonus::getLetterFactor() const {
+  return letter_factor;
+}
+
+
+unsigned char Bonus::getWordFactor() const {
+  return word_factor;
+}
+
 //apply the letter factor on a letter score
 unsigned int Bonus::apply_letter(unsigned int score) const {
   return letter_factor * score ;

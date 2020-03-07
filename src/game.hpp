@@ -1,6 +1,6 @@
 #pragma once
 
-#include<list>
+#include <list>
 
 class Board;
 class Player;
