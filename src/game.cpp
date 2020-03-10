@@ -14,6 +14,14 @@ Game::Game() {
 }
 
 
+Game::~Game() {
+  delete board;
+  delete player;
+  delete bag;
+  delete gad;
+}
+
+
 void Game::init() {
   for (unsigned int i = 0;  i < 7; i++) {
     player->setLetter(i,bag->randomDraw());

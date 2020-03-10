@@ -20,6 +20,8 @@ public:
 
   Game();
 
+  ~Game();
+
   Game(const char & nb_players);
 
   void init();
