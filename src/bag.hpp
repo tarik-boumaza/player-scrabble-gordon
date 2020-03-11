@@ -7,16 +7,12 @@ class Bag {
 private:
 
   unsigned int points[26];
-  unsigned int letters[26];
+  char letters[102];
   unsigned int nb_letters;
 
 
 
 public:
-
-  Bag();
-
-  Bag(const unsigned int * p[26], const unsigned int * l[26]);
 
   Bag(const std::string & file_l, const std::string & file_p);
 

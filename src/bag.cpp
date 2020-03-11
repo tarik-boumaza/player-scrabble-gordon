@@ -3,76 +3,6 @@
 #include "bag.hpp"
 
 
-Bag:: Bag() {
-  letters[0] = 9; //A
-  letters[1] = 2; //B
-  letters[2] = 2; //C
-  letters[3] = 3; //D
-  letters[4] = 15; //E
-  letters[5] = 2; //F
-  letters[6] = 2; //G
-  letters[7] = 2; //H
-  letters[8] = 8; //I
-  letters[9] = 1; //J
-  letters[10] = 1; //K
-  letters[11] = 5; //L
-  letters[12] = 3; //M
-  letters[13] = 6; //N
-  letters[14] = 6; //O
-  letters[15] = 2; //P
-  letters[16] = 3; //Q
-  letters[17] = 6; //R
-  letters[18] = 6; //S
-  letters[19] = 6; //T
-  letters[20] = 6; //U
-  letters[21] = 2; //V
-  letters[22] = 1; //W
-  letters[23] = 1; //X
-  letters[24] = 1; //Y
-  letters[25] = 1; //Z
-
-  points[0] = 1;
-  points[1] = 3;
-  points[2] = 3;
-  points[3] = 2;
-  points[4] = 1;
-  points[5] = 4;
-  points[6] = 2;
-  points[7] = 4;
-  points[8] = 1;
-  points[9] = 8;
-  points[10] = 10;
-  points[11] = 1;
-  points[12] = 2;
-  points[13] = 1;
-  points[14] = 1;
-  points[15] = 3;
-  points[16] = 2;
-  points[17] = 1;
-  points[18] = 1;
-  points[19] = 1;
-  points[20] = 1;
-  points[21] = 4;
-  points[22] = 10;
-  points[23] = 10;
-  points[24] = 10;
-  points[25] = 10;
-
-  nb_letters = 102;
-
-}
-
-
-Bag::Bag(const unsigned int * p[26], const unsigned int * l[26]) {
-  unsigned short int nb_l = 0;
-  for (unsigned int i = 0; i < 26; i++) {
-    points[i] = *p[i];
-    letters[i] = *l[i];
-    nb_l += letters[i];
-  }
-  nb_letters = nb_l;
-}
-
 
 Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
     std::ifstream file_l (filename_l.c_str());
@@ -84,10 +14,15 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
     else {
       std::string word, temp;
       unsigned int i = 0, nb = 0;
+      int j;
+      char l = 'A';
       while(!file_l.eof() && i < 26) {
         file_l >> word;
         temp = word;
-        this->letters[i] = std::stoi(temp);
+        for (j = 0; j < std::stoi(temp); j++) {
+          this->letters[nb + j] = l;
+        }
+        l++;
         nb += std::stoi(temp);
         i++;
       }
@@ -127,20 +62,11 @@ bool Bag::isEmpty() const {
 char Bag::randomDraw() {
   if (isEmpty())
     return '/';
-  char res,i;
-  i = 'Z';
-  int temp = rand() % nb_letters;
-  res = 'Z';
-  while(temp >= 0 && i >= 'A') {
-    if (letters[static_cast<short int>(i - 'A')] != 0)
-      temp -= letters[static_cast<short int>(i - 'A')];
-    res = i;
-    i--;
-  }
-  if (letters[static_cast<short int>(res - 'A')] > 0)
-    letters[static_cast<short int>(res - 'A')]--;
+  int random_number = rand() % nb_letters;
+  char l = letters[random_number];
+  letters[random_number] = letters[nb_letters - 1];
   nb_letters--;
-  return res;
+  return l;
 
 }
 
@@ -156,19 +82,15 @@ Bag& Bag::operator=(const Bag & _bag) {
 
 
 void Bag::printLetters() const {
-  char c;
-  for(unsigned int i = 0; i < 26; i++) {
-    c = 'A' + i;
-    std::cout << 'A' + i << " : " << letters[i] << std::endl;
+  for(unsigned int i = 0; i < nb_letters; i++) {
+    std::cout << letters[i] << std::endl;
   }
   std::cout << "Nombre total de lettres " << nb_letters << std::endl;
 }
 
 
 void Bag::printPoints() const {
-  char c;
   for(unsigned int i = 0; i < 26; i++) {
-    c = 'A' + i;
     std::cout << 'A' + i << " : " << points[i] << std::endl;
   }
 }

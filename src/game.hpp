@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <utility>
 
 class Board;
 class Player;
@@ -38,7 +39,8 @@ public:
 
   void useLetter(const std::list<unsigned int> & l);
 
-  
+  std::pair<unsigned short int, unsigned short int> score
+                            (const unsigned char & p, const unsigned char & l) const;
 
 
 

@@ -67,3 +67,12 @@ void Game::useLetter(const std::list<unsigned int> & l) {
     copy.pop_back();
   }
 }
+
+
+std::pair<unsigned short int, unsigned short int> Game::score
+                          (const unsigned char & pos, const unsigned char & l) const {
+  unsigned short int res = bag->getPoints(l);
+  res *= board->getLetterFactor(pos);
+  std::pair<unsigned short int, unsigned short int> p (res,board->getWordFactor(pos));
+  return p;
+}
