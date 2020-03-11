@@ -3,11 +3,15 @@
 #include "spot.hpp"
 
 #include <iostream>
+#include <list>
+
 
 /* Scrabble board */
 
 class Board {
   //default initialization of a scrabble board
+public:
+  std::list<unsigned char> getAnchorSquares();
 
 public:
 
@@ -28,7 +32,7 @@ public:
 
 private:
   Spot spots[225] ;
-  
+
 } ;
 
 //board display on the console

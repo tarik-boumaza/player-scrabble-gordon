@@ -1,6 +1,7 @@
 #include "board.hpp"
 
 #include <fstream>
+#include <utility>
 
 //default initialization
 Board::Board() {
@@ -73,6 +74,17 @@ Board::Board() {
 }
 
 
+static std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n){
+  unsigned char x = n / 15;
+  unsigned char y = n % 15;
+  return std::pair<unsigned char,unsigned char>(x,y);
+}
+
+static unsigned char getIndice(const unsigned char & x,const unsigned char &y){
+  return (x * 15 + y);
+}
+
+
 unsigned char Board::getLetterFactor(const unsigned int & id) const {
   return spots[id].getLetterFactor();
 }
@@ -83,6 +95,23 @@ unsigned char Board::getWordFactor(const unsigned int & id) const {
 }
 
 
+std::list<unsigned char> Board::getAnchorSquares(){
+  std::list<unsigned char> anchor_squares;
+  for(unsigned char i = 0; i < 225; i++){
+    if(spots[i].getLetter() == 0){
+      std::pair<unsigned char,unsigned char> indices = getIndice(i);
+      unsigned char x = indices.first;
+      unsigned char y = indices.second;
+      if( ((x > 0) &&  (spots[getIndice(x-1,y)].getLetter() != 0)) ||
+          ((x < 14) && (spots[getIndice(x+1,y)].getLetter() != 0)) ||
+          ((y > 0) && (spots[getIndice(x,y-1)].getLetter() != 0)) ||
+          ((y < 14) && (spots[getIndice(x,y+1)].getLetter() != 0))
+      )
+      anchor_squares.push_back(i);
+    }
+  }
+  return anchor_squares;
+}
 
 //i/o to files
 void Board::save(std::ostream& out) {

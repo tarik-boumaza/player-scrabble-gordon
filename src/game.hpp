@@ -38,6 +38,8 @@ public:
 
   void useLetter(const std::list<unsigned int> & l);
 
+  
+
 
 
 
