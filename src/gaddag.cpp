@@ -29,6 +29,18 @@ Gaddag::~Gaddag() {
 }
 
 
+Node* Gaddag::getFirst(){
+  return first;
+}
+
+
+Node* Gaddag::letterForward(Node* node, const char & c){
+  if (node != nullptr){
+    node = node->getNode(c - 'A');
+  }
+  return node;
+}
+
 char Gaddag::getLetter(const unsigned short int & n) const {
   if (n < 26)
     return ('A' + n);

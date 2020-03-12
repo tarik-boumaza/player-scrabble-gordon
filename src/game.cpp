@@ -76,3 +76,26 @@ std::pair<unsigned short int, unsigned short int> Game::score
   std::pair<unsigned short int, unsigned short int> p (res,board->getWordFactor(pos));
   return p;
 }
+
+std::list<unsigned char> Game::getCrossSetsHorizontal(const unsigned char & square){
+  unsigned char x = board->getIndice(square).first;
+  unsigned char y = board->getIndice(square).second;
+
+  // dans le cas où ma case n'est adjacente à qu'une seule case vide directement
+  // à gauche
+  if((x < 14) && (board->getSpot(board->getIndice(x+1,y)).getLetter() == 0) &&
+      (x > 0) && (board->getSpot(board->getIndice(x-1,y)).getLetter() != 0)){
+        Spot parcours = board->getSpot(board->getIndice(x-1,y));
+        Node* gad_parcours = gad->getFirst();
+        int i = 1;
+        while(parcours.getLetter() != 0){
+          gad->letterForward(gad_parcours,parcours.getLetter());
+          parcours = board->getSpot(board->getIndice(x-1-i,y));
+          i++;
+        }
+
+      }
+
+
+
+}

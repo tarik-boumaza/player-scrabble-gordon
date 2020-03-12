@@ -38,7 +38,9 @@ public:
 
   void print();
 
+  Node* getFirst();
 
+  Node* letterForward(Node* node, const char & c);
 
 
 
