@@ -85,25 +85,33 @@ void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizon
 
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
-  std::cout<<" la case à droite contient "<<static_cast<int>(board->getIndice(x,y+1))<<std::endl;
-  std::cout<<" la case à gauche contient "<<static_cast<int>(board->getIndice(x,y-1))<<std::endl;
-  if((x < 14) && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0) &&
-      (x > 0) && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)){
-        std::cout<<"je rentre dans le parcours"<<std::endl;
-        Spot* parcours = board->getSpot(board->getIndice(x,y-1));
+  std::cout << " la case à droite contient "
+            << static_cast<int>(board->getIndice(x,y+1))
+            << std::endl;
+  std::cout << " la case à gauche contient "
+            << static_cast<int>(board->getIndice(x,y-1))
+            << std::endl;
+  if( (x < 14)
+      && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0)
+      && (x > 0)
+      && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)) {
+        std::cout << "je rentre dans le parcours" << std::endl;
+        Spot* parcours = board->getSpot(board->getIndice(x, y-1));
         Node* gad_parcours = gad->getFirst();
         int i = 1;
-        /*while(parcours->getLetter() != 0){
-          std::cout<<" la case que je parcours contient : "<<parcours->getLetter()<<std::endl;
-          gad->letterForward(gad_parcours,parcours->getLetter());
-
-          parcours = board->getSpot(board->getIndice(x,y-1-i));
+        while(parcours->getLetter() != 0) {
+          std::cout <<" la case que je parcours contient : "
+                    << parcours->getLetter() << std::endl;
+          gad_parcours = gad_parcours->getNode(parcours->getLetter());
+          parcours = board->getSpot(board->getIndice(x, y-1-i));
           i++;
-        }*/
+        }
 
-        //gad->letterForward(gad_parcours,'+');
-        if(gad_parcours == nullptr) std::cout<<"gad_parcours est vide"<<std::endl;
-        for(int i = 0; i < 27; i++){
+        if(gad_parcours != nullptr)
+          gad_parcours = gad_parcours->getNode('+');
+        if(gad_parcours == nullptr)
+          std::cout<<"gad_parcours est vide"<<std::endl;
+        for(int i = 0; i < 27; i++) {
           if(gad_parcours->getNode(i) != nullptr){
             tab_horizontal[i] = gad->getLetter(i);
           }
@@ -112,6 +120,8 @@ void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizon
           }
         }
       }
+
+      //!\\ Pitié ! Indente ton code et respecte les espaces
 
 
 

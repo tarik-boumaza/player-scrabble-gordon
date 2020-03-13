@@ -40,8 +40,6 @@ public:
 
   Node* getFirst();
 
-  void letterForward(Node* node, const char & c);
-
 
 
 };

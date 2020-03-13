@@ -9,6 +9,7 @@
 
 int main() {
   Game g;
+  g.init();
   //Board b ;
 
   //std::cout << b << std::endl ;
