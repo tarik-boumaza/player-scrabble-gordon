@@ -11,7 +11,7 @@ class Gaddag;
 
 class Game {
 
-private:
+public:
   Board * board;
   Player * player;
   Bag * bag;

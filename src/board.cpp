@@ -95,8 +95,8 @@ unsigned char Board::getWordFactor(const unsigned int & id) const {
 }
 
 
-Spot Board::getSpot(unsigned char i){
-  return spots[i];
+Spot* Board::getSpot(unsigned char i){
+  return &spots[i];
 }
 
 std::list<unsigned char> Board::getAnchorSquares(){

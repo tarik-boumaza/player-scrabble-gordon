@@ -15,6 +15,7 @@ int main() {
 
   Game g;
   g.init();
+  g.printDico();
 
 
   cout << endl;

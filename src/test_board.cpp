@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "game.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -7,7 +8,8 @@
 
 
 int main() {
-  Board b ;
+  Game g;
+  //Board b ;
 
   //std::cout << b << std::endl ;
 
@@ -28,22 +30,31 @@ int main() {
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
 
-  b.load(ss) ;
+  g.board->load(ss) ;
 
-  std::cout << b << std::endl ;
-  std::list<unsigned char> tab (b.getAnchorSquares());
+  std::cout <<*(g.board)<< std::endl ;
+  //std::list<unsigned char> tab (b.getAnchorSquares());
   unsigned char i;
   int j = 0;
-  while(!tab.empty()) {
+  /*while(!tab.empty()) {
     i = tab.back();
     j++;
-    std::cout << static_cast<int>(i) / 15 <<","<< static_cast<int>(i) % 15 << std::endl;
+    //std::cout << static_cast<int>(i) / 15 <<","<< static_cast<int>(i) % 15 << std::endl;
+    std::cout<< static_cast<int>(i) <<std::endl;
     tab.pop_back();
 
+  }*/
+
+  char table[27];
+  g.getCrossSetsHorizontal(115,table);
+  for(int i =0; i<27;i++){
+    std::cout<<table[i]<<" ";
   }
-  std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
-  //b.spots[0].setLetter('H');
-  //std::cout << b << std::endl ;
+  std::cout<<std::endl;
+  //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
+  //g.board->getSpot(0)->setLetter('H');
+  /*if(g.board->getSpot(130)->getLetter() == 0)
+  std::cout << "la case est libre" << std::endl ;*/
 
   return 0 ;
 }

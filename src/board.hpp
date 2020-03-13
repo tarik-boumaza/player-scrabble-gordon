@@ -14,7 +14,7 @@ public:
   std::list<unsigned char> getAnchorSquares();
   std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n);
   unsigned char getIndice(const unsigned char & x,const unsigned char &y);
-  Spot getSpot(unsigned char i);
+  Spot* getSpot(unsigned char i);
 
 public:
 
