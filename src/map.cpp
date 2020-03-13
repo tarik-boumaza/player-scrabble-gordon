@@ -10,7 +10,7 @@ Node::Node() {
 }
 
 
-Node* Node::getNode(const unsigned short int & i) const {
+Node* Node::getNode(const unsigned short int & i)const{
   return tab[i];
 }
 

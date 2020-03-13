@@ -34,11 +34,10 @@ Node* Gaddag::getFirst(){
 }
 
 
-Node* Gaddag::letterForward(Node* node, const char & c){
+void Gaddag::letterForward(Node* node, const char & c){
   if (node != nullptr){
     node = node->getNode(c - 'A');
   }
-  return node;
 }
 
 char Gaddag::getLetter(const unsigned short int & n) const {

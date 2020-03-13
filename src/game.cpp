@@ -77,11 +77,11 @@ std::pair<unsigned short int, unsigned short int> Game::score
   return p;
 }
 
-std::list<unsigned char> Game::getCrossSetsHorizontal(const unsigned char & square){
+void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]){
   unsigned char x = board->getIndice(square).first;
   unsigned char y = board->getIndice(square).second;
 
-  // dans le cas où ma case n'est adjacente à qu'une seule case vide directement
+  // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
   if((x < 14) && (board->getSpot(board->getIndice(x+1,y)).getLetter() == 0) &&
       (x > 0) && (board->getSpot(board->getIndice(x-1,y)).getLetter() != 0)){
@@ -93,7 +93,16 @@ std::list<unsigned char> Game::getCrossSetsHorizontal(const unsigned char & squa
           parcours = board->getSpot(board->getIndice(x-1-i,y));
           i++;
         }
-
+        gad->letterForward(gad_parcours,'+');
+        for(int i = 0; i < 27; i++){
+          Node* res = gad_parcours->tab[i] ;
+          if(res != nullptr){
+            tab_horizontal[i] = gad->getLetter(i);
+          }
+          else{
+            tab_horizontal[i] = '/';
+          }
+        }
       }
 
 

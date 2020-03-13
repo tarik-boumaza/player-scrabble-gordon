@@ -18,7 +18,7 @@ public:
 
   Node();
 
-  Node* getNode(const unsigned short int & i) const;
+  Node* getNode(const unsigned short int & i)const;
 
   bool isFinal() const;
 
