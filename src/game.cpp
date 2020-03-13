@@ -1,4 +1,5 @@
 #include <iostream>
+#include "map.hpp"
 #include "board.hpp"
 #include "player.hpp"
 #include "bag.hpp"
@@ -95,7 +96,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizon
         }
         gad->letterForward(gad_parcours,'+');
         for(int i = 0; i < 27; i++){
-          Node* res = gad_parcours->tab[i] ;
+          Node* res = gad_parcours->getNode(i) ;
           if(res != nullptr){
             tab_horizontal[i] = gad->getLetter(i);
           }

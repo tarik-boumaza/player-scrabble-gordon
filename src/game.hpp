@@ -3,6 +3,7 @@
 #include <list>
 #include <utility>
 
+class Node;
 class Board;
 class Player;
 class Bag;
