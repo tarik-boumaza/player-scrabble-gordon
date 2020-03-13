@@ -15,8 +15,9 @@ int main() {
 
   Game g;
   g.init();
+  g.printDico();
 
-
+  
   cout << endl;
   t2 = clock();
   temps = (t2 - t1) / 1000;

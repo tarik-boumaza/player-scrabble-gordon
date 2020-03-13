@@ -18,6 +18,8 @@ public:
 
   Node();
 
+  ~Node();
+
   Node* getNode(const unsigned short int & i) const;
 
   bool isFinal() const;

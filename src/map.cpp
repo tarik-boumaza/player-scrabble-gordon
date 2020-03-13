@@ -10,6 +10,16 @@ Node::Node() {
 }
 
 
+Node::~Node() {
+  Node * temp = this;
+  for(unsigned int i = 0; i < 27; i++) {
+    delete temp->tab[i];
+    temp->tab[i] = nullptr;
+  }
+}
+
+
+
 Node* Node::getNode(const unsigned short int & i) const {
   return tab[i];
 }

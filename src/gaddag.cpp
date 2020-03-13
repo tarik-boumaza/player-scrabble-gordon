@@ -12,20 +12,7 @@ Gaddag::Gaddag() {
 
 
 Gaddag::~Gaddag() {
-  std::stack<Node*> s({first});
-  Node * current;
-  unsigned int i;
-  do {
-    current = s.top();
-    s.pop();
-
-    for(i = 0; i < 27; i++) {
-      if (current->getNode(i) != nullptr) {
-        s.push(current->getNode(i));
-      }
-    }
-    delete current;
-  } while (!s.empty());
+  delete first;
 }
 
 
