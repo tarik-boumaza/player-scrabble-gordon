@@ -15,7 +15,7 @@ int main() {
   //std::cout << b << std::endl ;
 
   std::stringstream ss ;
-  ss << "..............." << std::endl ;
+  ss << "ALPHA.ETIQUE..." << std::endl ;
   ss << ".QUE.CONQUE...." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -47,7 +47,7 @@ int main() {
   }*/
 
   char table[26];
-  g.getCrossSetsHorizontal(19,table);
+  g.getCrossSetsHorizontal(5,table);
   for(int i =0; i<26;i++){
     std::cout<<table[i]<<" ";
   }

@@ -84,28 +84,19 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
                                   char tab_horizontal[]) {
   unsigned char x = (board->getIndice(square)).first;
   unsigned char y = (board->getIndice(square)).second;
-  std::cout<<static_cast<int> (x) << " ; " <<static_cast<int>(y) << std::endl;
 
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
-  std::cout << " la case à droite contient "
-            << static_cast<int>(board->getIndice(x,y+1))
-            << std::endl;
-  std::cout << " la case à gauche contient "
-            << static_cast<int>(board->getIndice(x,y-1))
-            << std::endl;
 
   if( (((y < 14) && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0))
       || (y >= 14))
       && (y > 0)
       && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)) {
-        std::cout << "je rentre dans le parcours" << std::endl;
         Spot* parcours = board->getSpot(board->getIndice(x, y-1));
         Node* gad_parcours = gad->getFirst();
         int i = 1;
         while(parcours->getLetter() != 0) {
-          std::cout <<" la case que je parcours contient : "
-                    << parcours->getLetter() << std::endl;
+
           gad_parcours = gad_parcours->getNode(parcours->getLetter());
           parcours = board->getSpot(board->getIndice(x, y-1-i));
           i++;
@@ -113,8 +104,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
         if(gad_parcours != nullptr)
           gad_parcours = gad_parcours->getNode('+');
-        if(gad_parcours == nullptr)
-          std::cout<<"gad_parcours est vide"<<std::endl;
+
         for(int i = 0; i < 26; i++) {
           if(gad_parcours->getNode(i) != nullptr){
             tab_horizontal[i] = gad->getLetter(i);
@@ -132,7 +122,6 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           && (((y > 0) && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
           || (y <= 0))) {
             std::stack<char> pile;
-            std::cout << "je rentre dans le parcours" << std::endl;
             Spot* parcours = board->getSpot(board->getIndice(x, y+1));
             Node* gad_parcours = gad->getFirst();
             int i = 1;
@@ -143,7 +132,6 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             }
 
             while (!pile.empty()) {
-              std::cout<<"la pile contient"<< pile.top()<<std::endl;
               gad_parcours = gad_parcours->getNode(pile.top());
               pile.pop();
             }
@@ -161,19 +149,16 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           }
 
       else{
-        std::cout << "je rentre dans le else" << std::endl;
+
         Spot* parcours = board->getSpot(board->getIndice(x, y-1));
         Node* gad_parcours = gad->getFirst();
         int i = 1;
         while((parcours->getLetter() != 0) && (y - i >= 0)){
-          std::cout << "j'avance dans le gad avec la lettre : "
-                    << parcours->getLetter()
-                    << std::endl;
+
           gad_parcours = gad_parcours->getNode(parcours->getLetter());
           parcours = board->getSpot(board->getIndice(x, y-1-i));
           i++;
         }
-        std::cout << "je sors du while" << std::endl;
         gad_parcours = gad_parcours->getNode('+');
 
         Node * copy = gad_parcours;
@@ -185,7 +170,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             parcours = board->getSpot(board->getIndice(x,y+1));
             int j = 1;
             while( gad_coup_possible != nullptr
-                  && (parcours->getLetter() != 0 ) {
+                  && parcours->getLetter() != 0 ) {
               gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
               parcours = board->getSpot(board->getIndice(x, y+1+j));
               j++;
@@ -198,17 +183,13 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             }
             else {
               tab_horizontal[i] = '/';
-              std::cout << "je rentre dans le else 1 " << std::endl;
             }
           }
           else {
               tab_horizontal[i] = '/';
-              std::cout << "je rentre dans le else 2 " << std::endl;
           }
         }
 
       }
-
-
-
+      
 }
