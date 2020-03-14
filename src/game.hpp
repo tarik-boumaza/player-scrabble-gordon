@@ -43,7 +43,13 @@ public:
   std::pair<unsigned short int, unsigned short int> score
                             (const unsigned char & p, const unsigned char & l) const;
 
-  void getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]);
+  void getCrossSets(const unsigned char & square,
+                    char tab_horizontal[],
+                    char tab_vertical[]) const;
+
+  void getCrossSetsHorizontal(const unsigned char & x,
+                              const unsigned char & y,
+                              char tab_horizontal[]) const;
 
 
 

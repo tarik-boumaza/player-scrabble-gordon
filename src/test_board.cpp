@@ -46,10 +46,17 @@ int main() {
 
   }*/
 
-  char table[26];
-  g.getCrossSetsHorizontal(19,table);
+  char table_h[26];
+  char table_v[26];
+  g.getCrossSets(19,table_h,table_v);
+  std::cout << "CROSS SET HORIZONTAL" << std::endl;
   for(int i =0; i<26;i++){
-    std::cout<<table[i]<<" ";
+    std::cout<<table_h[i]<<" ";
+  }
+  std::cout<<std::endl;
+  std::cout << "CROSS SET VERTICAL" << std::endl;
+  for(int i =0; i<26;i++){
+    std::cout<<table_v[i]<<" ";
   }
   std::cout<<std::endl;
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;

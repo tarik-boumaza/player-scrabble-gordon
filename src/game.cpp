@@ -80,10 +80,22 @@ std::pair<unsigned short int, unsigned short int> Game::score
 }
 
 
-void Game::getCrossSetsHorizontal(const unsigned char & square,
-                                  char tab_horizontal[]) {
+void Game::getCrossSets(const unsigned char & square,
+                        char tab_horizontal[],
+                        char tab_vertical[]) const {
   unsigned char x = (board->getIndice(square)).first;
   unsigned char y = (board->getIndice(square)).second;
+
+  getCrossSetsHorizontal(x,y,tab_horizontal);
+  getCrossSetsHorizontal(y,x,tab_vertical);
+}
+
+
+
+void Game::getCrossSetsHorizontal(const unsigned char & x,
+                                  const unsigned char & y,
+                                  char tab_horizontal[]) const {
+
   std::cout<<static_cast<int> (x) << " ; " <<static_cast<int>(y) << std::endl;
 
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
@@ -177,6 +189,12 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
         gad_parcours = gad_parcours->getNode('+');
 
         Node * copy = gad_parcours;
+
+        for (unsigned int i = 0; i < 26; i++) {
+          if (copy->getNode(i) != nullptr)
+            std::cout << static_cast<char>('A' + i) << std::endl;
+        }
+
         for (int i = 0; i < 26; i++) {
           copy = gad_parcours;
           if (copy->getNode(i) != nullptr) {
@@ -185,7 +203,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             parcours = board->getSpot(board->getIndice(x,y+1));
             int j = 1;
             while( gad_coup_possible != nullptr
-                  && (parcours->getLetter() != 0 ) {
+                  && parcours->getLetter() != 0 ) {
               gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
               parcours = board->getSpot(board->getIndice(x, y+1+j));
               j++;
