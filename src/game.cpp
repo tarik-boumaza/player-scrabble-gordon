@@ -79,7 +79,9 @@ std::pair<unsigned short int, unsigned short int> Game::score
   return p;
 }
 
-void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]){
+
+void Game::getCrossSetsHorizontal(const unsigned char & square,
+                                  char tab_horizontal[]) {
   unsigned char x = (board->getIndice(square)).first;
   unsigned char y = (board->getIndice(square)).second;
   std::cout<<static_cast<int> (x) << " ; " <<static_cast<int>(y) << std::endl;
@@ -163,37 +165,43 @@ void Game::getCrossSetsHorizontal(const unsigned char & square, char tab_horizon
         Spot* parcours = board->getSpot(board->getIndice(x, y-1));
         Node* gad_parcours = gad->getFirst();
         int i = 1;
-        while((parcours->getLetter() != 0) && (y-1-i >= -1)){
-          std::cout << "j'avance dans le gad avec la lettre : "<<parcours->getLetter() << std::endl;
+        while((parcours->getLetter() != 0) && (y - i >= 0)){
+          std::cout << "j'avance dans le gad avec la lettre : "
+                    << parcours->getLetter()
+                    << std::endl;
           gad_parcours = gad_parcours->getNode(parcours->getLetter());
           parcours = board->getSpot(board->getIndice(x, y-1-i));
           i++;
         }
         std::cout << "je sors du while" << std::endl;
         gad_parcours = gad_parcours->getNode('+');
-        for (int i = 0; i < 26; i++){
-          if(gad_parcours->getNode(i) != nullptr){
 
-            gad_parcours = gad_parcours->getNode(i);
-            Node* gad_coup_possible = gad_parcours;
+        Node * copy = gad_parcours;
+        for (int i = 0; i < 26; i++) {
+          copy = gad_parcours;
+          if (copy->getNode(i) != nullptr) {
+            copy = copy->getNode(i);
+            Node* gad_coup_possible = copy;
             parcours = board->getSpot(board->getIndice(x,y+1));
             int j = 1;
-            while((gad_coup_possible != nullptr) && (parcours->getLetter() != 0)){
+            while( gad_coup_possible != nullptr
+                  && (parcours->getLetter() != 0 ) {
               gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
-              parcours = board->getSpot(board->getIndice(x,y+1+j));
+              parcours = board->getSpot(board->getIndice(x, y+1+j));
               j++;
             }
-            if((gad_coup_possible != nullptr)
-                && (parcours->getLetter() == 0)
-                && (gad_coup_possible->isFinal())){
+
+            if (gad_coup_possible != nullptr
+                && parcours->getLetter() == 0
+                && gad_coup_possible->isFinal() ) {
               tab_horizontal[i] = gad->getLetter(i);
             }
-            else{
+            else {
               tab_horizontal[i] = '/';
               std::cout << "je rentre dans le else 1 " << std::endl;
             }
           }
-          else{
+          else {
               tab_horizontal[i] = '/';
               std::cout << "je rentre dans le else 2 " << std::endl;
           }
