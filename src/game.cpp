@@ -96,17 +96,24 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
         Node* gad_parcours = gad->getFirst();
         int i = 1;
         while(parcours->getLetter() != 0) {
-
+          std::cout<<"la lettre est "<<parcours->getLetter()<<std::endl;
           gad_parcours = gad_parcours->getNode(parcours->getLetter());
           parcours = board->getSpot(board->getIndice(x, y-1-i));
           i++;
         }
 
-        if(gad_parcours != nullptr)
+        if(gad_parcours != nullptr){
           gad_parcours = gad_parcours->getNode('+');
+          std::cout<<"j'ajoute le + "<<std::endl;
+        }
+        Node* copy = gad_parcours;
+        for(int i = 0; i < 26; i++) {
+          if(copy->getNode(i) != nullptr)
+          std::cout<<static_cast<char>('A'+ i)<<std::endl;
+        }
 
         for(int i = 0; i < 26; i++) {
-          if(gad_parcours->getNode(i) != nullptr){
+          if(copy->getNode(i) != nullptr){
             tab_horizontal[i] = gad->getLetter(i);
           }
           else{
@@ -121,6 +128,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() != 0)
           && (((y > 0) && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
           || (y <= 0))) {
+            std::cout<<"je rentre dans le deuxième cas"<<std::endl;
             std::stack<char> pile;
             Spot* parcours = board->getSpot(board->getIndice(x, y+1));
             Node* gad_parcours = gad->getFirst();
@@ -191,5 +199,5 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
         }
 
       }
-      
+
 }
