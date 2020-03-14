@@ -16,7 +16,7 @@ int main() {
 
   std::stringstream ss ;
   ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".QUE.CONQUE...." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -46,9 +46,9 @@ int main() {
 
   }*/
 
-  char table[27];
-  g.getCrossSetsHorizontal(115,table);
-  for(int i =0; i<27;i++){
+  char table[26];
+  g.getCrossSetsHorizontal(19,table);
+  for(int i =0; i<26;i++){
     std::cout<<table[i]<<" ";
   }
   std::cout<<std::endl;
