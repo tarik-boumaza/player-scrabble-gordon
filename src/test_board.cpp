@@ -16,17 +16,17 @@ int main() {
 
   std::stringstream ss ;
   ss << "ALPHA.ETIQUE..." << std::endl ;
-  ss << ".QUE.CONQUE...." << std::endl ;
+  ss << "L.............." << std::endl ;
+  ss << "P.............." << std::endl ;
+  ss << "H.............." << std::endl ;
+  ss << "A.............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "....PROJET....." << std::endl ;
-  ss << ".......O......." << std::endl ;
-  ss << ".......U......." << std::endl ;
-  ss << ".......E......." << std::endl ;
-  ss << ".......U......." << std::endl ;
+  ss << "E.............." << std::endl ;
+  ss << "T...PROJET....." << std::endl ;
+  ss << "I......O......." << std::endl ;
+  ss << "Q......U......." << std::endl ;
+  ss << "U......E......." << std::endl ;
+  ss << "E......U......." << std::endl ;
   ss << ".....SCRABBLE.." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -47,7 +47,7 @@ int main() {
   }*/
 
   char table[26];
-  g.getCrossSetsHorizontal(12,table);
+  g.getCrossSetsVertical(75,table);
   for(int i =0; i<26;i++){
     std::cout<<table[i]<<" ";
   }

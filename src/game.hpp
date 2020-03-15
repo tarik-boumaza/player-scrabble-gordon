@@ -45,6 +45,8 @@ public:
 
   void getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]);
 
+  void getCrossSetsVertical(const unsigned char & square, char tab_horizontal[]);
+
 
 
 

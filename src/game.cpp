@@ -87,117 +87,291 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
+  if(((board->getSpot(board->getIndice(x,y)))->getLetter() == 0)){
+    if( (((y < 14) && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0))
+        || (y >= 14))
+        && (y > 0)
+        && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)) {
 
-  if( (((y < 14) && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0))
-      || (y >= 14))
-      && (y > 0)
-      && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)) {
-        Spot* parcours = board->getSpot(board->getIndice(x, y-1));
-        Node* gad_parcours = gad->getFirst();
-        int i = 1;
-        while(parcours->getLetter() != 0) {
-          std::cout<<"la lettre est "<<parcours->getLetter()<<std::endl;
-          gad_parcours = gad_parcours->getNode(parcours->getLetter());
-          parcours = board->getSpot(board->getIndice(x, y-1-i));
-          i++;
-        }
+          Spot* parcours = board->getSpot(board->getIndice(x, y-1));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
 
-        if(gad_parcours != nullptr){
-          gad_parcours = gad_parcours->getNode('+');
-          std::cout<<"j'ajoute le + "<<std::endl;
-        }
-        Node* copy = gad_parcours;
-        for(int i = 0; i < 26; i++) {
-          if(copy->getNode(i) != nullptr)
-          std::cout<<static_cast<char>('A'+ i)<<std::endl;
-        }
-
-        for(int i = 0; i < 26; i++) {
-          if(copy->getNode(i) != nullptr){
-            tab_horizontal[i] = gad->getLetter(i);
+          while((parcours->getLetter() != 0)
+                && (y - i >= 0) ) {
+            std::cout<<"la lettre est "<<parcours->getLetter()<<std::endl;
+            gad_parcours = gad_parcours->getNode(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x, y-1-i));
+            i++;
           }
-          else{
-            tab_horizontal[i] = '/';
-          }
-        }
-      }
 
-      // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-      // à droite
-      if( (y < 14)
+          if(gad_parcours != nullptr)
+            gad_parcours = gad_parcours->getNode('+');
+
+          for(int i = 0; i < 26; i++) {
+            if(gad_parcours->getNode(i) != nullptr){
+              tab_horizontal[i] = gad->getLetter(i);
+            }
+            else
+            {
+              tab_horizontal[i] = '/';
+            }
+          }
+
+    }
+
+    // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
+    // à droite
+    else if( (y < 14)
           && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() != 0)
-          && (((y > 0) && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
+          && (((y > 0)
+          && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
           || (y <= 0))) {
-            std::cout<<"je rentre dans le deuxième cas"<<std::endl;
-            std::stack<char> pile;
-            Spot* parcours = board->getSpot(board->getIndice(x, y+1));
-            Node* gad_parcours = gad->getFirst();
-            int i = 1;
-            while(parcours->getLetter() != 0) {
-              pile.push(parcours->getLetter());
-              parcours = board->getSpot(board->getIndice(x, y+1+i));
-              i++;
-            }
 
-            while (!pile.empty()) {
-              gad_parcours = gad_parcours->getNode(pile.top());
-              pile.pop();
-            }
+          std::cout<<"je rentre dans le deuxième cas"<<std::endl;
+          std::stack<char> pile;
+          Spot* parcours = board->getSpot(board->getIndice(x, y+1));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
 
-            if(gad_parcours == nullptr)
-              std::cout<<"gad_parcours est vide"<<std::endl;
-            for(int i = 0; i < 26; i++) {
-              if(gad_parcours->getNode(i) != nullptr){
+          while((parcours->getLetter() != 0)
+                && (y + i >= 0) ) {
+            pile.push(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x, y+1+i));
+            i++;
+          }
+
+          while (!pile.empty()) {
+            gad_parcours = gad_parcours->getNode(pile.top());
+            pile.pop();
+          }
+
+          for(int i = 0; i < 26; i++) {
+            if(gad_parcours->getNode(i) != nullptr){
+              tab_horizontal[i] = gad->getLetter(i);
+            }
+            else
+            {
+              tab_horizontal[i] = '/';
+            }
+          }
+    }
+
+    else if ((y < 14)
+            && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() != 0)
+            && (y > 0)
+            && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)){
+
+          Spot* parcours = board->getSpot(board->getIndice(x, y-1));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
+
+          while((parcours->getLetter() != 0)
+                && (y - i >= 0)){
+            gad_parcours = gad_parcours->getNode(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x, y-1-i));
+            i++;
+          }
+
+          gad_parcours = gad_parcours->getNode('+');
+          Node * copy = gad_parcours;
+
+          for (int i = 0; i < 26; i++) {
+
+            copy = gad_parcours;
+
+            if (copy->getNode(i) != nullptr) {
+
+              copy = copy->getNode(i);
+              Node* gad_coup_possible = copy;
+              parcours = board->getSpot(board->getIndice(x,y+1));
+              int j = 1;
+
+              while( gad_coup_possible != nullptr
+                    && parcours->getLetter() != 0 ) {
+                gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
+                parcours = board->getSpot(board->getIndice(x, y+1+j));
+                j++;
+              }
+
+              if (gad_coup_possible != nullptr
+                  && parcours->getLetter() == 0
+                  && gad_coup_possible->isFinal() ) {
                 tab_horizontal[i] = gad->getLetter(i);
               }
-              else{
+              else
+              {
                 tab_horizontal[i] = '/';
               }
             }
+
+            else
+            {
+                tab_horizontal[i] = '/';
+            }
+          }
+    }
+    else
+    {
+      for(int i = 0; i < 26; i++){
+        tab_horizontal[i] = gad->getLetter(i);
+      }
+    }
+
+  }
+  else
+  {
+    for(int i = 0; i < 26; i++){
+      tab_horizontal[i] = '/';
+    }
+  }
+
+}
+
+void Game::getCrossSetsVertical(const unsigned char & square,
+                                  char tab_horizontal[]) {
+  unsigned char x = (board->getIndice(square)).first;
+  unsigned char y = (board->getIndice(square)).second;
+
+  // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
+  // à gauche
+  if (((board->getSpot(board->getIndice(x,y)))->getLetter() == 0)){
+    if( (((x < 14) && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() == 0))
+        || (x >= 14))
+        && (x > 0)
+        && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() != 0)) {
+
+          Spot* parcours = board->getSpot(board->getIndice(x-1, y));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
+
+          while((parcours->getLetter() != 0)
+                && (x - i >= 0) ) {
+            std::cout<<"la lettre est "<<parcours->getLetter()<<std::endl;
+            gad_parcours = gad_parcours->getNode(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x-1-i, y));
+            i++;
           }
 
-      else{
+          if(gad_parcours != nullptr)
+            gad_parcours = gad_parcours->getNode('+');
 
-        Spot* parcours = board->getSpot(board->getIndice(x, y-1));
-        Node* gad_parcours = gad->getFirst();
-        int i = 1;
-        while((parcours->getLetter() != 0) && (y - i >= 0)){
+          for(int i = 0; i < 26; i++) {
 
-          gad_parcours = gad_parcours->getNode(parcours->getLetter());
-          parcours = board->getSpot(board->getIndice(x, y-1-i));
-          i++;
-        }
-        gad_parcours = gad_parcours->getNode('+');
-
-        Node * copy = gad_parcours;
-        for (int i = 0; i < 26; i++) {
-          copy = gad_parcours;
-          if (copy->getNode(i) != nullptr) {
-            copy = copy->getNode(i);
-            Node* gad_coup_possible = copy;
-            parcours = board->getSpot(board->getIndice(x,y+1));
-            int j = 1;
-            while( gad_coup_possible != nullptr
-                  && parcours->getLetter() != 0 ) {
-              gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
-              parcours = board->getSpot(board->getIndice(x, y+1+j));
-              j++;
-            }
-
-            if (gad_coup_possible != nullptr
-                && parcours->getLetter() == 0
-                && gad_coup_possible->isFinal() ) {
+            if(gad_parcours->getNode(i) != nullptr){
               tab_horizontal[i] = gad->getLetter(i);
             }
-            else {
+            else
+            {
               tab_horizontal[i] = '/';
             }
           }
-          else {
-              tab_horizontal[i] = '/';
+    }
+
+        // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
+        // à droite
+    else if( (x < 14)
+          && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() != 0)
+          && (((x > 0)
+          && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() == 0))
+          || (x <= 0))) {
+
+          std::cout<<"je rentre dans le deuxième cas"<<std::endl;
+          std::stack<char> pile;
+          Spot* parcours = board->getSpot(board->getIndice(x+1, y));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
+
+          while((parcours->getLetter() != 0)
+                && (x + i >= 0) ) {
+            pile.push(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x+1+i, y));
+            i++;
           }
-        }
 
+          while (!pile.empty()) {
+            gad_parcours = gad_parcours->getNode(pile.top());
+            pile.pop();
+          }
+
+          for(int i = 0; i < 26; i++) {
+            if(gad_parcours->getNode(i) != nullptr){
+              tab_horizontal[i] = gad->getLetter(i);
+            }
+            else
+            {
+              tab_horizontal[i] = '/';
+            }
+          }
+    }
+
+    else if ((x < 14)
+            && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() != 0)
+            && (x > 0)
+            && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() != 0)){
+
+          Spot* parcours = board->getSpot(board->getIndice(x-1, y));
+          Node* gad_parcours = gad->getFirst();
+          int i = 1;
+
+          while((parcours->getLetter() != 0)
+                && (x - i >= 0)){
+            gad_parcours = gad_parcours->getNode(parcours->getLetter());
+            parcours = board->getSpot(board->getIndice(x-1-i, y));
+            i++;
+          }
+
+          gad_parcours = gad_parcours->getNode('+');
+          Node * copy = gad_parcours;
+
+          for (int i = 0; i < 26; i++) {
+
+            copy = gad_parcours;
+
+            if (copy->getNode(i) != nullptr) {
+
+              copy = copy->getNode(i);
+              Node* gad_coup_possible = copy;
+              parcours = board->getSpot(board->getIndice(x+1,y));
+              int j = 1;
+
+              while( gad_coup_possible != nullptr
+                    && parcours->getLetter() != 0 ) {
+                gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
+                parcours = board->getSpot(board->getIndice(x+1+j, y));
+                j++;
+              }
+
+              if (gad_coup_possible != nullptr
+                  && parcours->getLetter() == 0
+                  && gad_coup_possible->isFinal() ) {
+
+                tab_horizontal[i] = gad->getLetter(i);
+              }
+              else
+              {
+                tab_horizontal[i] = '/';
+              }
+
+            }
+            else
+            {
+                tab_horizontal[i] = '/';
+            }
+          }
+    }
+    else
+    {
+      for(int i = 0; i < 26; i++){
+        tab_horizontal[i] = gad->getLetter(i);
       }
+    }
 
+  }
+  else
+  {
+    for(int i = 0; i < 26; i++){
+      tab_horizontal[i] = '/';
+    }
+  }
 }
