@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <utility>
+#include <iostream>
 
 //default initialization
 Board::Board() {
@@ -80,17 +81,17 @@ std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
   return std::pair<unsigned char,unsigned char>(x,y);
 }
 
-unsigned char Board::getIndice(const unsigned char & x,const unsigned char &y){
+unsigned short int Board::getIndice(const unsigned char & x,const unsigned char &y){
   return (x * 15 + y);
 }
 
 
-unsigned char Board::getLetterFactor(const unsigned int & id) const {
+unsigned short int Board::getLetterFactor(const unsigned char & id) const {
   return spots[id].getLetterFactor();
 }
 
 
-unsigned char Board::getWordFactor(const unsigned int & id) const {
+unsigned short int Board::getWordFactor(const unsigned char & id) const {
   return spots[id].getWordFactor();
 }
 

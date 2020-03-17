@@ -3,6 +3,9 @@
 #include <list>
 #include <utility>
 
+typedef std::pair<unsigned short int, unsigned short int> couple;
+
+
 class Node;
 class Board;
 class Player;
@@ -26,22 +29,23 @@ public:
 
   Game(const char & nb_players);
 
+  void draw(const unsigned short int & n = 1);
+
   void init();
 
   void printDico();
 
-  void printHands() const;
+  void printHand() const;
 
   void printBag() const;
 
-  void draw();
-
   bool isFinished() const;
 
-  void useLetter(const std::list<unsigned int> & l);
+  void useLetter(const char & c);
 
-  std::pair<unsigned short int, unsigned short int> score
-                            (const unsigned char & p, const unsigned char & l) const;
+  couple score (const couple & c) const;
+
+  unsigned short int score(const std::list<couple> & l) const;
 
   void getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]);
 

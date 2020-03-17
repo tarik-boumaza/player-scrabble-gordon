@@ -13,7 +13,7 @@ class Board {
 public:
   std::list<unsigned char> getAnchorSquares();
   std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n);
-  unsigned char getIndice(const unsigned char & x,const unsigned char &y);
+  unsigned short int getIndice(const unsigned char & x,const unsigned char &y);
   Spot* getSpot(unsigned char i);
 
 public:
@@ -28,9 +28,9 @@ public:
   Spot operator()(unsigned char l, unsigned char c) const ;
   Spot& operator()(unsigned char l, unsigned char c) ;
 
-  unsigned char getWordFactor(const unsigned int & id) const;
+  unsigned short int getWordFactor(const unsigned char & id) const;
 
-  unsigned char getLetterFactor(const unsigned int & id) const;
+  unsigned short int getLetterFactor(const unsigned char & id) const;
 
 
 private:

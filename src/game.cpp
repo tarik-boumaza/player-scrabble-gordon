@@ -8,6 +8,7 @@
 #include <stack>
 
 
+
 Game::Game() {
   bag = new Bag("./data/letters.txt","./data/points.txt");
   player = new Player;
@@ -24,10 +25,17 @@ Game::~Game() {
 }
 
 
-void Game::init() {
-  for (unsigned int i = 0;  i < 7; i++) {
-    player->setLetter(i,bag->randomDraw());
+void Game::draw(const unsigned short int & n) {
+  unsigned int i = 0;
+  while (i < n && !isFinished() ) {
+    player->setLetter(bag->randomDraw());
+    i++;
   }
+}
+
+
+void Game::init() {
+  draw(7);
   gad->addDictionnary();
 }
 
@@ -37,7 +45,7 @@ void Game::printDico() {
 }
 
 
-void Game::printHands() const {
+void Game::printHand() const {
   player->printHand();
 }
 
@@ -47,36 +55,44 @@ void Game::printBag() const {
 }
 
 
-void Game::draw() {
-  unsigned int i = 0;
-  while (i < 7 && !isFinished() ) {
-    if (player->getLetter(i) == '/')
-      player->setLetter(i,bag->randomDraw());
-    i++;
-  }
-}
-
-
 bool Game::isFinished() const {
   return bag->isEmpty();
 }
 
 
-void Game::useLetter(const std::list<unsigned int> & l) {
-  std::list<unsigned int> copy(l);
-  while(!copy.empty()) {
-    player->setLetter(copy.back(),'/');
-    copy.pop_back();
-  }
+void Game::useLetter(const char & c) {
+  player->removeLetter(c);
 }
 
 
-std::pair<unsigned short int, unsigned short int> Game::score
-                          (const unsigned char & pos, const unsigned char & l) const {
-  unsigned short int res = bag->getPoints(l);
-  res *= board->getLetterFactor(pos);
-  std::pair<unsigned short int, unsigned short int> p (res,board->getWordFactor(pos));
+//c.first représente la case du plateau
+//c.second représente la lettre jouée sur la case
+couple Game::score (const couple & c) const {
+  unsigned short int res = bag->getPoints(c.second);
+  res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
+  couple p (res,static_cast<unsigned short int>(board->getWordFactor(c.first)));
   return p;
+  //p.first est le score que donne la lettre multiplié par le letter_factor
+  //p.second est le word_factor
+}
+
+
+//couple.first représente la case du plateau
+//couple.second représente la lettre jouée sur la case
+//l contient ainsi l'ensemble des lettres jouées ainsi que leurs positions
+unsigned short int Game::score(const std::list<couple> & l) const {
+  unsigned short int res = 0;
+  unsigned short int wf = 1;
+  std::list<couple> copy (l);
+  couple temp;
+  while(!copy.empty()) {
+    temp = score(copy.back()); //temp.first est le score, temp.second est le word_factor
+    res += temp.first;
+    if (temp.second > wf)
+      wf = temp.second;
+    copy.pop_back();
+  }
+  return (wf * res);
 }
 
 

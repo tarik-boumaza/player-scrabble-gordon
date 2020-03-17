@@ -5,33 +5,58 @@
 
 
 Player:: Player() {
-  for (unsigned int i = 0; i < 7; i++) {
-    this->hand[i] = '/';
+  for (unsigned short int i = 0; i < 26; i++) {
+    this->hand[i] = 0;
   }
 }
 
 
-Player:: Player(const char h[7]) {
-  for(unsigned int i = 0; i < 7; i++) {
+Player:: Player(const short unsigned int h[26]) {
+  for(unsigned short int i = 0; i < 26; i++) {
     this->hand[i] = h[i];
   }
 }
 
 
-char Player::getLetter(const unsigned short int & _n) const {
-  if (_n < 7)
-    return hand[_n];
-  return '/';
+unsigned short int Player::getLetter(const char & c) const {
+  if (c < 26)
+    return hand[c];
+  if (c >= 'A' && c <= 'Z')
+    return hand[c - 'A'];
+  std::cerr << "Case non accessible... Sortie" << std::endl;
+  exit(EXIT_FAILURE);
 }
 
 
-void Player::setLetter(const unsigned short int & n, const char & c) {
-  hand[n] = c;
+void Player::setLetter(const char & c) {
+  if (c < 26)
+    hand[c]++;
+  else
+    hand[c - 'A']++;
+}
+
+
+void Player::removeLetter(const char & c) {
+  if (c < 26)
+    if (hand[c] > 0)
+      hand[c]--;
+    else {
+      std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  else
+    if (hand[c - 'A'] > 0)
+      hand[c - 'A']--;
+    else {
+      std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
+      exit(EXIT_FAILURE);
+    }
 }
 
 
 void Player::printHand() const {
-  for(unsigned int i = 0; i < 7; i++) {
-    std::cout << hand[i] << std::flush;
+  for(unsigned short int i = 0; i < 26; i++) {
+    std::cout << hand[i] << " " << std::flush;
   }
+  std::cout << std::endl;
 }

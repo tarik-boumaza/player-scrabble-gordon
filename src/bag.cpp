@@ -49,8 +49,23 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
 }
 
 
+unsigned short int Bag::getPoints(const unsigned char & c) const {
+  if (static_cast<int>(c) < 26)
+    return points[c];
+  if (c >= 'A' && c <= 'Z')
+    return points[c - 'A'];
+  std::cerr << "Case non déclarée" << std::endl;
+  exit(EXIT_FAILURE);
+}
+
+
 unsigned short int Bag::getPoints(const unsigned short int & c) const {
-  return points[c];
+  if (c < 26)
+    return points[c];
+  if (c >= 'A' && c <= 'Z')
+    return points[c - 'A'];
+  std::cerr << "Case non déclarée" << std::endl;
+  exit(EXIT_FAILURE);
 }
 
 
@@ -82,15 +97,15 @@ Bag& Bag::operator=(const Bag & _bag) {
 
 
 void Bag::printLetters() const {
-  for(unsigned int i = 0; i < nb_letters; i++) {
-    std::cout << letters[i] << std::endl;
+  for(unsigned short int i = 0; i < nb_letters; i++) {
+    std::cout << letters[i] << " " << std::flush;
   }
-  std::cout << "Nombre total de lettres " << nb_letters << std::endl;
+  std::cout << std::endl << "Nombre total de lettres " << nb_letters << std::endl;
 }
 
 
 void Bag::printPoints() const {
   for(unsigned int i = 0; i < 26; i++) {
-    std::cout << 'A' + i << " : " << points[i] << std::endl;
+    std::cout << static_cast<char>('A' + i) << " : " << points[i] << std::endl;
   }
 }

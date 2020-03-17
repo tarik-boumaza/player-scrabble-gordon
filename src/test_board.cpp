@@ -10,12 +10,9 @@
 int main() {
   Game g;
   g.init();
-  //Board b ;
-
-  //std::cout << b << std::endl ;
 
   std::stringstream ss ;
-  ss << "ALPHA.ETIQUE..." << std::endl ;
+  ss << "ALPHABETIQUE..." << std::endl ;
   ss << "L.............." << std::endl ;
   ss << "P.............." << std::endl ;
   ss << "H.............." << std::endl ;
@@ -37,6 +34,9 @@ int main() {
   //std::list<unsigned char> tab (b.getAnchorSquares());
   unsigned char i;
   int j = 0;
+
+
+  //////////////////////
   /*while(!tab.empty()) {
     i = tab.back();
     j++;
@@ -45,6 +45,8 @@ int main() {
     tab.pop_back();
 
   }*/
+  //////////////////////
+
 
   char table[26];
   g.getCrossSetsVertical(75,table);
@@ -52,10 +54,15 @@ int main() {
     std::cout<<table[i]<<" ";
   }
   std::cout<<std::endl;
+
+
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
   //g.board->getSpot(0)->setLetter('H');
+
+  ////////////////////
   /*if(g.board->getSpot(130)->getLetter() == 0)
   std::cout << "la case est libre" << std::endl ;*/
+  ////////////////////
 
   return 0 ;
 }
