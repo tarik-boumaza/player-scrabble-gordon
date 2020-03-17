@@ -38,7 +38,7 @@ public:
 
   void print();
 
-
+  Node* getFirst();
 
 
 

@@ -3,6 +3,7 @@
 #include <list>
 #include <utility>
 
+class Node;
 class Board;
 class Player;
 class Bag;
@@ -10,7 +11,7 @@ class Gaddag;
 
 class Game {
 
-private:
+public:
   Board * board;
   Player * player;
   Bag * bag;
@@ -42,6 +43,9 @@ public:
   std::pair<unsigned short int, unsigned short int> score
                             (const unsigned char & p, const unsigned char & l) const;
 
+  void getCrossSetsHorizontal(const unsigned char & square, char tab_horizontal[]);
+
+  void getCrossSetsVertical(const unsigned char & square, char tab_horizontal[]);
 
 
 

@@ -16,6 +16,11 @@ Gaddag::~Gaddag() {
 }
 
 
+Node* Gaddag::getFirst(){
+  return first;
+}
+
+
 char Gaddag::getLetter(const unsigned short int & n) const {
   if (n < 26)
     return ('A' + n);

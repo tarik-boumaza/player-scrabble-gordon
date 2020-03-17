@@ -74,13 +74,13 @@ Board::Board() {
 }
 
 
-static std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n){
+std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
   unsigned char x = n / 15;
   unsigned char y = n % 15;
   return std::pair<unsigned char,unsigned char>(x,y);
 }
 
-static unsigned char getIndice(const unsigned char & x,const unsigned char &y){
+unsigned char Board::getIndice(const unsigned char & x,const unsigned char &y){
   return (x * 15 + y);
 }
 
@@ -94,6 +94,10 @@ unsigned char Board::getWordFactor(const unsigned int & id) const {
   return spots[id].getWordFactor();
 }
 
+
+Spot* Board::getSpot(unsigned char i){
+  return &spots[i];
+}
 
 std::list<unsigned char> Board::getAnchorSquares(){
   std::list<unsigned char> anchor_squares;

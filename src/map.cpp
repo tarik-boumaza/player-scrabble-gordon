@@ -21,14 +21,20 @@ Node::~Node() {
 
 
 Node* Node::getNode(const unsigned short int & i) const {
-  return tab[i];
+  if (i < 27)
+    return tab[i];
+  if (i == static_cast<unsigned int>('+'))
+    return tab[26];
+  if (i - 'A' < 26)
+    return tab[i - 'A'];
+
+  return nullptr;
 }
 
 
 bool Node::isFinal() const {
   return is_final;
 }
-
 
 
 Node* Node::addNode(const bool & b) {
