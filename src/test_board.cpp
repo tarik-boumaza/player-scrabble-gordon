@@ -49,7 +49,7 @@ int main() {
 
 
   char table[26];
-  g.getCrossSetsVertical(75,table);
+  g.getCrossSetsHorizontal(115,table,true);
   for(int i =0; i<26;i++){
     std::cout<<table[i]<<" ";
   }
