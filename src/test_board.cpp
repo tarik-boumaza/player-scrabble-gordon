@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "game.hpp"
+#include "gaddag.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -29,11 +30,14 @@ int main() {
   ss << "..............." << std::endl ;
 
   g.board->load(ss) ;
-
-  std::cout <<*(g.board)<< std::endl ;
+  std::cout << "Tarikounet mégnon" << std::endl ;
+  Board b(*(g.board));
+  std::cout << "Tarikounet mégnon" << std::endl ;
+  //std::cout <<*(g.board)<< std::endl ;
+  std::cout << b << std::endl ;
+  //std::cout << "Tarikounet mégnon" << std::endl ;
   //std::list<unsigned char> tab (b.getAnchorSquares());
-  unsigned char i;
-  int j = 0;
+
 
 
   //////////////////////
@@ -48,13 +52,19 @@ int main() {
   //////////////////////
 
 
-  char table[26];
-  g.getCrossSetsHorizontal(115,table,true);
-  for(int i =0; i<26;i++){
-    std::cout<<table[i]<<" ";
+  /*unsigned int table[26];
+  //g.getCrossSetsHorizontal(115,table,true);
+  for(unsigned int i =0; i<26;i++){
+    table[i] = 0;
   }
+  table[1]=1;
+  table[18] = 1;
+  table[4]=1;
   std::cout<<std::endl;
-
+  std::string word = " ";
+  Node* parcours = g.gad->getFirst();
+  g.Gen(180,0,word,table,parcours,0);
+  std::cout<<word<<std::endl;*/
 
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
   //g.board->getSpot(0)->setLetter('H');

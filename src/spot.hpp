@@ -31,6 +31,8 @@ public:
 
   void setLetter(const char & c);
 
+  Spot& operator = (const Spot& s);
+
 } ;
 
 //display of the spot contents

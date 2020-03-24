@@ -25,6 +25,8 @@ public:
   unsigned int apply_letter(unsigned int score) const ;
   unsigned int apply_word(unsigned int score) const ;
 
+  //affectation operator
+  Bonus& operator = (const Bonus & b);
 
 private:
   //stored factors

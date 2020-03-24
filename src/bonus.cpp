@@ -19,3 +19,10 @@ unsigned int Bonus::apply_letter(unsigned int score) const {
 unsigned int Bonus::apply_word(unsigned int score) const {
   return word_factor * score ;
 }
+
+
+Bonus& Bonus::operator = (const Bonus & b){
+  this->letter_factor = b.letter_factor;
+  this->word_factor = b.word_factor;
+  return *this;
+}

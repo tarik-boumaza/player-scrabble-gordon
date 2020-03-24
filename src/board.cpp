@@ -75,6 +75,15 @@ Board::Board() {
 }
 
 
+Board::Board(const Board& copy){
+  for(int i = 0; i < 255; i++){
+    std::cout<<"je suis à "<< i << std::endl;
+    this->spots[i] = copy.spots[i];
+
+  }
+}
+
+
 std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
   unsigned char x = n / 15;
   unsigned char y = n % 15;

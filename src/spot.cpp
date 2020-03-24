@@ -20,7 +20,11 @@ void Spot::setLetter(const char & c) {
   letter = c;
 }
 
-
+Spot& Spot::operator= (const Spot& s){
+  this->letter = s.letter;
+  this->bonus = s.bonus;
+  return *this;
+}
 
 //display of the spot contents
 std::ostream& operator<<(std::ostream& out, Spot s) {
