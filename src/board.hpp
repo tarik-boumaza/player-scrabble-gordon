@@ -32,6 +32,8 @@ public:
 
   unsigned short int getLetterFactor(const unsigned char & id) const;
 
+  Board& operator = (const Board& b);
+
 
 private:
   Spot spots[225] ;

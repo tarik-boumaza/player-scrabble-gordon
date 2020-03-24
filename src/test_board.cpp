@@ -52,20 +52,21 @@ int main() {
   //////////////////////
 
 
-  /*unsigned int table[26];
+  unsigned int table[26];
   //g.getCrossSetsHorizontal(115,table,true);
   for(unsigned int i =0; i<26;i++){
     table[i] = 0;
   }
+  table[0] = 1;
   table[1]=1;
-  table[18] = 1;
+  table[18] = 2;
   table[4]=1;
   std::cout<<std::endl;
-  std::string word = " ";
+  std::string word = "";
   Node* parcours = g.gad->getFirst();
-  g.Gen(180,0,word,table,parcours,0);
-  std::cout<<word<<std::endl;*/
-
+  g.Gen(115,0,word,table,parcours,1,&b);
+  std::cout<<word<<std::endl;
+  //std::cout <<*(g.board)<< std::endl ;
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
   //g.board->getSpot(0)->setLetter('H');
 

@@ -17,6 +17,14 @@ Game::Game() {
 }
 
 
+Game::Game(const Board& b){
+  bag = new Bag("./data/letters.txt","./data/points.txt");
+  player = new Player;
+  gad = new Gaddag;
+  board = new Board(b);
+}
+
+
 Game::~Game() {
   delete board;
   delete player;
@@ -421,11 +429,12 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
-         unsigned int rack[], Node* arc, unsigned int direction){
+         unsigned int rack[], Node* arc, unsigned int direction, Board* b){
 
-  unsigned char x = (board->getIndice(square)).first;
-  unsigned char y = (board->getIndice(square)).second;
-  char letter = (board->getSpot(square))->getLetter();
+  unsigned char x = (b->getIndice(square)).first;
+  unsigned char y = (b->getIndice(square)).second;
+  char letter = (b->getSpot(square))->getLetter();
+
   //std::cout<<"je rentre dans la fontion Gen"<<std::endl;
   // si la case sur laquelle je suis n'est pas vide, j'avance dans le gaddag
   // en lisant la lettre qu'elle contient déja
@@ -433,21 +442,22 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
   {
     std::cout<<"la case contient une lettre "<<std::endl;
     Node* next_arc = arc->getNode(letter);
-    GoOn(square,pos,letter,word,rack,next_arc,arc,direction);
+    GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b);
 
   }
   else
   {
     char tab_horizontal[26];
     char tab_vertical[26];
+    *board = *b;
     std::cout<<"la case ne contient pas de lettre  "<<std::endl;
     // si direction = 1 -> je me déplace horizontalement, et donc les cross sets
     // verticals doivent être des lettres finales
     if(direction == 1){
       getCrossSetsHorizontal(square,tab_horizontal, false);
       getCrossSetsVertical(square,tab_vertical, true);
-      //std::cout<<"le getCrossSetsHorizontal "<<std::endl;
-      /*for (int i = 0; i < 26; i++){
+      std::cout<<"le getCrossSetsHorizontal "<<std::endl;
+      for (int i = 0; i < 26; i++){
         std::cout<<tab_horizontal[i]<< " ";
       }
       std::cout<<std::endl;
@@ -455,7 +465,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       for (int i = 0; i < 26; i++){
         std::cout<<tab_vertical[i]<< " ";
       }
-      std::cout<<std::endl;*/
+      std::cout<<std::endl;
     }
     // sinon je me déplace verticalement et donc les cross sets horizontales
     // doivent être des lettres finales
@@ -463,7 +473,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     {
       getCrossSetsHorizontal(square,tab_horizontal, true);
       getCrossSetsVertical(square,tab_vertical, false);
-      std::cout<<"le getCrossSetsVertical "<<std::endl;
+      /*std::cout<<"le getCrossSetsVertical "<<std::endl;
       for (int i = 0; i < 26; i++){
         std::cout<<tab_vertical[i]<< " ";
       }
@@ -472,23 +482,24 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       for (int i = 0; i < 26; i++){
         std::cout<<tab_horizontal[i]<< " ";
       }
-      std::cout<<std::endl;
+      std::cout<<std::endl;*/
     }
 
     // pour chaque lettre que possède le jour, jouable sur cette case, j'essaye
     // de génerer des mots
     for(int i = 0; i < 26; i++){
-      std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
+      /*std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
       std::cout<<"le rack contient "<< rack[i]<<std::endl;
       std::cout<<"tab horizontale contitent "<< tab_horizontal[i]<<std::endl;
-      std::cout<<"tab_vertical contient  "<< tab_vertical[i]<<std::endl;
+      std::cout<<"tab_vertical contient  "<< tab_vertical[i]<<std::endl;*/
       if((rack[i] > 0)
         && (tab_horizontal[i] != '/')
         && (tab_vertical[i] != '/')){
-          std::cout<<"je rentre dans le if pour la case "<< i <<std::endl;
+          //std::cout<<"je rentre dans le if pour la case "<< i <<std::endl;
           rack[i]--;
           Node* next_arc = arc->getNode(i);
-          GoOn(square,pos,'A'+ i,word,rack,next_arc,arc,direction);
+          b->getSpot(square)->setLetter('A'+ i);
+          GoOn(square, pos,'A'+ i, word, rack, next_arc, arc, direction, b);
         }
     }
 
@@ -498,26 +509,27 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           unsigned int rack[],Node* new_arc,
-          Node* old_arc,unsigned int direction){
+          Node* old_arc,unsigned int direction, Board* b){
 
-  unsigned char x = (board->getIndice(square)).first;
-  unsigned char y = (board->getIndice(square)).second;
+  unsigned char x = (b->getIndice(square)).first;
+  unsigned char y = (b->getIndice(square)).second;
   //std::cout<<"je rentre dans la fontion GoOn"<<std::endl;
   if(pos <= 0 ){ // se déplacer à gauche
       //std::cout<<"pos est <= 0 "<<std::endl;
+      std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à gauche"<<std::endl;
       word = L + word;
-      if(old_arc->isFinal()){
+      if(new_arc->isFinal()){
         //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
         // si la lettre est finale , et qu'il n'y a pas de case non vide
         // directement à gauche -> j'enregistre de coup
         if(direction == 1){
-          if ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0){
+          if ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0){
                 //recordplay
                 std::cout<< "un coup possible " << word <<std::endl;
           }
         }
         else{
-          if ((board->getSpot(board->getIndice(x-1,y)))->getLetter() == 0){
+          if ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0){
                 //recordplay
                 std::cout<< "un coup possible " << word <<std::endl;
           }
@@ -530,8 +542,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
         if(direction == 1){
           if(y-1 >= 0){
             // je continue à gauche
-            unsigned int suivant = board->getIndice(x,y-1);
-            Gen(suivant,pos-1,word,rack,new_arc,direction);
+            unsigned int suivant = b->getIndice(x,y-1);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b);
           }
           // j'avance à droite
           //std::cout<<"je change de direction... vers la droite"<<std::endl;
@@ -543,14 +555,14 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
           if ((new_arc != nullptr)
               && (((y-1>= 0)
-              && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
+              && ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0))
               || (y-1 < 0))){
                 if(new_arc->isFinal())
                   std::cout<<"coup possible "<< word <<std::endl;
                 //std::cout<<"je rentre dans le if"<<std::endl;
                 if(y-pos+1 <= 14){
-                  unsigned int suivant = board->getIndice(x,y-pos+1);
-                  Gen(suivant, 1, word, rack,new_arc,direction);
+                  unsigned int suivant = b->getIndice(x,y-pos+1);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b);
                 }
 
               }
@@ -560,26 +572,26 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
           if(x-1 >= 0){
             // je continue à gauche
-            unsigned int suivant = board->getIndice(x-1,y);
-            Gen(suivant,pos-1,word,rack,new_arc,direction);
+            unsigned int suivant = b->getIndice(x-1,y);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b);
           }
           // j'avance à droite
           new_arc = new_arc->getNode('+');
           // à condition que la nouvelle branche n'est pas vide, que la case
           // directement à gauche est vide, et qu'il éxiste une case à droite
-          std::cout<<"x - 1 = "<< x-1<<std::endl;
-          std::cout<<"x - pos + 1 = "<< x - pos + 1<<std::endl;
+          //std::cout<<"x - 1 = "<< x-1<<std::endl;
+          //std::cout<<"x - pos + 1 = "<< x - pos + 1<<std::endl;
           //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
           if ((new_arc != nullptr)
               && (((x-1 >= 0)
-              && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() == 0))
+              && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0))
               || (x-1 < 0))){
                 if(new_arc->isFinal())
                   std::cout<<"coup possible "<< word <<std::endl;
 
                 if(x-pos+1 <= 14){
-                  unsigned int suivant = board->getIndice(x-pos+1,y);
-                  Gen(suivant, 1, word, rack,new_arc,direction);
+                  unsigned int suivant = b->getIndice(x-pos+1,y);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b);
                 }
               }
         }
@@ -587,19 +599,20 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
   }
   else if (pos > 0){ //se déplacer à droite
+    std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à droite"<<std::endl;
     word = word + L;
-    std::cout<<"pos est > 0 "<<std::endl;
-    if(old_arc->isFinal()){
-      std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
+    //std::cout<<"pos est > 0 "<<std::endl;
+    if(new_arc->isFinal()){
+      //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
       // si la lettre est finale , et qu'il n'y a pas de case non vide
       // directement à droite -> j'enregistre de coup
       if(direction == 1){
-        if ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0){
+        if ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0){
               std::cout<< "un coup possible " << word <<std::endl;
         }
       }
       else{
-        if ((board->getSpot(board->getIndice(x+1,y)))->getLetter() == 0){
+        if ((b->getSpot(b->getIndice(x+1,y)))->getLetter() == 0){
               //recordplay
               std::cout<< "un coup possible " << word <<std::endl;
         }
@@ -609,15 +622,15 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
     if(new_arc != nullptr){
       if(direction == 1){
         if(y+1 <= 14){
-          unsigned int suivant = board->getIndice(x,y+1);
-          Gen(suivant, pos+1, word, rack,new_arc,direction);
+          unsigned int suivant = b->getIndice(x,y+1);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b);
         }
 
       }
       else{
         if(x+1 <= 14){
-          unsigned int suivant = board->getIndice(x+1,y);
-          Gen(suivant, pos+1, word, rack,new_arc,direction);
+          unsigned int suivant = b->getIndice(x+1,y);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b);
         }
       }
     }

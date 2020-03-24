@@ -76,13 +76,18 @@ Board::Board() {
 
 
 Board::Board(const Board& copy){
-  for(int i = 0; i < 255; i++){
-    std::cout<<"je suis à "<< i << std::endl;
+  for(int i = 0; i < 225; i++){
     this->spots[i] = copy.spots[i];
-
   }
 }
 
+
+Board& Board::operator = (const Board& b){
+  for(int i = 0; i < 225; i++){
+    this->spots[i] = b.spots[i];
+  }
+  return *this;
+}
 
 std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
   unsigned char x = n / 15;
