@@ -30,11 +30,11 @@ int main() {
   ss << "..............." << std::endl ;
 
   g.board->load(ss) ;
-  std::cout << "Tarikounet mégnon" << std::endl ;
+
   Board b(*(g.board));
-  std::cout << "Tarikounet mégnon" << std::endl ;
-  //std::cout <<*(g.board)<< std::endl ;
-  std::cout << b << std::endl ;
+
+  std::cout <<*(g.board)<< std::endl ;
+  //std::cout << b << std::endl ;
   //std::cout << "Tarikounet mégnon" << std::endl ;
   //std::list<unsigned char> tab (b.getAnchorSquares());
 
