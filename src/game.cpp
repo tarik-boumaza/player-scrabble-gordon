@@ -462,7 +462,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
         std::cout<<tab_horizontal[i]<< " ";
       }
       std::cout<<std::endl;
-      //std::cout<<"le getCrossSetsVertical "<<std::endl;
+      std::cout<<"le getCrossSetsVertical "<<std::endl;
       for (int i = 0; i < 26; i++){
         std::cout<<tab_vertical[i]<< " ";
       }
@@ -541,6 +541,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       //std::cout<<"pos est <= 0 "<<std::endl;
       //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à gauche"<<std::endl;
       word = L + word;
+      //std::cout<<"WORD : "<< word <<std::endl;
       if(new_arc->isFinal()){
         //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
         // si la lettre est finale , et qu'il n'y a pas de case non vide
@@ -548,13 +549,13 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
         if(direction == 1){
           if ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0){
                 //recordplay
-                std::cout<< "un coup possible " << word <<std::endl;
+                std::cout<< "un * coup possible " << word <<std::endl;
           }
         }
         else{
           if ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0){
                 //recordplay
-                std::cout<< "un coup possible " << word <<std::endl;
+                std::cout<< "un *  coup possible " << word <<std::endl;
           }
         }
       }
@@ -580,7 +581,10 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               && (((y-1>= 0)
               && ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0))
               || (y-1 < 0))){
-                if(new_arc->isFinal())
+
+                if((new_arc->isFinal())
+                  && ((y-pos+1 >14) || ((y-pos+1 <=14)
+                  && ((b->getSpot(b->getIndice(x,y-pos+1)))->getLetter() == 0))))
                   std::cout<<"coup possible "<< word <<std::endl;
                 //std::cout<<"je rentre dans le if"<<std::endl;
                 if(y-pos+1 <= 14){
@@ -602,14 +606,16 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           new_arc = new_arc->getNode('+');
           // à condition que la nouvelle branche n'est pas vide, que la case
           // directement à gauche est vide, et qu'il éxiste une case à droite
-          std::cout<<"x - 1 = "<< x-1<<std::endl;
-          std::cout<<"x - pos + 1 = "<< x - pos + 1<<std::endl;
+          //std::cout<<"x - 1 = "<< x-1<<std::endl;
+          //std::cout<<"x - pos + 1 = "<< x - pos + 1<<std::endl;
           //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
           if ((new_arc != nullptr)
               && (((x-1 >= 0)
               && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0))
               || (x-1 < 0))){
-                if(new_arc->isFinal())
+                if((new_arc->isFinal())
+                  && ((x-pos+1 >14) || ((x-pos+1 <=14)
+                  && ((b->getSpot(b->getIndice(x-pos+1,y)))->getLetter() == 0))))
                   std::cout<<"coup possible "<< word <<std::endl;
 
                 if(x-pos+1 <= 14){
@@ -624,24 +630,31 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
   else if (pos > 0){ //se déplacer à droite
     //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à droite"<<std::endl;
     word = word + L;
+    //std::cout<<"WORD : "<< word <<std::endl;
     //std::cout<<"pos est > 0 "<<std::endl;
-    if(new_arc->isFinal()){
+    if((new_arc != nullptr) && (new_arc->isFinal())){
       //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
       // si la lettre est finale , et qu'il n'y a pas de case non vide
       // directement à droite -> j'enregistre de coup
       if(direction == 1){
-        if ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0){
+
+        if (((y + 1 <= 14)
+            && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0))
+            ||(y + 1 > 14)){
               std::cout<< "un coup possible " << word <<std::endl;
         }
       }
       else{
-        if ((b->getSpot(b->getIndice(x+1,y)))->getLetter() == 0){
+        if (((x + 1 <= 14)
+            && ((b->getSpot(b->getIndice(x + 1,y)))->getLetter() == 0))
+            ||(x + 1 > 14)){
               //recordplay
               std::cout<< "un coup possible " << word <<std::endl;
         }
       }
     }
     //sinon si la branche est vide je continue d'avancer à droite
+    //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
     if(new_arc != nullptr){
       if(direction == 1){
         if(y+1 <= 14){

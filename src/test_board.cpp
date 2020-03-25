@@ -57,15 +57,20 @@ int main() {
   for(unsigned int i =0; i<26;i++){
     table[i] = 0;
   }
+
   table[0] = 1;
   table[1]=1;
   table[18] = 2;
+  table[11] = 1;
+  table[12] = 1;
+  table[19] = 1;
   table[4]=1;
   std::cout<<std::endl;
   std::string word = "";
+
   Node* parcours = g.gad->getFirst();
   g.Gen(115,0,word,table,parcours,1,&b);
-  std::cout<<word<<std::endl;
+  //std::cout<<word<<std::endl;
   //std::cout <<*(g.board)<< std::endl ;
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
   //g.board->getSpot(0)->setLetter('H');
