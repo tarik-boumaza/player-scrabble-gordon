@@ -429,7 +429,8 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
-         unsigned int rack[], Node* arc, unsigned int direction, Board* b){
+         unsigned int rack[], Node* arc, unsigned int direction,
+         Board* b, unsigned short int& score, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -443,7 +444,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
   {
     //std::cout<<"la case contient une lettre "<<std::endl;
     Node* next_arc = arc->getNode(letter);
-    GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b);
+    GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b, score, move);
 
   }
   else
@@ -494,6 +495,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     Board b_copy(*b);
     Node* arc_copy = arc;
     unsigned int rack_copy[26];
+    unsigned short int score_copy = score;
+    Move move_copy = move;
 
     for (int i = 0; i < 26; i++){
       rack_copy[i] = rack[i];
@@ -510,6 +513,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       word = word_copy;
       *b = b_copy;
       arc = arc_copy;
+      //score = score_copy;
+      //move = move_copy;
 
       for (int i = 0; i < 26; i++){
         rack[i] = rack_copy[i];
@@ -522,7 +527,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
           rack[i]--;
           Node* next_arc = arc->getNode(i);
           b->getSpot(square)->setLetter('A'+ i);
-          GoOn(square, pos,'A'+ i, word, rack, next_arc, arc, direction, b);
+          GoOn(square, pos,'A'+ i, word, rack, next_arc, arc, direction, b, score,move);
         }
     }
 
@@ -532,7 +537,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           unsigned int rack[],Node* new_arc,
-          Node* old_arc,unsigned int direction, Board* b){
+          Node* old_arc,unsigned int direction,
+          Board* b, unsigned short int& score, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -567,7 +573,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           if(y-1 >= 0){
             // je continue à gauche
             unsigned int suivant = b->getIndice(x,y-1);
-            Gen(suivant, pos-1, word, rack, new_arc, direction, b);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b, score, move);
           }
            //j'avance à droite
           //std::cout<<"je change de direction... vers la droite"<<std::endl;
@@ -584,12 +590,25 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
                 if((new_arc->isFinal())
                   && ((y-pos+1 >14) || ((y-pos+1 <=14)
-                  && ((b->getSpot(b->getIndice(x,y-pos+1)))->getLetter() == 0))))
-                  std::cout<<"coup possible "<< word <<std::endl;
+                  && ((b->getSpot(b->getIndice(x,y-pos+1)))->getLetter() == 0)))){
+                    std::cout<<"coup possible "<< word <<std::endl;
+                    //appel de la fonction qui calcule le score
+                    int new_score = 1; // = l'appel récursif
+                    if (new_score > score){
+                      std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+                      Move new_move;
+                      new_move.word = word;
+                      new_move.first_square = b->getIndice(x, y);
+                      new_move.direction = 'D';
+                      move = new_move;
+                      score = new_score;
+                    }
+                  }
+
                 //std::cout<<"je rentre dans le if"<<std::endl;
                 if(y-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x,y-pos+1);
-                  Gen(suivant, 1, word, rack, new_arc, direction, b);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b, score, move);
                 }
 
               }
@@ -600,7 +619,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           if(x-1 >= 0){
             // je continue à gauche
             unsigned int suivant = b->getIndice(x-1,y);
-            Gen(suivant, pos-1, word, rack, new_arc, direction, b);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b, score, move);
           }
           // j'avance à droite
           new_arc = new_arc->getNode('+');
@@ -615,12 +634,25 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               || (x-1 < 0))){
                 if((new_arc->isFinal())
                   && ((x-pos+1 >14) || ((x-pos+1 <=14)
-                  && ((b->getSpot(b->getIndice(x-pos+1,y)))->getLetter() == 0))))
-                  std::cout<<"coup possible "<< word <<std::endl;
+                  && ((b->getSpot(b->getIndice(x-pos+1,y)))->getLetter() == 0)))){
+                    std::cout<<"coup possible "<< word <<std::endl;
+                    //appel de la fonction qui calcule le score
+                    int new_score = 1; // = l'appel récursif
+                    if (new_score > score){
+                      std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+                      Move new_move;
+                      new_move.word = word;
+                      new_move.first_square = b->getIndice(x, y);
+                      new_move.direction = 'B';
+                      move = new_move;
+                      score = new_score;
+                    }
+                  }
+
 
                 if(x-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x-pos+1,y);
-                  Gen(suivant, 1, word, rack, new_arc, direction, b);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b, score, move);
                 }
               }
         }
@@ -641,7 +673,19 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
         if (((y + 1 <= 14)
             && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0))
             ||(y + 1 > 14)){
+              //recordplay
               std::cout<< "un coup possible " << word <<std::endl;
+
+              int new_score = 1; // = l'appel récursif
+              if (new_score > score){
+                std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+                Move new_move;
+                new_move.word = word;
+                new_move.first_square = b->getIndice(x, y);
+                new_move.direction = 'G';
+                move = new_move;
+                score = new_score;
+              }
         }
       }
       else{
@@ -650,6 +694,17 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(x + 1 > 14)){
               //recordplay
               std::cout<< "un coup possible " << word <<std::endl;
+
+              int new_score = 1; // = l'appel récursif
+              if (new_score > score){
+                std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+                Move new_move;
+                new_move.word = word;
+                new_move.first_square = b->getIndice(x, y);
+                new_move.direction = 'H';
+                move = new_move;
+                score = new_score;
+              }
         }
       }
     }
@@ -659,14 +714,14 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       if(direction == 1){
         if(y+1 <= 14){
           unsigned int suivant = b->getIndice(x,y+1);
-          Gen(suivant, pos+1, word, rack, new_arc, direction, b);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b, score, move);
         }
 
       }
       else{
         if(x+1 <= 14){
           unsigned int suivant = b->getIndice(x+1,y);
-          Gen(suivant, pos+1, word, rack, new_arc, direction, b);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b, score, move);
         }
       }
     }

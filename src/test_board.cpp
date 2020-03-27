@@ -69,8 +69,16 @@ int main() {
   std::string word = "";
 
   Node* parcours = g.gad->getFirst();
-  g.Gen(115,0,word,table,parcours,1,&b);
-  //std::cout<<word<<std::endl;
+  Move m;
+  m.word = "hana";
+  m.first_square = 0;
+  m.direction = 'H';
+  Move m2;
+  m2 = m;
+  std::cout<<"le coup possible est "<<m2.word<<std::endl;
+  g.Gen(115,0,word,table,parcours,1,&b,0,m);
+
+  std::cout<<"le coup possible est "<<m.word<<std::endl;
   //std::cout <<*(g.board)<< std::endl ;
   //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
   //g.board->getSpot(0)->setLetter('H');

@@ -3,8 +3,9 @@
 #include <list>
 #include <utility>
 
-
+// first -> indice de la case, second -> la lettre que contient la case
 typedef std::pair<unsigned short int, unsigned short int> couple;
+
 
 
 class Node;
@@ -54,9 +55,9 @@ public:
 
   void getCrossSetsVertical(const unsigned char & square, char tab_vertical[], bool final);
 
-  void Gen(unsigned char  square,int pos, std::string & word,unsigned int rack[],Node* arc, unsigned int direction, Board* b);
+  void Gen(unsigned char  square,int pos, std::string& word,unsigned int rack[],Node* arc, unsigned int direction, Board* b, unsigned short int& score, Move& move);
 
-  void GoOn(unsigned char  square, int pos, char L, std::string & word, unsigned int rack[],Node* new_arc,Node* old_arc, unsigned int direction, Board* b);
+  void GoOn(unsigned char  square, int pos, char L, std::string & word, unsigned int rack[],Node* new_arc,Node* old_arc, unsigned int direction, Board* b,unsigned short int& score, Move& move);
 
 
 
