@@ -95,11 +95,13 @@ unsigned short int Game::score(const std::list<couple> & l) const {
   couple temp;
   while(!copy.empty()) {
     temp = score(copy.back()); //temp.first est le score, temp.second est le word_factor
+    //std::cout << "Lettre " << static_cast<int>((copy.back().first)) << " : + " << temp.first << " pts" << std::endl;
     res += temp.first;
     if (temp.second > wf)
       wf = temp.second;
     copy.pop_back();
   }
+  std::cout << std::endl;
   return (wf * res);
 }
 
@@ -658,4 +660,250 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
     }
   }
+}
+
+
+
+unsigned short int Game::score (const Board * b, const int & pos,
+                                const char & direction) const {
+
+  int i = pos;
+  std::list<couple> l;
+  couple temp;
+
+
+  temp = couple(i,b->getLetter(i));
+  l.push_back(temp);
+
+  if (direction == 'H') {
+    i -= 15;
+    while (i >= 0 && b->getLetter(i) != 0) {
+      temp = couple(i,b->getLetter(i));
+      l.push_back(temp);
+      i -=15 ;
+    }
+    return score(l);
+  }
+
+  if (direction == 'B') {
+    i += 15;
+    while (i / 15 < 15 && b->getLetter(i) != 0) {
+      temp = couple(i,b->getLetter(i));
+      l.push_back(temp);
+      i +=15 ;
+    }
+    return score(l);
+  }
+
+  if (direction == 'G') {
+    i -= 1;
+    while ( pos / 15 == (i * (-1)) / 15 && b->getLetter(i) != 0) {
+      temp = couple(i,b->getLetter(i));
+      l.push_back(temp);
+      i -= 1 ;
+    }
+    return score(l);
+  }
+
+  i += 1;
+  while ( pos / 15 == i / 15  && b->getLetter(i) != 0) {
+    temp = couple(i,b->getLetter(i));
+    l.push_back(temp);
+    i += 1;
+  }
+  return score(l);
+
+
+
+}
+
+
+
+
+unsigned short int Game::score (const std::string & word,
+                                const int & p, const char & direction) const {
+                                    // sens = 'G'  => vers la gauche,
+                                    //sens = 'D' => vers la droite etc.
+
+  unsigned short int points = 0;
+  unsigned int pos = static_cast<unsigned int> (p);
+  unsigned int board_pos = pos;
+  unsigned int word_pos = 0;
+  couple temp_couple;
+  unsigned int temp_pos = 0;
+  std::list<couple> move;
+
+
+  if (direction == 'H') {               //On joue vers le HAUT
+
+
+    while ( word_pos < word.size()
+            && board_pos < 225) {
+
+      if (board->getLetter(board_pos) == 0) {
+
+          if ( (board_pos % 15) > 0
+                &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
+            temp_pos = board_pos;
+            while ( (temp_pos % 15) < 14
+                    && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
+              temp_pos++;
+            }
+            Board * b_copy = new Board(*board);
+            b_copy->setLetter(temp_pos,word[word_pos]);
+            points += score(b_copy,temp_pos,'G');
+          }
+
+          else if ( (board_pos % 15) < 14 && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
+            Board * b_copy = new Board(*board);
+            b_copy->setLetter(board_pos,word[word_pos]);
+            points += score(b_copy,board_pos,'D');
+          }
+
+      }
+      temp_couple = couple (board_pos,word[word_pos]);
+      move.push_back(temp_couple);
+      board_pos -= 15;
+      word_pos++;
+
+    }
+
+    points += score(move);
+    return points;
+  }
+
+
+
+  else if (direction == 'B')  {        //On joue vers le BAS
+
+    while ( word_pos < word.size()
+            && board_pos < 225) {
+
+      if (board->getLetter(board_pos) == 0) {
+
+          if ( (board_pos % 15) > 0
+              &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
+
+            temp_pos = board_pos;
+            while ( (temp_pos % 15) < 14
+                    && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
+            temp_pos++;
+          }
+
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(temp_pos,word[word_pos]);
+          points += score(b_copy,temp_pos,'G');
+        }
+
+        else if ( (board_pos % 15) < 14
+                  && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(board_pos,word[word_pos]);
+          points += score(b_copy,board_pos,'D');
+        }
+
+      }
+      temp_couple = couple (board_pos,word[word_pos]);
+      move.push_back(temp_couple);
+      board_pos += 15;
+      word_pos++;
+    }
+
+    points += score(move);
+    return points;
+
+  }
+
+
+  else if (direction =='G') {          //On joue vers la GAUCHE
+
+    unsigned int line = (pos / 15);
+
+    while ( word_pos < word.size()
+            && (board_pos / 15) == line ) {
+
+      if (board->getLetter(board_pos) == 0) {
+
+          if ( board_pos > 14
+              &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
+
+            temp_pos = board_pos;
+            while ( temp_pos < 210
+                    && board->getLetter(temp_pos + 15) != 0 ) {   //tant que lettre en bas
+              temp_pos += 15;
+            }
+
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(temp_pos,word[word_pos]);
+          points += score(b_copy,temp_pos,'H');
+        }
+
+        else if ( board_pos < 210
+                && board->getLetter(temp_pos + 15) != 0) {   //lettre  en bas uniquement
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(board_pos,word[word_pos]);
+          points += score(b_copy,board_pos,'B');
+        }
+
+      }
+      temp_couple = couple (board_pos,word[word_pos]);
+      move.push_back(temp_couple);
+      board_pos--;
+      word_pos++;
+    }
+
+    points += score(move);
+    return points;
+
+  }
+
+
+
+
+  else {                           //On joue vers la DROITE
+
+    unsigned int line = (pos / 15);
+
+    while ( word_pos < word.size()
+            && board_pos / 15 == line) {
+
+      if (board->getLetter(board_pos) == 0) {
+          if ( board_pos > 14
+              &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
+
+            temp_pos = board_pos;
+            while ( temp_pos < 210
+                    && board->getLetter(temp_pos + 15) != 0 ) {   //tant que lettre en bas
+              temp_pos += 15;
+            }
+
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(temp_pos,word[word_pos]);
+          points += score(b_copy,temp_pos,'H');
+        }
+        else if ( board_pos < 210
+                  && board->getLetter(temp_pos + 15) != 0) {   //lettre  en bas uniquement
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(board_pos,word[word_pos]);
+          points += score(b_copy,board_pos,'B');
+        }
+        std::cout << std::endl;
+
+      }
+      temp_couple = couple (board_pos,word[word_pos]);
+      move.push_back(temp_couple);
+      board_pos++;
+      word_pos++;
+    }
+
+    points += score(move);
+
+  }
+
+  return points;
+
+
+
+
+
 }

@@ -54,7 +54,7 @@ unsigned short int Bag::getPoints(const unsigned char & c) const {
     return points[c];
   if (c >= 'A' && c <= 'Z')
     return points[c - 'A'];
-  std::cerr << "Case non déclarée" << std::endl;
+  std::cerr << "Case non déclarée!" << std::endl;
   exit(EXIT_FAILURE);
 }
 
@@ -64,7 +64,7 @@ unsigned short int Bag::getPoints(const unsigned short int & c) const {
     return points[c];
   if (c >= 'A' && c <= 'Z')
     return points[c - 'A'];
-  std::cerr << "Case non déclarée" << std::endl;
+  std::cerr << c << " est une case non déclarée!!" << std::endl;
   exit(EXIT_FAILURE);
 }
 

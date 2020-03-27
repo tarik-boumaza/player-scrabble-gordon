@@ -14,7 +14,7 @@ public:
   std::list<unsigned char> getAnchorSquares();
   std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n);
   unsigned short int getIndice(const unsigned char & x,const unsigned char &y);
-  Spot* getSpot(unsigned char i);
+  Spot* getSpot(const unsigned char & i) ;
 
 public:
 
@@ -28,11 +28,17 @@ public:
   Spot operator()(unsigned char l, unsigned char c) const ;
   Spot& operator()(unsigned char l, unsigned char c) ;
 
+
+  char getLetter(const unsigned char & i) const;
+
+  void setLetter(const unsigned char & n, const char & c);
+
   unsigned short int getWordFactor(const unsigned char & id) const;
 
   unsigned short int getLetterFactor(const unsigned char & id) const;
 
   Board& operator = (const Board& b);
+
 
 
 private:

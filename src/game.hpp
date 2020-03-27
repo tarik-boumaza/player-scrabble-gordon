@@ -5,6 +5,7 @@
 
 
 typedef std::pair<unsigned short int, unsigned short int> couple;
+            ///   <case,lettre>
 
 
 class Node;
@@ -58,7 +59,11 @@ public:
 
   void GoOn(unsigned char  square, int pos, char L, std::string & word, unsigned int rack[],Node* new_arc,Node* old_arc, unsigned int direction, Board* b);
 
+  unsigned short int score (const Board * b, const int & pos,
+                            const char & direction) const;
 
+  unsigned short int score (const std::string & word,
+                            const int & pos, const char & sens) const;
 
 
 
