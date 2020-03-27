@@ -30,34 +30,13 @@ int main() {
   ss << "..............." << std::endl ;
 
   g.board->load(ss) ;
-
-  Board b(*(g.board));
-
   std::cout <<*(g.board)<< std::endl ;
-  //std::cout << b << std::endl ;
-  //std::cout << "Tarikounet mégnon" << std::endl ;
-  //std::list<unsigned char> tab (b.getAnchorSquares());
-
-
-
-  //////////////////////
-  /*while(!tab.empty()) {
-    i = tab.back();
-    j++;
-    //std::cout << static_cast<int>(i) / 15 <<","<< static_cast<int>(i) % 15 << std::endl;
-    std::cout<< static_cast<int>(i) <<std::endl;
-    tab.pop_back();
-
-  }*/
-  //////////////////////
 
 
   unsigned int table[26];
-  //g.getCrossSetsHorizontal(115,table,true);
   for(unsigned int i =0; i<26;i++){
     table[i] = 0;
   }
-
   table[0] = 1;
   table[1]=1;
   table[18] = 2;
@@ -65,28 +44,23 @@ int main() {
   table[12] = 1;
   table[19] = 1;
   table[4]=1;
+
   std::cout<<std::endl;
   std::string word = "";
+  Board b(*(g.board));
 
   Node* parcours = g.gad->getFirst();
   Move m;
-  m.word = "hana";
+
+  m.word = "";
   m.first_square = 0;
   m.direction = 'H';
-  Move m2;
-  m2 = m;
-  std::cout<<"le coup possible est "<<m2.word<<std::endl;
-  g.Gen(115,0,word,table,parcours,1,&b,0,m);
 
-  std::cout<<"le coup possible est "<<m.word<<std::endl;
-  //std::cout <<*(g.board)<< std::endl ;
-  //std::cout<<"j'ai "<< j <<" anchor_squares"<<std::endl;
-  //g.board->getSpot(0)->setLetter('H');
+  unsigned short int s = 0;
+  g.Gen(115,0,word,table,parcours,1,&b,s,m);
 
-  ////////////////////
-  /*if(g.board->getSpot(130)->getLetter() == 0)
-  std::cout << "la case est libre" << std::endl ;*/
-  ////////////////////
+  //std::cout<<"le coup possible est "<<m.word<<std::endl;
+
 
   return 0 ;
 }

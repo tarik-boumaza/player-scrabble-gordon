@@ -430,7 +430,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
          unsigned int rack[], Node* arc, unsigned int direction,
-         Board* b, unsigned short int& score, Move& move){
+         Board* b,unsigned short int& score, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -496,7 +496,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     Node* arc_copy = arc;
     unsigned int rack_copy[26];
     unsigned short int score_copy = score;
-    Move move_copy = move;
+
 
     for (int i = 0; i < 26; i++){
       rack_copy[i] = rack[i];
@@ -513,8 +513,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       word = word_copy;
       *b = b_copy;
       arc = arc_copy;
-      //score = score_copy;
-      //move = move_copy;
+
 
       for (int i = 0; i < 26; i++){
         rack[i] = rack_copy[i];
@@ -538,7 +537,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           unsigned int rack[],Node* new_arc,
           Node* old_arc,unsigned int direction,
-          Board* b, unsigned short int& score, Move& move){
+          Board* b,unsigned short int& score, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -548,24 +547,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à gauche"<<std::endl;
       word = L + word;
       //std::cout<<"WORD : "<< word <<std::endl;
-      if(new_arc->isFinal()){
-        //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
-        // si la lettre est finale , et qu'il n'y a pas de case non vide
-        // directement à gauche -> j'enregistre de coup
-        if(direction == 1){
-          if ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0){
-                //recordplay
-                std::cout<< "un * coup possible " << word <<std::endl;
-          }
-        }
-        else{
-          if ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0){
-                //recordplay
-                std::cout<< "un *  coup possible " << word <<std::endl;
-          }
-        }
-      }
-
       if(new_arc != nullptr){
         //std::cout<<"new_arc n'est pas vide "<<std::endl;
         //j'avance dans le gaddag et le plateau
@@ -591,11 +572,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                 if((new_arc->isFinal())
                   && ((y-pos+1 >14) || ((y-pos+1 <=14)
                   && ((b->getSpot(b->getIndice(x,y-pos+1)))->getLetter() == 0)))){
-                    std::cout<<"coup possible "<< word <<std::endl;
+                    //std::cout<<"coup possible "<< word <<std::endl;
                     //appel de la fonction qui calcule le score
                     int new_score = 1; // = l'appel récursif
                     if (new_score > score){
-                      std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+
                       Move new_move;
                       new_move.word = word;
                       new_move.first_square = b->getIndice(x, y);
@@ -605,7 +586,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     }
                   }
 
-                //std::cout<<"je rentre dans le if"<<std::endl;
                 if(y-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x,y-pos+1);
                   Gen(suivant, 1, word, rack, new_arc, direction, b, score, move);
@@ -632,14 +612,15 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               && (((x-1 >= 0)
               && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0))
               || (x-1 < 0))){
+
                 if((new_arc->isFinal())
                   && ((x-pos+1 >14) || ((x-pos+1 <=14)
                   && ((b->getSpot(b->getIndice(x-pos+1,y)))->getLetter() == 0)))){
-                    std::cout<<"coup possible "<< word <<std::endl;
+                    //std::cout<<"coup possible "<< word <<std::endl;
                     //appel de la fonction qui calcule le score
                     int new_score = 1; // = l'appel récursif
                     if (new_score > score){
-                      std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+
                       Move new_move;
                       new_move.word = word;
                       new_move.first_square = b->getIndice(x, y);
@@ -649,14 +630,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     }
                   }
 
-
                 if(x-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x-pos+1,y);
                   Gen(suivant, 1, word, rack, new_arc, direction, b, score, move);
                 }
               }
         }
-
       }
   }
   else if (pos > 0){ //se déplacer à droite
@@ -674,11 +653,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0))
             ||(y + 1 > 14)){
               //recordplay
-              std::cout<< "un coup possible " << word <<std::endl;
+              //std::cout<< "un coup possible " << word <<std::endl;
 
               int new_score = 1; // = l'appel récursif
               if (new_score > score){
-                std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+
                 Move new_move;
                 new_move.word = word;
                 new_move.first_square = b->getIndice(x, y);
@@ -693,11 +672,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             && ((b->getSpot(b->getIndice(x + 1,y)))->getLetter() == 0))
             ||(x + 1 > 14)){
               //recordplay
-              std::cout<< "un coup possible " << word <<std::endl;
+              //std::cout<< "un coup possible " << word <<std::endl;
 
               int new_score = 1; // = l'appel récursif
               if (new_score > score){
-                std::cout<<"je rentre enregistrer le nouveau coup "<<std::endl;
+                
                 Move new_move;
                 new_move.word = word;
                 new_move.first_square = b->getIndice(x, y);
