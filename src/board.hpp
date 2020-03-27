@@ -5,6 +5,18 @@
 #include <iostream>
 #include <list>
 
+struct Move{
+  std::string word;
+  unsigned char first_square;
+  char direction;
+
+  Move& operator = (const Move& m){
+    word = m.word;
+    first_square = m.first_square;
+    direction = m.direction;
+  }
+
+};
 
 /* Scrabble board */
 
