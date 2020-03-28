@@ -12,13 +12,39 @@ int main() {
   Game g;
   g.init();
 
+  Board * b_vierge = new Board;
+  std::stringstream ss2;
+  ss2 << "................" << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+
+  b_vierge->load(ss2);
+  std::cout << *b_vierge << std::endl << std::endl;
+
+
+
+
+
   std::stringstream ss ;
-  ss << "ALPHABETIQUE..." << std::endl ;
+
+  ss << ".LPHABETIQUE..." << std::endl ;
   ss << "L.............." << std::endl ;
   ss << "P.............." << std::endl ;
   ss << "H.............." << std::endl ;
   ss << "A.............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".ETISE........." << std::endl ;
   ss << "E.............." << std::endl ;
   ss << "T...PROJET....." << std::endl ;
   ss << "I......O......." << std::endl ;
@@ -37,29 +63,31 @@ int main() {
   for(unsigned int i =0; i<26;i++){
     table[i] = 0;
   }
-  table[0] = 1;
-  table[1]=1;
-  table[18] = 2;
-  table[11] = 1;
-  table[12] = 1;
-  table[19] = 1;
-  table[4]=1;
+  table['R' - 'A']++ ;
+  table['B' - 'A']++ ;
+  table['E' - 'A']++ ;
+  table['T' - 'A']++ ;
+  table['A' - 'A']++ ;
+  table['Z' - 'A']++ ;
+  table['W' - 'A']++;
 
   std::cout<<std::endl;
   std::string word = "";
   Board b(*(g.board));
 
-  Node* parcours = g.gad->getFirst();
-  Move m;
 
-  m.word = "";
-  m.first_square = 0;
-  m.direction = 'H';
-
+  Move m ("",0,'H');
   unsigned short int s = 0;
-  g.Gen(115,0,word,table,parcours,1,&b,s,m);
+  Node* parcours = g.gad->getFirst();
 
-  //std::cout<<"le coup possible est "<<m.word<<std::endl;
+  g.Gen(b_vierge->getIndice(12,0),0,word,table,parcours,0,&b,s,m);
+
+  std::cout << std::endl << "Le meilleur coup possible est : " << m.word
+            << ", il rapporte " << s << " points" << std::endl << std::endl;
+
+
+  std::cout << "Je sais que le meilleur coup donne : "
+            << g.score(Move("ALPHABETIQUE",0,'B')) << " points " << std::endl;
 
 
   return 0 ;

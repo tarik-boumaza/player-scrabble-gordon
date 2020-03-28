@@ -1,5 +1,6 @@
 #include <cstring>
 #include "map.hpp"
+#include <iostream>
 
 
 Node::Node() {
@@ -21,7 +22,7 @@ Node::~Node() {
 
 
 Node* Node::getNode(const unsigned short int & i) const {
-  if (i < 27)
+  if (i < 26)
     return tab[i];
   if (i == static_cast<unsigned int>('+'))
     return tab[26];

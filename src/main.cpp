@@ -35,12 +35,15 @@ int main() {
   ss << ".....SCRABBLE.." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-
-
-
-
   g.board->load(ss) ;
-  unsigned short int s = g.score("ALPHABETIQUE",0,'D');
+
+  Move m;
+  m.word = "ALPHABETIQUE";
+  m.first_square = 0;
+  m.direction = 'D';
+
+  unsigned short int s = g.score(m);
+
   std::cout << *g.board << std::endl;
   std::cout << "J'obtiens le score : " << s << std::endl;
 
@@ -94,6 +97,9 @@ ss << "..............." << std::endl ;
   g.board->load(ss2);
   std::cout << *g.board << std::endl;
 */
+
+
+
 
 
   cout << endl;

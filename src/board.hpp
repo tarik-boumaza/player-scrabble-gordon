@@ -10,6 +10,12 @@ struct Move{
   unsigned char first_square;
   char direction;
 
+  Move(const std::string w, const unsigned char & fq, const char & d) {
+    word = w;
+    first_square = fq;
+    direction = d;
+  }
+
   Move& operator = (const Move& m){
     word = m.word;
     first_square = m.first_square;
