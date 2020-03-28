@@ -39,7 +39,7 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "ALPHABETIQUE..." << std::endl ;
+  ss << ".LPHABETIQUE..." << std::endl ;
   ss << "L.............." << std::endl ;
   ss << "P.............." << std::endl ;
   ss << "H.............." << std::endl ;
@@ -81,7 +81,7 @@ int main() {
   unsigned short int s = 0;
   Node* parcours = g.gad->getFirst();
 
-  g.Gen(180,0,word,table,parcours,0,&b,s,m);
+  g.Gen(0,0,word,table,parcours,1,&b,s,m);
 
   std::cout << std::endl << "Le meilleur coup possible est : " << m.word
             << ", il rapporte " << s << " points" << std::endl << std::endl;
