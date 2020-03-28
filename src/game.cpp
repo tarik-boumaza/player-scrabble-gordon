@@ -453,7 +453,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
             copy = gad_parcours;
 
-            if (copy->getNode(i) != nullptr) {
+            if (copy != nullptr && copy->getNode(i) != nullptr) {
 
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
@@ -506,10 +506,10 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
   unsigned char x = (board->getIndice(square)).first;
   unsigned char y = (board->getIndice(square)).second;
-
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
   if (((board->getSpot(board->getIndice(x,y)))->getLetter() == 0)){
+
     if( (((x < 14) && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() == 0))
         || (x >= 14))
         && (x > 0)
@@ -548,9 +548,8 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             }
           }
     }
-
-        // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-        // à droite
+    // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
+    // à droite
     else if( (x < 14)
           && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() != 0)
           && (((x > 0)
@@ -617,7 +616,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
             copy = gad_parcours;
 
-            if (copy->getNode(i) != nullptr) {
+            if (copy != nullptr && copy->getNode(i) != nullptr) {
 
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
@@ -869,10 +868,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
   }
   else if (pos > 0){ //se déplacer à droite
+    //std::cout<<"pos est > 0 "<<std::endl;
     //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à droite"<<std::endl;
     word = word + L;
     //std::cout<<"WORD : "<< word <<std::endl;
-    //std::cout<<"pos est > 0 "<<std::endl;
+
     if((new_arc != nullptr) && (new_arc->isFinal())){
       //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
       // si la lettre est finale , et qu'il n'y a pas de case non vide

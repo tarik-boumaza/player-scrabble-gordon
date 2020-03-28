@@ -80,7 +80,7 @@ int main() {
   unsigned short int s = 0;
   Node* parcours = g.gad->getFirst();
 
-  g.Gen(b_vierge->getIndice(12,0),0,word,table,parcours,0,&b,s,m);
+  g.Gen(180,0,word,table,parcours,0,&b,s,m);
 
   std::cout << std::endl << "Le meilleur coup possible est : " << m.word
             << ", il rapporte " << s << " points" << std::endl << std::endl;
