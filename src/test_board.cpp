@@ -39,7 +39,7 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << ".LPHABETIQUE..." << std::endl ;
+  ss << "ALPHABETIQUE..." << std::endl ;
   ss << "L.............." << std::endl ;
   ss << "P.............." << std::endl ;
   ss << "H.............." << std::endl ;
@@ -64,6 +64,7 @@ int main() {
     table[i] = 0;
   }
   table['R' - 'A']++ ;
+  table['S' - 'A']++ ;
   table['B' - 'A']++ ;
   table['E' - 'A']++ ;
   table['T' - 'A']++ ;

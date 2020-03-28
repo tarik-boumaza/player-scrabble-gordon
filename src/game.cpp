@@ -370,7 +370,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
           for(int i = 0; i < 26; i++) {
 
-            if(gad_parcours->getNode(i) != nullptr){
+            if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
               if(final){
                 if((gad_parcours->getNode(i))->isFinal())
                   tab_horizontal[i] = gad->getLetter(i);
@@ -414,9 +414,10 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
           for(int i = 0; i < 26; i++) {
 
-            if(gad_parcours->getNode(i) != nullptr){
+            if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
               if(final){
-                if((gad_parcours->getNode(i))->isFinal())
+                if(gad_parcours->getNode(i)->getNode('+') != nullptr &&
+                  (gad_parcours->getNode(i)->getNode('+'))->isFinal())
                   tab_horizontal[i] = gad->getLetter(i);
                 else
                   tab_horizontal[i] = '/';
@@ -531,7 +532,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
           for(int i = 0; i < 26; i++) {
 
-            if(gad_parcours->getNode(i) != nullptr){
+            if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
 
               if(final){
                 if((gad_parcours->getNode(i))->isFinal())
@@ -575,10 +576,11 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
           for(int i = 0; i < 26; i++) {
 
-            if(gad_parcours->getNode(i) != nullptr){
+            if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
 
               if(final){
-                if((gad_parcours->getNode(i))->isFinal())
+                if(gad_parcours->getNode(i)->getNode('+') != nullptr &&
+                  (gad_parcours->getNode(i)->getNode('+'))->isFinal())
                   tab_vertical[i] = gad->getLetter(i);
                 else
                   tab_vertical[i] = '/';
@@ -757,7 +759,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       if((rack[i] > 0)
         && (tab_horizontal[i] != '/')
         && (tab_vertical[i] != '/')){
-          //std::cout<<"je rentre dans le if pour la case "<< i <<std::endl;
+          //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
           rack[i]--;
           Node* next_arc = arc->getNode(i);
           b->getSpot(square)->setLetter('A'+ i);
