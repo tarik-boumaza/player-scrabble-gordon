@@ -64,7 +64,6 @@ int main() {
     table[i] = 0;
   }
   table['R' - 'A']++ ;
-  table['S' - 'A']++ ;
   table['B' - 'A']++ ;
   table['E' - 'A']++ ;
   table['T' - 'A']++ ;
@@ -81,7 +80,7 @@ int main() {
   unsigned short int s = 0;
   Node* parcours = g.gad->getFirst();
 
-  g.Gen(0,0,word,table,parcours,1,&b,s,m);
+  g.Gen(0,0,word,table,parcours,0,&b,s,m);
 
   std::cout << std::endl << "Le meilleur coup possible est : " << m.word
             << ", il rapporte " << s << " points" << std::endl << std::endl;

@@ -59,10 +59,10 @@ public:
   unsigned short int score (const Move & move) const;
 
   void getCrossSetsHorizontal(const unsigned char & square,
-                              char tab_horizontal[], bool final) const;
+                              char tab_horizontal[], bool final, Board* b) const;
 
   void getCrossSetsVertical(const unsigned char & square,
-                            char tab_vertical[], bool final) const;
+                            char tab_vertical[], bool final, Board * b) const;
 
   void Gen(unsigned char square,int pos, std::string& word,
           unsigned int rack[],Node* arc, unsigned int direction,

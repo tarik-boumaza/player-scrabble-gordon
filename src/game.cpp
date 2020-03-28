@@ -342,26 +342,26 @@ unsigned short int Game::score (const Move & m) const {
 
 
 void Game::getCrossSetsHorizontal(const unsigned char & square,
-                                  char tab_horizontal[], bool final) const {
-  unsigned char x = (board->getIndice(square)).first;
-  unsigned char y = (board->getIndice(square)).second;
+                                  char tab_horizontal[], bool final, Board * b) const {
+  unsigned char x = (b->getIndice(square)).first;
+  unsigned char y = (b->getIndice(square)).second;
 
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
-  if(((board->getSpot(board->getIndice(x,y)))->getLetter() == 0)){
-    if( (((y < 14) && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() == 0))
+  if(((b->getSpot(b->getIndice(x,y)))->getLetter() == 0)){
+    if( (((y < 14) && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0))
         || (y >= 14))
         && (y > 0)
-        && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)) {
+        && ((b->getSpot(b->getIndice(x,y-1)))->getLetter() != 0)) {
 
-          Spot* parcours = board->getSpot(board->getIndice(x, y-1));
+          Spot* parcours = b->getSpot(b->getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (y - i >= 0) ) {
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x, y-1-i));
+            parcours = b->getSpot(b->getIndice(x, y-1-i));
             i++;
           }
 
@@ -390,20 +390,20 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
     // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
     // à droite
     else if( (y < 14)
-          && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() != 0)
+          && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() != 0)
           && (((y > 0)
-          && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() == 0))
+          && ((b->getSpot(b->getIndice(x,y-1)))->getLetter() == 0))
           || (y <= 0))) {
 
           std::stack<char> pile;
-          Spot* parcours = board->getSpot(board->getIndice(x, y+1));
+          Spot* parcours = b->getSpot(b->getIndice(x, y+1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (y + i >= 0) ) {
             pile.push(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x, y+1+i));
+            parcours = b->getSpot(b->getIndice(x, y+1+i));
             i++;
           }
 
@@ -432,18 +432,18 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
     }
 
     else if ((y < 14)
-            && ((board->getSpot(board->getIndice(x,y+1)))->getLetter() != 0)
+            && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() != 0)
             && (y > 0)
-            && ((board->getSpot(board->getIndice(x,y-1)))->getLetter() != 0)){
+            && ((b->getSpot(b->getIndice(x,y-1)))->getLetter() != 0)){
 
-          Spot* parcours = board->getSpot(board->getIndice(x, y-1));
+          Spot* parcours = b->getSpot(b->getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (y - i >= 0)){
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x, y-1-i));
+            parcours = b->getSpot(b->getIndice(x, y-1-i));
             i++;
           }
 
@@ -458,13 +458,13 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
-              parcours = board->getSpot(board->getIndice(x,y+1));
+              parcours = b->getSpot(b->getIndice(x,y+1));
               int j = 1;
 
               while( gad_coup_possible != nullptr
                     && parcours->getLetter() != 0 ) {
                 gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
-                parcours = board->getSpot(board->getIndice(x, y+1+j));
+                parcours = b->getSpot(b->getIndice(x, y+1+j));
                 j++;
               }
 
@@ -503,27 +503,27 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
 }
 
 void Game::getCrossSetsVertical(const unsigned char & square,
-                                  char tab_vertical[], bool final) const {
+                                  char tab_vertical[], bool final, Board * b) const {
 
-  unsigned char x = (board->getIndice(square)).first;
-  unsigned char y = (board->getIndice(square)).second;
+  unsigned char x = (b->getIndice(square)).first;
+  unsigned char y = (b->getIndice(square)).second;
   // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
   // à gauche
-  if (((board->getSpot(board->getIndice(x,y)))->getLetter() == 0)){
+  if (((b->getSpot(b->getIndice(x,y)))->getLetter() == 0)){
 
-    if( (((x < 14) && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() == 0))
+    if( (((x < 14) && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() == 0))
         || (x >= 14))
         && (x > 0)
-        && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() != 0)) {
+        && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() != 0)) {
 
-          Spot* parcours = board->getSpot(board->getIndice(x-1, y));
+          Spot* parcours = b->getSpot(b->getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (x - i >= 0) ) {
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x-1-i, y));
+            parcours = b->getSpot(b->getIndice(x-1-i, y));
             i++;
           }
 
@@ -552,20 +552,20 @@ void Game::getCrossSetsVertical(const unsigned char & square,
     // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
     // à droite
     else if( (x < 14)
-          && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() != 0)
+          && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() != 0)
           && (((x > 0)
-          && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() == 0))
+          && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() == 0))
           || (x <= 0))) {
 
           std::stack<char> pile;
-          Spot* parcours = board->getSpot(board->getIndice(x+1, y));
+          Spot* parcours = b->getSpot(b->getIndice(x+1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (x + i >= 0) ) {
             pile.push(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x+1+i, y));
+            parcours = b->getSpot(b->getIndice(x+1+i, y));
             i++;
           }
 
@@ -596,18 +596,18 @@ void Game::getCrossSetsVertical(const unsigned char & square,
     }
 
     else if ((x < 14)
-            && ((board->getSpot(board->getIndice(x+1,y)))->getLetter() != 0)
+            && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() != 0)
             && (x > 0)
-            && ((board->getSpot(board->getIndice(x-1,y)))->getLetter() != 0)){
+            && ((b->getSpot(b->getIndice(x-1,y)))->getLetter() != 0)){
 
-          Spot* parcours = board->getSpot(board->getIndice(x-1, y));
+          Spot* parcours = b->getSpot(b->getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
 
           while((parcours->getLetter() != 0)
                 && (x - i >= 0)){
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
-            parcours = board->getSpot(board->getIndice(x-1-i, y));
+            parcours = b->getSpot(b->getIndice(x-1-i, y));
             i++;
           }
 
@@ -622,13 +622,13 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
-              parcours = board->getSpot(board->getIndice(x+1,y));
+              parcours = b->getSpot(b->getIndice(x+1,y));
               int j = 1;
 
               while( gad_coup_possible != nullptr
                     && parcours->getLetter() != 0 ) {
                 gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
-                parcours = board->getSpot(board->getIndice(x+1+j, y));
+                parcours = b->getSpot(b->getIndice(x+1+j, y));
                 j++;
               }
 
@@ -688,13 +688,13 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
   {
     char tab_horizontal[26];
     char tab_vertical[26];
-    *board = *b;
+    //*board = *b;
     //std::cout<<"la case ne contient pas de lettre  "<<std::endl;
     // si direction = 1 -> je me déplace horizontalement, et donc les cross sets
     // verticals doivent être des lettres finales
     if(direction == 1){
-      getCrossSetsHorizontal(square,tab_horizontal, false);
-      getCrossSetsVertical(square,tab_vertical, true);
+      getCrossSetsHorizontal(square,tab_horizontal, false, b);
+      getCrossSetsVertical(square,tab_vertical, true, b);
       /*std::cout<<"le getCrossSetsHorizontal "<<std::endl;
       for (int i = 0; i < 26; i++){
         std::cout<<tab_horizontal[i]<< " ";
@@ -710,8 +710,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     // doivent être des lettres finales
     else
     {
-      getCrossSetsHorizontal(square,tab_horizontal, true);
-      getCrossSetsVertical(square,tab_vertical, false);
+      getCrossSetsHorizontal(square,tab_horizontal, true, b);
+      getCrossSetsVertical(square,tab_vertical, false, b);
       /*std::cout<<"le getCrossSetsVertical "<<std::endl;
       for (int i = 0; i < 26; i++){
         std::cout<<tab_vertical[i]<< " ";
