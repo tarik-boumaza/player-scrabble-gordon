@@ -308,7 +308,7 @@ unsigned short int Game::score (const Move & m) const {
           b_copy->setLetter(board_pos,word[word_pos]);
           points += score(b_copy,board_pos,'B');
         }
-        std::cout << std::endl;
+        //std::cout << std::endl;
 
       }
       temp_couple = couple (board_pos,word[word_pos]);
@@ -856,8 +856,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //appel de la fonction qui calcule le score
                     Move temp_move (word,b->getIndice(x, y),'D');
                     unsigned short int new_points = score(temp_move); // = l'appel récursif
-                    std::cout << "Dun coup possible " << word
-                              << " ; qui donne : " << new_points <<  " points" << std::endl;
+                    //std::cout << "Dun coup possible " << word
+                              //<< " ; qui donne : " << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = temp_move;
                       points = new_points;
@@ -897,8 +897,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //appel de la fonction qui calcule le score
                     Move new_move(word,b->getIndice(x, y),'B');
                     unsigned short int new_points = score(new_move); // = l'appel récursif
-                    std::cout << "Bun coup possible " << word
-                              << " ; qui donne : " << new_points <<  " points" << std::endl;
+                    //std::cout << "Bun coup possible " << word
+                              //<< " ; qui donne : " << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -931,8 +931,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //recordplay
               Move new_move (word,square,'G');
               unsigned short int new_points = score(new_move); // = l'appel récursif
-              std::cout << "Gun coup possible " << word
-                        << " ; qui donne : " << new_points <<  " points" << std::endl;
+              //std::cout << "Gun coup possible " << word
+                        //<< " ; qui donne : " << new_points <<  " points" << std::endl;
 
               if (new_points > points){
                 move = new_move;
@@ -947,8 +947,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //recordplay
               Move new_move = Move (word,b->getIndice(x, y),'H');
               unsigned short int new_points = score(new_move); // = l'appel récursif
-              std::cout << "Hun coup possible " << word
-                        << " ; qui donne : " << new_points <<  " points" << std::endl;
+              //std::cout << "Hun coup possible " << word
+                        //<< " ; qui donne : " << new_points <<  " points" << std::endl;
               if (new_points > points){
                 move = new_move;
                 points = new_points;
@@ -1039,8 +1039,8 @@ void Game::moveTurn() {
 
 
   player->addPoints(s);
-  //makeMove(m);
-  //draw();
+  makeMove(m);
+  draw();
 
 }
 
