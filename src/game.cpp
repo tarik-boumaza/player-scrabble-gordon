@@ -774,14 +774,15 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     char rack_copy[7];
     unsigned short int points_copy = points;
 
+    unsigned short int i,j;
 
-    for (int i = 0; i < 7; i++){
+    for (i = 0; i < 7; i++){
       rack_copy[i] = rack[i];
     }
 
     char temp;
 
-    for(int i = 0; i < 7; i++){
+    for (i = 0; i < 7; i++) {
       /*std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
       std::cout<<"le rack contient "<< rack[i]<<std::endl;
       std::cout<<"tab horizontale contitent "<< tab_horizontal[i]<<std::endl;
@@ -794,8 +795,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       arc = arc_copy;
 
 
-      for (int i = 0; i < 7; i++) {
-        rack[i] = rack_copy[i];
+      for (j = 0; j < 7; j++) {
+        rack[j] = rack_copy[j];
       }
 
       if((rack[i] != '/')
