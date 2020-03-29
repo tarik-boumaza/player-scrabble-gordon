@@ -779,6 +779,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       rack_copy[i] = rack[i];
     }
 
+    char temp;
+
     for(int i = 0; i < 7; i++){
       /*std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
       std::cout<<"le rack contient "<< rack[i]<<std::endl;
@@ -792,7 +794,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       arc = arc_copy;
 
 
-      for (int i = 0; i < 7; i++){
+      for (int i = 0; i < 7; i++) {
         rack[i] = rack_copy[i];
       }
 
@@ -800,10 +802,11 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
         && (tab_horizontal[i] != '/')
         && (tab_vertical[i] != '/')){
           //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
+          temp = rack[i];
           rack[i] = '/';
-          Node* next_arc = arc->getNode(i);
-          b->getSpot(square)->setLetter('A'+ i);
-          GoOn(square, pos,'A'+ i, word, rack, next_arc, arc, direction, b, points,move);
+          Node* next_arc = arc->getNode(temp - 'A');
+          b->getSpot(square)->setLetter(temp);
+          GoOn(square, pos, temp, word, rack, next_arc, arc, direction, b, points,move);
         }
     }
 
@@ -814,7 +817,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           char rack[],Node* new_arc,
           Node* old_arc,unsigned int direction,
-          Board* b,unsigned short int& points, Move& move){
+          Board* b,unsigned short int& points, Move& move) {
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
