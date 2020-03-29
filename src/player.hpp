@@ -5,7 +5,6 @@ class Player {
 
 private:
   char hand[7];
-  //unsigned short int hand[26];
   unsigned short int points;
 
 public:

@@ -14,16 +14,8 @@ Game::Game() {
   player = new Player;
   gad = new Gaddag;
   board = new Board;
+  ended = false;
 }
-
-
-Game::Game(const Board& b){
-  bag = new Bag("./data/letters.txt","./data/points.txt");
-  player = new Player;
-  gad = new Gaddag;
-  board = new Board(b);
-}
-
 
 Game::~Game() {
   delete board;
@@ -33,9 +25,9 @@ Game::~Game() {
 }
 
 
-void Game::draw(const unsigned short int & n) {
+void Game::draw() {
   unsigned int i = 0;
-  while (i < n && !isFinished() ) {
+  while (i < 7 && !isFinished() ) {
     if (player->getLetter(i) == '/')
       player->setLetter(i,bag->randomDraw());
     i++;
@@ -44,7 +36,7 @@ void Game::draw(const unsigned short int & n) {
 
 
 void Game::init() {
-  draw(7);
+  draw();
   gad->addDictionnary();
 }
 
@@ -64,13 +56,16 @@ void Game::printBag() const {
 }
 
 
-bool Game::isFinished() const {
-  return bag->isEmpty();
+void Game::print() const {
+  std:: cout << std::endl << "Rack : " << std::flush;
+  player->printHand();
+  std::cout << std::endl << *board << std::endl;
+  std::cout << "Score : " << player->getPoints() << std::endl << std::endl;
 }
 
 
-void Game::useLetter(const char & c) {
-  player->removeLetter(c);
+bool Game::isFinished() const {
+  return (bag->isEmpty() || ended);
 }
 
 
@@ -156,11 +151,7 @@ unsigned short int Game::score (const Board * b, const int & pos,
   }
   return score(l);
 
-
-
 }
-
-
 
 
 unsigned short int Game::score (const Move & m) const {
@@ -169,6 +160,7 @@ unsigned short int Game::score (const Move & m) const {
   unsigned int pos = static_cast<unsigned int> (m.first_square);
 
   unsigned short int points = 0;
+  unsigned short int nb_letters_used = 0;
   unsigned int board_pos = pos;
   couple temp_couple;
   unsigned int temp_pos = 0;
@@ -182,24 +174,23 @@ unsigned short int Game::score (const Move & m) const {
             && board_pos < 225) {
 
       if (board->getLetter(board_pos) == 0) {
-
-          if ( (board_pos % 15) > 0
-                &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
-            temp_pos = board_pos;
-            while ( (temp_pos % 15) < 14
-                    && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
-              temp_pos++;
-            }
-            Board * b_copy = new Board(*board);
-            b_copy->setLetter(temp_pos,word[word_pos]);
-            points += score(b_copy,temp_pos,'G');
+        nb_letters_used++;
+        if ( (board_pos % 15) > 0
+              &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
+          temp_pos = board_pos;
+          while ( (temp_pos % 15) < 14
+                  && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
+            temp_pos++;
           }
-
-          else if ( (board_pos % 15) < 14 && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
-            Board * b_copy = new Board(*board);
-            b_copy->setLetter(board_pos,word[word_pos]);
-            points += score(b_copy,board_pos,'D');
-          }
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(temp_pos,word[word_pos]);
+          points += score(b_copy,temp_pos,'G');
+        }
+        else if ( (board_pos % 15) < 14 && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
+          Board * b_copy = new Board(*board);
+          b_copy->setLetter(board_pos,word[word_pos]);
+          points += score(b_copy,board_pos,'D');
+        }
 
       }
       temp_couple = couple (board_pos,word[word_pos]);
@@ -209,8 +200,6 @@ unsigned short int Game::score (const Move & m) const {
 
     }
 
-    points += score(move);
-    return points;
   }
 
   else if (m.direction == 'B')  {        //On joue vers le BAS
@@ -221,9 +210,9 @@ unsigned short int Game::score (const Move & m) const {
             && board_pos < 225) {
 
       if (board->getLetter(board_pos) == 0) {
-
-          if ( (board_pos % 15) > 0
-              &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
+        nb_letters_used++;
+        if ( (board_pos % 15) > 0
+            &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
 
             temp_pos = board_pos;
             while ( (temp_pos % 15) < 14
@@ -249,10 +238,6 @@ unsigned short int Game::score (const Move & m) const {
       board_pos += 15;
       word_pos++;
     }
-
-    points += score(move);
-    return points;
-
   }
 
   else if (m.direction =='G') {          //On joue vers la GAUCHE
@@ -263,7 +248,7 @@ unsigned short int Game::score (const Move & m) const {
             && board->getIndice(board_pos).first == board->getIndice(pos).first ) {
 
       if (board->getLetter(board_pos) == 0) {
-
+          nb_letters_used++;
           if ( board_pos > 14
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
 
@@ -291,8 +276,6 @@ unsigned short int Game::score (const Move & m) const {
       board_pos--;
       word_pos--;
     }
-    points += score(move);
-    return points;
 
   }
 
@@ -305,6 +288,7 @@ unsigned short int Game::score (const Move & m) const {
             && board_pos / 15 == line) {
 
       if (board->getLetter(board_pos) == 0) {
+        nb_letters_used++;
           if ( board_pos > 14
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
 
@@ -333,11 +317,66 @@ unsigned short int Game::score (const Move & m) const {
       word_pos++;
     }
 
-    points += score(move);
+  }
+  points += score(move);
+  if (nb_letters_used == 7)
+    points += 50;
+  return points;
 
+}
+
+
+void Game::makeMove(const Move & m) {
+
+  unsigned char board_pos = m.first_square;
+
+  if (m.direction == 'H') {
+    unsigned short int word_pos = m.word.size();
+    while (word_pos > 0) {
+      if (board->getLetter(board_pos) == 0) {
+        player->removeLetter(word_pos);
+      }
+      board->setLetter(board_pos,m.word[word_pos - 1]);
+      word_pos--;
+      board_pos -= 15;
+    }
   }
 
-  return points;
+    else if (m.direction == 'B') {
+      unsigned short int word_pos = 0;
+      while (word_pos < m.word.size()) {
+        if (board->getLetter(board_pos) == 0) {
+          player->removeLetter(word_pos);
+        }
+        board->setLetter(board_pos,m.word[word_pos]);
+        word_pos++;
+        board_pos += 15;
+      }
+    }
+
+      else if (m.direction == 'D') {
+        unsigned short int word_pos = 0;
+        while (word_pos < m.word.size()) {
+          if (board->getLetter(board_pos) == 0) {
+            player->removeLetter(word_pos);
+          }
+          board->setLetter(board_pos,m.word[word_pos]);
+          word_pos++;
+          board_pos++;
+        }
+      }
+
+        else {
+          unsigned short int word_pos = m.word.size();
+          while (word_pos > 0) {
+            if (board->getLetter(board_pos) == 0) {
+              player->removeLetter(word_pos);
+            }
+            board->setLetter(board_pos,m.word[word_pos - 1]);
+            word_pos--;
+            board_pos--;
+          }
+        }
 
 }
 
@@ -667,7 +706,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
-         unsigned rack[], Node* arc, unsigned int direction,
+         char rack[], Node* arc, unsigned int direction,
          Board* b,unsigned short int& points, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
@@ -732,15 +771,15 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     std::string word_copy = word;
     Board b_copy(*b);
     Node* arc_copy = arc;
-    unsigned int rack_copy[26];
+    char rack_copy[7];
     unsigned short int points_copy = points;
 
 
-    for (int i = 0; i < 26; i++){
+    for (int i = 0; i < 7; i++){
       rack_copy[i] = rack[i];
     }
 
-    for(int i = 0; i < 26; i++){
+    for(int i = 0; i < 7; i++){
       /*std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
       std::cout<<"le rack contient "<< rack[i]<<std::endl;
       std::cout<<"tab horizontale contitent "<< tab_horizontal[i]<<std::endl;
@@ -753,15 +792,15 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       arc = arc_copy;
 
 
-      for (int i = 0; i < 26; i++){
+      for (int i = 0; i < 7; i++){
         rack[i] = rack_copy[i];
       }
 
-      if((rack[i] > 0)
+      if((rack[i] != '/')
         && (tab_horizontal[i] != '/')
         && (tab_vertical[i] != '/')){
           //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
-          rack[i]--;
+          rack[i] = '/';
           Node* next_arc = arc->getNode(i);
           b->getSpot(square)->setLetter('A'+ i);
           GoOn(square, pos,'A'+ i, word, rack, next_arc, arc, direction, b, points,move);
@@ -773,7 +812,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 
 
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
-          unsigned int rack[],Node* new_arc,
+          char rack[],Node* new_arc,
           Node* old_arc,unsigned int direction,
           Board* b,unsigned short int& points, Move& move){
 
@@ -933,65 +972,53 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
   }
 }
 
+
+
 /*
-void Game::play() {
+
+void Game::firstMove() {
+
+
+  draw();
+}
+
+
+
+void Game::moveTurn() {
 
 
   string word;
-
-  Gaddag * parcours = gad->getFirst();
+  char table[7];
+  for (unsigned short int i = 0; i < 7; i++) {
+    table[i] = player->getLetter(i);
+  }
+  Gaddag * parcours = gad->getFirst();*
   char direction = 'H';
   Board b(*(g.board));
   unsigned short int s = 0;
   Move m;
 
   g.Gen(0,0,word,table,parcours,0,&b,s,m);
+  //appel avec copie de hand car on joue les lettres dans la fonction makeMove()
 
 
   player->addPoints(s);
   makeMove(m);
+  draw();
 
 }*/
 
 
-void Game::makeMove(const Move & m) {
 
-  unsigned char board_pos = m.first_square;
-
-  if (m.direction == 'H') {
-    unsigned short int word_pos = m.word.size();
-    while (word_pos > 0) {
-      board->setLetter(board_pos,m.word[word_pos - 1]);
-      word_pos--;
-      board_pos -= 15;
-    }
+void Game::end() {
+  if (bag->isEmpty()) {
+    std::cout << "Le sac de lettre est vide, la partie est terminée..."
+              << std::endl;
   }
-
-    else if (m.direction == 'B') {
-      unsigned short int word_pos = 0;
-      while (word_pos < m.word.size()) {
-        board->setLetter(board_pos,m.word[word_pos]);
-        word_pos++;
-        board_pos += 15;
-      }
-    }
-
-      else if (m.direction == 'D') {
-        unsigned short int word_pos = 0;
-        while (word_pos < m.word.size()) {
-          board->setLetter(board_pos,m.word[word_pos]);
-          word_pos++;
-          board_pos++;
-        }
-      }
-
-        else {
-          unsigned short int word_pos = m.word.size();
-          while (word_pos > 0) {
-            board->setLetter(board_pos,m.word[word_pos - 1]);
-            word_pos--;
-            board_pos--;
-          }
-        }
-
+  else {
+    std::cout << "Le joueur ne peut plus jouer, la partie est terminée..."
+              << std::endl;
+  }
+  std::cout << "Le joueur termine avec un score de "
+            << player->getPoints() << std::endl;
 }

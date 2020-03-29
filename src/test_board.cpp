@@ -59,17 +59,14 @@ int main() {
   std::cout <<*(g.board)<< std::endl ;
 
 
-  unsigned int table[26];
-  for(unsigned int i =0; i<26;i++){
-    table[i] = 0;
-  }
-  table['R' - 'A']++ ;
-  table['B' - 'A']++ ;
-  table['E' - 'A']++ ;
-  table['T' - 'A']++ ;
-  table['A' - 'A']++ ;
-  table['Z' - 'A']++ ;
-  table['W' - 'A']++;
+  char table[7];
+  table[0] = 'R';
+  table[1] = 'B';
+  table[2] = 'E';
+  table[3] = 'A';
+  table[4] = 'T';
+  table[5] = 'Z';
+  table[6] = 'W';
 
   std::cout<<std::endl;
   std::string word = "";
@@ -88,6 +85,9 @@ int main() {
 
   std::cout << "Je sais que le meilleur coup donne : "
             << g.score(Move("ALPHABETIQUE",0,'B')) << " points " << std::endl;
+
+
+
 
 
   return 0 ;

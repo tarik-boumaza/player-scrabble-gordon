@@ -22,7 +22,7 @@ Player:: Player(const char h[7]) {
 char Player::getLetter(const char & c) const {
   if (c >= 0 && c < 7)
     return hand[c];
-  std::cerr << "Case non accessible... Sortie" << std::endl;
+  std::cerr << "Case non accessible... Sortie!" << std::endl;
   exit(EXIT_FAILURE);
 }
 
@@ -35,8 +35,10 @@ unsigned short int Player::getPoints() const {
 void Player::setLetter(const char & n, const char & c) {
   if (n >= 0 && n < 7)
     hand[n] = c;
-  std::cerr << "Case non accessible... Sortie" << std::endl;
-  exit(EXIT_FAILURE);
+  else {
+    std::cerr << "Case non accessible... Sortie!!" << std::endl;
+    exit(EXIT_FAILURE);
+  }
 }
 
 

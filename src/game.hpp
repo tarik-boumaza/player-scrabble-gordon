@@ -23,6 +23,7 @@ public:
   Player * player;
   Bag * bag;
   Gaddag * gad;
+  bool ended;   //signale la fin de partie : joueur bloqué ou sac vide
 
 
 public:
@@ -35,7 +36,7 @@ public:
 
   Game(const Board& b);
 
-  void draw(const unsigned short int & n = 1);
+  void draw();
 
   void init();
 
@@ -45,9 +46,9 @@ public:
 
   void printBag() const;
 
-  bool isFinished() const;
+  void print() const;
 
-  void useLetter(const char & c);
+  bool isFinished() const;
 
   couple score (const couple & c) const;
 
@@ -64,19 +65,26 @@ public:
   void getCrossSetsVertical(const unsigned char & square,
                             char tab_vertical[], bool final, Board * b) const;
 
+  //fonction qui joue un coup sur le plateau
+  void makeMove(const Move & m);
+
   void Gen(unsigned char square,int pos, std::string& word,
-          unsigned int rack[],Node* arc, unsigned int direction,
+          char rack[],Node* arc, unsigned int direction,
           Board * b, unsigned short int& score, Move& move);
 
   void GoOn(unsigned char square, int pos, char L, std::string & word,
-            unsigned int rack[],Node * new_arc,Node * old_arc,
+            char rack[],Node * new_arc,Node * old_arc,
             unsigned int direction, Board * b,unsigned short int& score,
             Move& move);
 
+  //fonction qui joue le premier coup, lorsque le plateau est vierge
+  void firstMove();
 
-  void play();
+  //fonction appelée à chaque tour de jeu
+  void moveTurn();
 
-  void makeMove(const Move & m);
+  //informations de fin de partie
+  void end();
 
 
 
