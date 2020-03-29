@@ -74,6 +74,11 @@ public:
             Move& move);
 
 
+  void play();
+
+  void makeMove(const Move & m);
+
+
 
 
 };

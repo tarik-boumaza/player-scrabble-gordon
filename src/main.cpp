@@ -37,11 +37,8 @@ int main() {
   ss << "..............." << std::endl ;
   g.board->load(ss) ;
 
-  Move m;
-  m.word = "ALPHABETIQUE";
-  m.first_square = 0;
-  m.direction = 'D';
-
+  Move m("ALPHABTIQUE",0,'D');
+  
   unsigned short int s = g.score(m);
 
   std::cout << *g.board << std::endl;

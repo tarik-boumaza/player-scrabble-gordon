@@ -36,7 +36,8 @@ Game::~Game() {
 void Game::draw(const unsigned short int & n) {
   unsigned int i = 0;
   while (i < n && !isFinished() ) {
-    player->setLetter(bag->randomDraw());
+    if (player->getLetter(i) == '/')
+      player->setLetter(i,bag->randomDraw());
     i++;
   }
 }
@@ -666,7 +667,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
-         unsigned int rack[], Node* arc, unsigned int direction,
+         unsigned rack[], Node* arc, unsigned int direction,
          Board* b,unsigned short int& points, Move& move){
 
   unsigned char x = (b->getIndice(square)).first;
@@ -930,4 +931,67 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
     }
   }
+}
+
+/*
+void Game::play() {
+
+
+  string word;
+
+  Gaddag * parcours = gad->getFirst();
+  char direction = 'H';
+  Board b(*(g.board));
+  unsigned short int s = 0;
+  Move m;
+
+  g.Gen(0,0,word,table,parcours,0,&b,s,m);
+
+
+  player->addPoints(s);
+  makeMove(m);
+
+}*/
+
+
+void Game::makeMove(const Move & m) {
+
+  unsigned char board_pos = m.first_square;
+
+  if (m.direction == 'H') {
+    unsigned short int word_pos = m.word.size();
+    while (word_pos > 0) {
+      board->setLetter(board_pos,m.word[word_pos - 1]);
+      word_pos--;
+      board_pos -= 15;
+    }
+  }
+
+    else if (m.direction == 'B') {
+      unsigned short int word_pos = 0;
+      while (word_pos < m.word.size()) {
+        board->setLetter(board_pos,m.word[word_pos]);
+        word_pos++;
+        board_pos += 15;
+      }
+    }
+
+      else if (m.direction == 'D') {
+        unsigned short int word_pos = 0;
+        while (word_pos < m.word.size()) {
+          board->setLetter(board_pos,m.word[word_pos]);
+          word_pos++;
+          board_pos++;
+        }
+      }
+
+        else {
+          unsigned short int word_pos = m.word.size();
+          while (word_pos > 0) {
+            board->setLetter(board_pos,m.word[word_pos - 1]);
+            word_pos--;
+            board_pos--;
+          }
+        }
+
 }

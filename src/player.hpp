@@ -4,17 +4,23 @@
 class Player {
 
 private:
-  short unsigned int hand[26];
+  char hand[7];
+  //unsigned short int hand[26];
+  unsigned short int points;
 
 public:
 
   Player();
 
-  Player(const short unsigned int h[26]);
+  Player(const char h[7]);
 
-  short unsigned int getLetter(const char & c) const;
+  char getLetter(const char & c) const;
 
-  void setLetter(const char & c);
+  unsigned short int getPoints() const;
+
+  void setLetter(const char & n, const char & c);
+
+  void addPoints(const unsigned short int & s);
 
   void removeLetter(const char & c);
 
