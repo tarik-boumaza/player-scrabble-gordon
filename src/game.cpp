@@ -28,8 +28,9 @@ Game::~Game() {
 void Game::draw() {
   unsigned int i = 0;
   while (i < 7 && !isFinished() ) {
-    if (player->getLetter(i) == '/')
+    if (player->getLetter(i) == '/') {
       player->setLetter(i,bag->randomDraw());
+    }
     i++;
   }
 }
@@ -331,12 +332,12 @@ void Game::makeMove(const Move & m) {
   unsigned char board_pos = m.first_square;
 
   if (m.direction == 'H') {
-    unsigned short int word_pos = m.word.size();
-    while (word_pos > 0) {
+    short int word_pos = static_cast<int>(m.word.size() - 1);
+    while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
-        player->removeLetter(word_pos);
+        player->removeLetter(m.word[word_pos]);
       }
-      board->setLetter(board_pos,m.word[word_pos - 1]);
+      board->setLetter(board_pos,m.word[word_pos]);
       word_pos--;
       board_pos -= 15;
     }
@@ -346,7 +347,7 @@ void Game::makeMove(const Move & m) {
       unsigned short int word_pos = 0;
       while (word_pos < m.word.size()) {
         if (board->getLetter(board_pos) == 0) {
-          player->removeLetter(word_pos);
+          player->removeLetter(m.word[word_pos]);
         }
         board->setLetter(board_pos,m.word[word_pos]);
         word_pos++;
@@ -358,7 +359,7 @@ void Game::makeMove(const Move & m) {
         unsigned short int word_pos = 0;
         while (word_pos < m.word.size()) {
           if (board->getLetter(board_pos) == 0) {
-            player->removeLetter(word_pos);
+            player->removeLetter(m.word[word_pos]);
           }
           board->setLetter(board_pos,m.word[word_pos]);
           word_pos++;
@@ -367,12 +368,12 @@ void Game::makeMove(const Move & m) {
       }
 
         else {
-          unsigned short int word_pos = m.word.size();
-          while (word_pos > 0) {
+          int word_pos = static_cast<int>(m.word.size() - 1);
+          while (word_pos >= 0) {
             if (board->getLetter(board_pos) == 0) {
-              player->removeLetter(word_pos);
+              player->removeLetter(m.word[word_pos]);
             }
-            board->setLetter(board_pos,m.word[word_pos - 1]);
+            board->setLetter(board_pos,m.word[word_pos]);
             word_pos--;
             board_pos--;
           }

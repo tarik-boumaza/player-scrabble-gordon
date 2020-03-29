@@ -23,20 +23,17 @@ static void clean() {
 
 
 void ScrabbleTXT::play() {
-  unsigned short int i = 1;
   clean();
-  std::cout << "Coup n° " << i << std::endl << std::endl;
-  //g->firstMove();  //premier coup, lorsque le plateau est vierge
   g->print();
-  usleep(1500000);
+  unsigned short int i = 1;
   while (!g->isFinished()) {
-    i++;
-    //g->moveTurn();
     clean();
     std::cout << "Coup n° " << i << std::endl << std::endl;
     g->print();
-    usleep(1500000);
+    g->moveTurn();
     g->draw();
+    i++;
+    usleep(1500000);
   }
   g->end();
 }

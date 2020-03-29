@@ -8,20 +8,14 @@ Player:: Player() {
   for (unsigned short int i = 0; i < 7; i++) {
     this->hand[i] = '/';
   }
+
+
   points = 0;
 }
 
-
-Player:: Player(const char h[7]) {
-  for(unsigned short int i = 0; i < 7; i++) {
-    this->hand[i] = h[i];
-  }
-}
-
-
-char Player::getLetter(const char & c) const {
-  if (c >= 0 && c < 7)
-    return hand[c];
+char Player::getLetter(const unsigned short int & n) const {
+  if (n < 7)
+    return hand[n];
   std::cerr << "Case non accessible... Sortie!" << std::endl;
   exit(EXIT_FAILURE);
 }
@@ -32,9 +26,11 @@ unsigned short int Player::getPoints() const {
 }
 
 
-void Player::setLetter(const char & n, const char & c) {
-  if (n >= 0 && n < 7)
+void Player::setLetter(const unsigned short int n, const char & c) {
+  if (n < 7 && c >= 'A' && c <= 'Z') {
     hand[n] = c;
+    hand_pointer[c - 'A'].push_front(n);
+  }
   else {
     std::cerr << "Case non accessible... Sortie!!" << std::endl;
     exit(EXIT_FAILURE);
@@ -52,16 +48,15 @@ void Player::removeLetter(const char & c) {
     std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
     exit(EXIT_FAILURE);
   }
-
-  unsigned short i = 0; {
-    while (i < 7) {
-      if (hand[i] == c) {
-        hand[i]--;
-        return;
-      }
-    }
+  if (hand_pointer[c - 'A'].empty() ){
+    std::cerr << c << " : Erreur liste, lettre non disponible... Suppression avortée"
+              << std::endl;
+    //printHand();
+    exit(EXIT_FAILURE);
   }
 
+  hand[hand_pointer[c - 'A'].back()] = '/';
+  hand_pointer[c - 'A'].pop_back();
 }
 
 

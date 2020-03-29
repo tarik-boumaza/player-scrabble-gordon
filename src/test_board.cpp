@@ -33,6 +33,7 @@ int main() {
   g.board->load(ss) ;
   std::cout <<*(g.board)<< std::endl ;
   g.moveTurn();
+  std::cout <<*(g.board)<< std::endl ;
 
   //std::cout <<*(g.board)<< std::endl ;
 

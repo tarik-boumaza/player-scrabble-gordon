@@ -1,10 +1,13 @@
 #pragma once
 
+#include <list>
+
 
 class Player {
 
 private:
   char hand[7];
+  std::list<unsigned short int> hand_pointer[26];
   unsigned short int points;
 
 public:
@@ -13,11 +16,11 @@ public:
 
   Player(const char h[7]);
 
-  char getLetter(const char & c) const;
+  char getLetter(const unsigned short int & n) const;
 
   unsigned short int getPoints() const;
 
-  void setLetter(const char & n, const char & c);
+  void setLetter(const unsigned short int n, const char & c);
 
   void addPoints(const unsigned short int & s);
 
