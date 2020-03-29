@@ -800,8 +800,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       }
 
       if((rack[i] != '/')
-        && (tab_horizontal[i] != '/')
-        && (tab_vertical[i] != '/')){
+        && (tab_horizontal[rack[i] - 'A'] != '/')
+        && (tab_vertical[rack[i] - 'A'] != '/')){
           //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
           temp = rack[i];
           rack[i] = '/';
@@ -986,31 +986,63 @@ void Game::firstMove() {
   draw();
 }
 
-
+*/
 
 void Game::moveTurn() {
 
-
-  string word;
+  std::string word;
   char table[7];
+
   for (unsigned short int i = 0; i < 7; i++) {
     table[i] = player->getLetter(i);
   }
-  Gaddag * parcours = gad->getFirst();*
-  char direction = 'H';
-  Board b(*(g.board));
+
+  Node * parcours = gad->getFirst();
+  Board b(*(board));
   unsigned short int s = 0;
   Move m;
 
-  g.Gen(0,0,word,table,parcours,0,&b,s,m);
-  //appel avec copie de hand car on joue les lettres dans la fonction makeMove()
+  std::list<unsigned char> anchor_squares = board->getAnchorSquares();
+
+  if (anchor_squares.empty()){
+    Gen(112,0,word,table,parcours,1,&b,s,m);
+  }
+
+  while(!anchor_squares.empty()){
+
+    word = "";
+    for (unsigned short int i = 0; i < 7; i++) {
+      table[i] = player->getLetter(i);
+    }
+    b = *board;
+
+    Gen(anchor_squares.back(),0,word,table,parcours,1,&b,s,m);
+
+    word = "";
+    for (unsigned short int i = 0; i < 7; i++) {
+      table[i] = player->getLetter(i);
+    }
+    b = *board;
+
+    Gen(anchor_squares.back(),0,word,table,parcours,0,&b,s,m);
+
+    anchor_squares.pop_back();
+  }
+
+  if(s == 0){
+    ended = true;
+  }
+
+  std::cout<<"le meilleur coup est "<<m.word
+            << " et ça raporte "<<s <<" points, jouable à partir de la case "
+            <<static_cast<int>(m.first_square)<<" vers "<<m.direction<<std::endl;
 
 
   player->addPoints(s);
-  makeMove(m);
-  draw();
+  //makeMove(m);
+  //draw();
 
-}*/
+}
 
 
 

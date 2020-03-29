@@ -11,32 +11,7 @@
 int main() {
   Game g;
   g.init();
-
-  Board * b_vierge = new Board;
-  std::stringstream ss2;
-  ss2 << "................" << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-  ss2 << "..............." << std::endl ;
-
-  b_vierge->load(ss2);
-  std::cout << *b_vierge << std::endl << std::endl;
-
-
-
-
-
+  
   std::stringstream ss ;
 
   ss << ".LPHABETIQUE..." << std::endl ;
@@ -57,35 +32,9 @@ int main() {
 
   g.board->load(ss) ;
   std::cout <<*(g.board)<< std::endl ;
+  g.moveTurn();
 
-
-  char table[7];
-  table[0] = 'R';
-  table[1] = 'B';
-  table[2] = 'E';
-  table[3] = 'A';
-  table[4] = 'T';
-  table[5] = 'Z';
-  table[6] = 'W';
-
-  std::cout<<std::endl;
-  std::string word = "";
-  Board b(*(g.board));
-
-
-  Move m ("",0,'H');
-  unsigned short int s = 0;
-  Node* parcours = g.gad->getFirst();
-
-  g.Gen(0,0,word,table,parcours,0,&b,s,m);
-
-  std::cout << std::endl << "Le meilleur coup possible est : " << m.word
-            << ", il rapporte " << s << " points" << std::endl << std::endl;
-
-
-  std::cout << "Je sais que le meilleur coup donne : "
-            << g.score(Move("ALPHABETIQUE",0,'B')) << " points " << std::endl;
-
+  //std::cout <<*(g.board)<< std::endl ;
 
 
 
