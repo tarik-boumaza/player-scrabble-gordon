@@ -14,21 +14,21 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "...T..........." << std::endl ;
-  ss << "...R...T......." << std::endl ;
-  ss << "...E...E....P.." << std::endl ;
-  ss << "...M...L....O.." << std::endl ;
-  ss << "...BAFRES...U.." << std::endl ;
-  ss << "...L...P....D.." << std::endl ;
-  ss << "...E...O....R.." << std::endl ;
-  ss << "...S...R....I.." << std::endl ;
-  ss << ".......T....N.J" << std::endl ;
-  ss << ".......AZURASSE" << std::endl ;
-  ss << "..............U" << std::endl ;
-  ss << "..............N" << std::endl ;
+  ss << "F.............." << std::endl ;
+  ss << "I....WAPS......" << std::endl ;
+  ss << "N......I......." << std::endl ;
+  ss << "I......FIQHS..." << std::endl ;
+  ss << "ES..ME.A..OUIE." << std::endl ;
+  ss << ".H.POU.M......." << std::endl ;
+  ss << "DOTAL.BEY......" << std::endl ;
+  ss << ".NOVERAS......." << std::endl ;
+  ss << ".ACE..R........" << std::endl ;
+  ss << ".S.R..D........" << std::endl ;
+  ss << "..NACREZ......." << std::endl ;
+  ss << "..AI..N........" << std::endl ;
+  ss << "..VS..T........" << std::endl ;
+  ss << ".JE............" << std::endl ;
+  ss << "GELEE.........." << std::endl ;
 
   g.board->load(ss) ;
   std::cout <<*(g.board)<< std::endl ;
@@ -43,13 +43,13 @@ int main() {
   Node * parcours = g.gad->getFirst();
   Board b(*(g.board));
   unsigned short int s = 0;
-  Move m;
+  Move m("MALT",82,'D');
 
   //g.Gen(223,0,word,table,parcours,1,&b,s,m);
   g.moveTurn();
-  //std::cout <<*(g.board)<< std::endl ;
+  g.makeMove(m);
 
-  //std::cout <<*(g.board)<< std::endl ;
+  std::cout <<*(g.board)<< std::endl ;
 
 
 

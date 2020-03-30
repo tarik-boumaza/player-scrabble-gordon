@@ -116,7 +116,8 @@ unsigned short int Game::score (const Board * b, const int & pos,
 
   if (direction == 'H') {
     i -= 15;
-    while (i >= 0 && b->getLetter(i) != 0) {
+    while (i >= 0
+           && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       i -=15 ;
@@ -126,7 +127,8 @@ unsigned short int Game::score (const Board * b, const int & pos,
 
   if (direction == 'B') {
     i += 15;
-    while (i / 15 < 15 && b->getLetter(i) != 0) {
+    while ( i < 225
+            && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       i +=15 ;
@@ -136,7 +138,8 @@ unsigned short int Game::score (const Board * b, const int & pos,
 
   if (direction == 'G') {
     i -= 1;
-    while ( pos / 15 == (i * (-1)) / 15 && b->getLetter(i) != 0) {
+    while ( board->getIndice(pos).first == board->getIndice(i).first
+            && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       i -= 1 ;
@@ -145,7 +148,8 @@ unsigned short int Game::score (const Board * b, const int & pos,
   }
 
   i += 1;
-  while ( pos / 15 == i / 15  && b->getLetter(i) != 0) {
+  while ( board->getIndice(pos).first == board->getIndice(i).first
+          && b->getLetter(i) != 0) {
     temp = couple(i,b->getLetter(i));
     l.push_back(temp);
     i += 1;
@@ -176,10 +180,10 @@ unsigned short int Game::score (const Move & m) const {
 
       if (board->getLetter(board_pos) == 0) {
         nb_letters_used++;
-        if ( (board_pos % 15) > 0
-              &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
+        if ( board->getIndice(pos).first == board->getIndice(board_pos - 1).first
+              && board->getLetter(board_pos - 1) != 0) { //lettre à gauche
           temp_pos = board_pos;
-          while ( (temp_pos % 15) < 14
+          while ( board->getIndice(pos).first == board->getIndice(temp_pos + 1).first
                   && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
@@ -188,7 +192,8 @@ unsigned short int Game::score (const Move & m) const {
           points += score(b_copy,temp_pos,'G');
           delete b_copy;
         }
-        else if ( (board_pos % 15) < 14 && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
+        else if ( board->getIndice(pos).first == board->getIndice(board_pos + 1).first
+                  && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
           Board * b_copy = new Board(*board);
           b_copy->setLetter(board_pos,word[word_pos]);
           points += score(b_copy,board_pos,'D');
@@ -214,12 +219,12 @@ unsigned short int Game::score (const Move & m) const {
 
       if (board->getLetter(board_pos) == 0) {
         nb_letters_used++;
-        if ( (board_pos % 15) > 0
+        if ( board->getIndice(pos).first == board->getIndice(board_pos - 1).first
             &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
 
-            temp_pos = board_pos;
-            while ( (temp_pos % 15) < 14
-                    && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
+          temp_pos = board_pos;
+          while ( board->getIndice(pos).first == board->getIndice(temp_pos + 1).first
+                  && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
 
@@ -229,7 +234,7 @@ unsigned short int Game::score (const Move & m) const {
           delete b_copy;
         }
 
-        else if ( (board_pos % 15) < 14
+        else if ( board->getIndice(pos).first == board->getIndice(board_pos + 1).first
                   && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
           Board * b_copy = new Board(*board);
           b_copy->setLetter(board_pos,word[word_pos]);
@@ -250,11 +255,11 @@ unsigned short int Game::score (const Move & m) const {
     int word_pos = static_cast<int>(word.size() - 1);
 
     while ( word_pos >= 0
-            && board->getIndice(board_pos).first == board->getIndice(pos).first ) {
+            && board->getIndice(board_pos).second == board->getIndice(pos).second ) {
 
       if (board->getLetter(board_pos) == 0) {
           nb_letters_used++;
-          if ( board_pos > 14
+          if ( board_pos > 14 && board_pos < 225
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
 
             temp_pos = board_pos;
@@ -287,16 +292,14 @@ unsigned short int Game::score (const Move & m) const {
   }
 
   else {                           //On joue vers la DROITE
-
     unsigned int word_pos = 0;
-    unsigned int line = (pos / 15);
 
     while ( word_pos < word.size()
-            && board_pos / 15 == line) {
+            && board->getIndice(pos).first == board->getIndice(board_pos).first) {
 
       if (board->getLetter(board_pos) == 0) {
         nb_letters_used++;
-          if ( board_pos > 14
+          if ( board_pos > 14 && board_pos < 225
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
 
             temp_pos = board_pos;
@@ -999,6 +1002,15 @@ void Game::moveTurn() {
 
   std::string word;
   char table[7];
+
+  player->setLetter(0,'D');
+  player->setLetter(1,'T');
+  player->setLetter(2,'L');
+  player->setLetter(3,'G');
+  player->setLetter(4,'A');
+  player->setLetter(5,'Q');
+  player->setLetter(6,'N');
+
 
   for (unsigned short int i = 0; i < 7; i++) {
     table[i] = player->getLetter(i);
