@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <random>
 #include "bag.hpp"
 
 
@@ -77,7 +78,10 @@ bool Bag::isEmpty() const {
 char Bag::randomDraw() {
   if (isEmpty())
     return '/';
-  int random_number = rand() % nb_letters;
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(1,nb_letters);
+  int random_number = dis(gen) - 1;
   char l = letters[random_number];
   letters[random_number] = letters[nb_letters - 1];
   nb_letters--;

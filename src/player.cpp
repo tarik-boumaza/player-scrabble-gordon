@@ -4,14 +4,14 @@
 #include "player.hpp"
 
 
-Player:: Player() {
-  for (unsigned short int i = 0; i < 7; i++) {
+Player::Player() {
+  unsigned int i = 0;
+  for (i = 0; i < 7; i++) {
     this->hand[i] = '/';
   }
-
-
   points = 0;
 }
+
 
 char Player::getLetter(const unsigned short int & n) const {
   if (n < 7)

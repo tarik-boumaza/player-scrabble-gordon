@@ -14,8 +14,6 @@ public:
 
   Player();
 
-  Player(const char h[7]);
-
   char getLetter(const unsigned short int & n) const;
 
   unsigned short int getPoints() const;
