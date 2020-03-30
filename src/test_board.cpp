@@ -7,33 +7,46 @@
 
 #include <list>
 
-
 int main() {
   Game g;
   g.init();
 
   std::stringstream ss ;
 
-  ss << ".LPHABETIQUE..." << std::endl ;
-  ss << "L.............." << std::endl ;
-  ss << "P.............." << std::endl ;
-  ss << "H.............." << std::endl ;
-  ss << "A.............." << std::endl ;
-  ss << ".ETISE........." << std::endl ;
-  ss << "E.............." << std::endl ;
-  ss << "T...PROJET....." << std::endl ;
-  ss << "I......O......." << std::endl ;
-  ss << "Q......U......." << std::endl ;
-  ss << "U......E......." << std::endl ;
-  ss << "E......U......." << std::endl ;
-  ss << ".....SCRABBLE.." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "...T..........." << std::endl ;
+  ss << "...R...T......." << std::endl ;
+  ss << "...E...E.WHIPS." << std::endl ;
+  ss << "...M...L....O.." << std::endl ;
+  ss << "...BAFRES..FUSE" << std::endl ;
+  ss << "...L...P..FADES" << std::endl ;
+  ss << "...E...O....R.." << std::endl ;
+  ss << "...S...R....I.." << std::endl ;
+  ss << ".......T....N.J" << std::endl ;
+  ss << ".......AZURASSE" << std::endl ;
+  ss << "....FLET......U" << std::endl ;
+  ss << "OBERA.........N" << std::endl ;
 
   g.board->load(ss) ;
   std::cout <<*(g.board)<< std::endl ;
-  g.moveTurn();
-  std::cout <<*(g.board)<< std::endl ;
+
+  std::string word;
+  char table[7];
+
+  for (unsigned short int i = 0; i < 7; i++) {
+    table[i] = g.player->getLetter(i);
+  }
+
+  Node * parcours = g.gad->getFirst();
+  Board b(*(g.board));
+  unsigned short int s = 0;
+  Move m;
+
+  g.Gen(195,0,word,table,parcours,1,&b,s,m);
+  //g.moveTurn();
+  //std::cout <<*(g.board)<< std::endl ;
 
   //std::cout <<*(g.board)<< std::endl ;
 

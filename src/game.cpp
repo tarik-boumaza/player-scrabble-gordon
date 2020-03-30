@@ -448,7 +448,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             i++;
           }
 
-          while (!pile.empty()) {
+          while (gad_parcours!= nullptr && !pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
@@ -610,7 +610,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             i++;
           }
 
-          while (!pile.empty()) {
+          while (gad_parcours!= nullptr && !pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
