@@ -1,6 +1,7 @@
 #include "board.hpp"
 #include "game.hpp"
 #include "gaddag.hpp"
+#include "player.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -18,16 +19,16 @@ int main() {
   ss << "..............." << std::endl ;
   ss << "...T..........." << std::endl ;
   ss << "...R...T......." << std::endl ;
-  ss << "...E...E.WHIPS." << std::endl ;
+  ss << "...E...E....P.." << std::endl ;
   ss << "...M...L....O.." << std::endl ;
-  ss << "...BAFRES..FUSE" << std::endl ;
-  ss << "...L...P..FADES" << std::endl ;
+  ss << "...BAFRES...U.." << std::endl ;
+  ss << "...L...P....D.." << std::endl ;
   ss << "...E...O....R.." << std::endl ;
   ss << "...S...R....I.." << std::endl ;
   ss << ".......T....N.J" << std::endl ;
   ss << ".......AZURASSE" << std::endl ;
-  ss << "....FLET......U" << std::endl ;
-  ss << "OBERA.........N" << std::endl ;
+  ss << "..............U" << std::endl ;
+  ss << "..............N" << std::endl ;
 
   g.board->load(ss) ;
   std::cout <<*(g.board)<< std::endl ;
@@ -44,8 +45,8 @@ int main() {
   unsigned short int s = 0;
   Move m;
 
-  g.Gen(195,0,word,table,parcours,1,&b,s,m);
-  //g.moveTurn();
+  //g.Gen(223,0,word,table,parcours,1,&b,s,m);
+  g.moveTurn();
   //std::cout <<*(g.board)<< std::endl ;
 
   //std::cout <<*(g.board)<< std::endl ;

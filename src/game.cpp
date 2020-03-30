@@ -442,13 +442,13 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           int i = 1;
 
           while((parcours->getLetter() != 0)
-                && (y + i >= 0) ) {
+                && (y + i <= 14) ) {
             pile.push(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x, y+1+i));
             i++;
           }
 
-          while (gad_parcours!= nullptr && !pile.empty()) {
+          while (!pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
@@ -604,13 +604,13 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           int i = 1;
 
           while((parcours->getLetter() != 0)
-                && (x + i >= 0) ) {
+                && (x + i <= 14) ) {
             pile.push(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x+1+i, y));
             i++;
           }
 
-          while (gad_parcours!= nullptr && !pile.empty()) {
+          while (!pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
