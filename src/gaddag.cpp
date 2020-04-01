@@ -83,46 +83,32 @@ void Gaddag::addDictionnary() {
 
 
 void Gaddag::print_letters(Node* node,
-                          std::queue<std::pair<char,Node*>> & fifo,
+                          std::list<std::pair<char,Node*>> & l,
                           const char & c) {
   std::string letters ="";
   std::pair<char,Node*> p(c,node);
   if(node != nullptr){
-    fifo.push(p);
+    l.push_back(p);
     if(node->isFinal()){
-      std::queue<std::pair<char,Node*>> newfifo(fifo);
-      while(!newfifo.empty()){
-        letters = letters +  newfifo.front().first;
-        newfifo.pop();
+      std::list<std::pair<char,Node*>> newlist(l);
+      while(!newlist.empty()){
+        letters = letters +  newlist.front().first;
+        newlist.pop_front();
       }
       std::cout << letters << std::endl;
     }
     for (unsigned short int i = 0 ; i < 27; i++) {
       if (node->getNode(i) != nullptr) {
-          print_letters(node->getNode(i),fifo,getLetter(static_cast<char>(i)));
+          print_letters(node->getNode(i),l,getLetter(static_cast<char>(i)));
       }
     }
 
   }
-
-  std::stack<std::pair<char,Node*>> pile1,pile2;
-  while(!fifo.empty()){
-    pile1.push(fifo.front());
-    fifo.pop();
-  }
-  pile1.pop();
-  while(!pile1.empty()){
-    pile2.push(pile1.top());
-    pile1.pop();
-  }
-  while(!pile2.empty()){
-    fifo.push(pile2.top());
-    pile2.pop();
-  }
+  l.pop_back();
 }
 
 
 void Gaddag::print() {
-  std::queue<std::pair<char,Node*>> f;
+  std::list<std::pair<char,Node*>> f;
   print_letters(this->first,f,' ');
 }

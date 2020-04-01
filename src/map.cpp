@@ -22,7 +22,7 @@ Node::~Node() {
 
 
 Node* Node::getNode(const unsigned short int & i) const {
-  if (i < 26)
+  if (i < 27)
     return tab[i];
   if (i == static_cast<unsigned int>('+'))
     return tab[26];

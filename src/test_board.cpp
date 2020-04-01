@@ -11,8 +11,8 @@
 int main() {
   Game g;
   g.init();
-
-  std::stringstream ss ;
+  g.gad->print();
+  /*std::stringstream ss ;
 
   ss << "F.............." << std::endl ;
   ss << "I....WAPS......" << std::endl ;
@@ -49,7 +49,7 @@ int main() {
   g.moveTurn();
   g.makeMove(m);
 
-  std::cout <<*(g.board)<< std::endl ;
+  std::cout <<*(g.board)<< std::endl ;*/
 
 
 

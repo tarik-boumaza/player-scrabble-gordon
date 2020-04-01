@@ -20,9 +20,8 @@ private:
   std::list<std::string> mirror(const std::string & word) ;
 
   void print_letters(Node* node,
-                    std::queue<std::pair<char,Node*>> & fifo,
+                    std::list<std::pair<char,Node*>> & l,
                     const char & c);
-
 
 public:
 
