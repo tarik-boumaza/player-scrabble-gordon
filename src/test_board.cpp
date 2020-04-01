@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "bag.hpp"
 #include "game.hpp"
 #include "gaddag.hpp"
 #include "player.hpp"
@@ -9,9 +10,8 @@
 #include <list>
 
 int main() {
-  Game g;
-  g.init();
-  g.gad->print();
+  Bag * b = new Bag("data/letters.txt","data/points.txt");
+  b->printPoints();
   /*std::stringstream ss ;
 
   ss << "F.............." << std::endl ;

@@ -10,12 +10,13 @@
 
 
 Game::Game() {
-  bag = new Bag("./data/letters.txt","./data/points.txt");
+  bag = new Bag;
   player = new Player;
   gad = new Gaddag;
   board = new Board;
   ended = false;
 }
+
 
 Game::~Game() {
   delete board;

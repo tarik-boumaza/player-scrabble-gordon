@@ -4,6 +4,10 @@
 #include "bag.hpp"
 
 
+Bag::Bag() {
+  Bag(".data/letters.txt","./data/points.txt");
+}
+
 
 Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
     std::ifstream file_l (filename_l.c_str());
