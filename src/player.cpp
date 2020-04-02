@@ -27,9 +27,20 @@ unsigned short int Player::getPoints() const {
 
 
 void Player::setLetter(const unsigned short int n, const char & c) {
-  if (n < 7 && c >= 'A' && c <= 'Z') {
-    hand[n] = c;
-    hand_pointer[c - 'A'].push_front(n);
+  if (n < 7) {
+    if (c >= 'A' && c <= 'Z') {
+      hand[n] = c;
+      hand_pointer[c - 'A'].push_front(n);
+    }
+    else if (c == '*') {
+      hand[n] = '*';
+      hand_pointer[26].push_front(n);
+    }
+    else {
+      std::cerr << "Caractère spécial détecté." << std::endl 
+                << "Sortie..." << std::endl;
+      exit(EXIT_FAILURE);
+    }
   }
   else {
     std::cerr << "Case non accessible... Sortie!!" << std::endl;
@@ -45,17 +56,25 @@ void Player::addPoints(const unsigned short int & s) {
 
 void Player::removeLetter(const char & c) {
   if (c < 'A' || c > 'Z') {
-    std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
-    exit(EXIT_FAILURE);
+    if (c == '*' && !hand_pointer[26].empty()) {
+      hand[hand_pointer[26].back()] = '/';
+      hand_pointer[26].pop_back();
+    }
+    else {
+      std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
+      exit(EXIT_FAILURE);
+    }
   }
-  if (hand_pointer[c - 'A'].empty() ){
+  else if (hand_pointer[c - 'A'].empty() && c != '*' ){
     std::cerr << c << " : Erreur liste, lettre non disponible... Suppression avortée"
               << std::endl;
     exit(EXIT_FAILURE);
   }
+  else {
+    hand[hand_pointer[c - 'A'].back()] = '/';
+    hand_pointer[c - 'A'].pop_back();
+  }
 
-  hand[hand_pointer[c - 'A'].back()] = '/';
-  hand_pointer[c - 'A'].pop_back();
 }
 
 

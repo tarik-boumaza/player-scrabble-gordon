@@ -21,11 +21,18 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
         file_l >> word;
         temp = word;
         for (j = 0; j < std::stoi(temp); j++) {
-          this->letters[nb + j] = l;
+          this->letters[nb + j] = l + i;
         }
-        l++;
         nb += std::stoi(temp);
         i++;
+      }
+      if (!file_l.eof()) {
+        file_l >> word;
+        temp = word;
+        for (j = 0; j < std::stoi(temp); j++) {
+          this->letters[nb + j] = '*';
+        }
+        nb += std::stoi(temp);
       }
       this->nb_letters = nb;
       file_l.close();
@@ -38,12 +45,13 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
       }
       else {
         i = 0;
-        while(!file_p.eof() && i < 26) {
+        while(!file_p.eof() && i < 27) {
           file_p >> word;
           temp = word;
           this->points[i] = std::stoi(temp);
           i++;
         }
+        
         file_p.close();
       }
     }
@@ -51,10 +59,12 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
 
 
 unsigned short int Bag::getPoints(const unsigned char & c) const {
+  if (c >= 'A' && c <= 'Z')
+    return points[c - 'A'];  
   if (static_cast<int>(c) < 26)
     return points[c];
-  if (c >= 'A' && c <= 'Z')
-    return points[c - 'A'];
+  if (c == '*')
+    return points[26];
   std::cerr << "Case non déclarée!" << std::endl;
   exit(EXIT_FAILURE);
 }
@@ -63,6 +73,8 @@ unsigned short int Bag::getPoints(const unsigned char & c) const {
 unsigned short int Bag::getPoints(const unsigned short int & c) const {
   if (c < 26)
     return points[c];
+  if (c == static_cast<int>('*'))
+    return points[26];
   if (c >= 'A' && c <= 'Z')
     return points[c - 'A'];
   std::cerr << c << " est une case non déclarée!!" << std::endl;
@@ -90,16 +102,6 @@ char Bag::randomDraw() {
 }
 
 
-Bag& Bag::operator=(const Bag & _bag) {
-  this->nb_letters = _bag.nb_letters;
-  for (unsigned int i = 0; i < 26; i++) {
-    this->points[i] = _bag.points[i];
-    this->letters[i] = _bag.letters[i];
-  }
-  return *this;
-}
-
-
 void Bag::printLetters() const {
   for(unsigned short int i = 0; i < nb_letters; i++) {
     std::cout << letters[i] << " " << std::flush;
@@ -112,4 +114,5 @@ void Bag::printPoints() const {
   for(unsigned int i = 0; i < 26; i++) {
     std::cout << static_cast<char>('A' + i) << " : " << points[i] << std::endl;
   }
+  std::cout << "Joker : " << points[26] << std::endl << std::endl;
 }

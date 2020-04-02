@@ -192,7 +192,9 @@ unsigned short int Game::score(const Board * b, const int & pos,
 }
 
 
-unsigned short int Game::score (const Move & m) const {
+unsigned short int Game::score (const Move & m,
+                                const unsigned char & j1,
+                                const unsigned char & j2) const {
 
   std::string word = m.word;
   unsigned int pos = static_cast<unsigned int> (m.first_square);
@@ -200,6 +202,7 @@ unsigned short int Game::score (const Move & m) const {
   unsigned short int nb_letters_used = 0;
   unsigned int board_pos = pos;
   couple temp_couple;
+  char temp_word;
   unsigned int temp_pos = 0;
   std::list<couple> move;
   std::list<bool> played;
@@ -210,10 +213,18 @@ unsigned short int Game::score (const Move & m) const {
 
     while ( word_pos >= 0
             && board_pos < 225) {
-
+      
       if (board->getLetter(board_pos) == 0) {
         played.push_back(true);
         nb_letters_used++;
+        
+        if (board_pos == j1 || board_pos == j2) {
+          temp_word = '*';
+        }
+        else {
+          temp_word = word[word_pos]
+        }
+
         if ( board->getIndice(pos).first == board->getIndice(board_pos - 1).first
               && board->getLetter(board_pos - 1) != 0) { //lettre à gauche
           temp_pos = board_pos;

@@ -11,13 +11,13 @@
 
 int main() {
 
-  Game g;
-  g.init();
+ 
 
   //Bag * bag = new Bag ("./data/letters.txt","./data/points.txt");
   //bag->printPoints();
 
-
+  Game g;
+  g.init();
 
   Board * bo = new Board;
 

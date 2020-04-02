@@ -60,7 +60,9 @@ public:
   unsigned short int score (const Board * b, const int & pos,
                             const char & direction) const;
 
-  unsigned short int score (const Move & move) const;
+  unsigned short int score (const Move & move,
+                            const unsigned char & j1 = 255,
+                            const unsigned char & j2 = 255) const;
 
   void getCrossSetsHorizontal(const unsigned char & square,
                               char tab_horizontal[], bool final, Board* b) const;

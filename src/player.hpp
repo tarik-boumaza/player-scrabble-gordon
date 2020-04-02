@@ -7,7 +7,7 @@ class Player {
 
 private:
   char hand[7];
-  std::list<unsigned short int> hand_pointer[26];
+  std::list<unsigned short int> hand_pointer[27];
   unsigned short int points;
 
 public:

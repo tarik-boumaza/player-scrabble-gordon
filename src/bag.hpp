@@ -6,8 +6,8 @@ class Bag {
 
 private:
 
-  unsigned int points[26];
-  char letters[102];
+  unsigned int points[27];
+  char letters[104];
   unsigned int nb_letters;
 
 
@@ -23,8 +23,6 @@ public:
   bool isEmpty() const;
 
   char randomDraw();
-
-  Bag& operator=(const Bag & _bag);
 
   void printLetters() const;
 
