@@ -9,8 +9,14 @@
 
 
 
+
+
+
+
+
+
 Game::Game() {
-  bag = new Bag;
+  bag = new Bag("./data/letters.txt","./data/points.txt");
   player = new Player;
   gad = new Gaddag;
   board = new Board;
@@ -28,7 +34,7 @@ Game::~Game() {
 
 void Game::draw() {
   unsigned int i = 0;
-  while (i < 7 && !isFinished() ) {
+  while (i < 7 && !bag->isEmpty() ) {
     if (player->getLetter(i) == '/') {
       player->setLetter(i,bag->randomDraw());
     }
@@ -67,53 +73,74 @@ void Game::print() const {
 
 
 bool Game::isFinished() const {
-  return (bag->isEmpty() || ended);
+  return  (ended);
 }
+
+
+bool Game::emptyBag() const {
+  return (bag->isEmpty());
+} 
+
 
 
 //c.first représente la case du plateau
 //c.second représente la lettre jouée sur la case
-couple Game::score (const couple & c) const {
+couple Game::score (const couple & c, const bool & played) const {
   unsigned short int res = bag->getPoints(c.second);
-  res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
-  couple p (res,static_cast<unsigned short int>(board->getWordFactor(c.first)));
-  return p;
-  //p.first est le score que donne la lettre multiplié par le letter_factor
-  //p.second est le word_factor
+  unsigned short int wf;
+  if (played) {
+    res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
+    wf = static_cast<unsigned short int>(board->getWordFactor(c.first));
+  }
+  else {
+    wf = 1;
+  }
+  return couple (res,wf);
+    
+  //res.first est le score que donne la lettre multiplié par le letter_factor
+  //res.second est le word_factor
 }
 
 
 //couple.first représente la case du plateau
 //couple.second représente la lettre jouée sur la case
 //l contient ainsi l'ensemble des lettres jouées ainsi que leurs positions
-unsigned short int Game::score(const std::list<couple> & l) const {
+//played contient des booléens qui indiquent si la lettre jouée est posée par le joueur
+unsigned short int Game::score(const std::list<couple> & l,
+                                const std::list<bool> & played1) const {
   unsigned short int res = 0;
   unsigned short int wf = 1;
-  std::list<couple> copy (l);
+  std::list<couple> l_copy (l);
+  std::list<bool> played_copy(played1);
   couple temp;
-  while(!copy.empty()) {
-    temp = score(copy.back()); //temp.first est le score, temp.second est le word_factor
-    //std::cout << "Lettre " << static_cast<int>((copy.back().first))
-    //                        << " : + " << static_cast<char>(copy.back().second) << " pts" << std::endl;
+
+  while(!l_copy.empty()) {
+    temp = score(l_copy.back(),played_copy.back()); //temp.first est le score, temp.second est le word_factor
+    //std::cout << "Lettre " << static_cast<char>((l_copy.back().second))
+    //                        << " : + " << static_cast<int>(temp.first) << " pts" << std::endl;
     res += temp.first;
     if (temp.second > wf)
       wf = temp.second;
-    copy.pop_back();
+    l_copy.pop_back();
+    played_copy.pop_back();
   }
+
   return (wf * res);
 }
 
 
-unsigned short int Game::score (const Board * b, const int & pos,
+unsigned short int Game::score(const Board * b, const int & pos,
                                 const char & direction) const {
 
   int i = pos;
   std::list<couple> l;
+  std::list<bool> played;
   couple temp;
 
 
   temp = couple(i,b->getLetter(i));
   l.push_back(temp);
+  played.push_back(board->getLetter(i) != b->getLetter(i));
 
   if (direction == 'H') {
     i -= 15;
@@ -121,42 +148,47 @@ unsigned short int Game::score (const Board * b, const int & pos,
            && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
+      played.push_back(board->getLetter(i) != b->getLetter(i));
       i -=15 ;
     }
-    return score(l);
+    return score(l,played);
   }
 
-  if (direction == 'B') {
+  else if (direction == 'B') {
     i += 15;
     while ( i < 225
             && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
+      played.push_back(board->getLetter(i) != b->getLetter(i));
       i +=15 ;
     }
-    return score(l);
+    return score(l,played);
   }
 
-  if (direction == 'G') {
+  else if (direction == 'G') {
     i -= 1;
     while ( board->getIndice(pos).first == board->getIndice(i).first
             && b->getLetter(i) != 0) {
       temp = couple(i,b->getLetter(i));
       l.push_back(temp);
+      played.push_back(board->getLetter(i) != b->getLetter(i));
       i -= 1 ;
     }
-    return score(l);
+    return score(l,played);
   }
 
-  i += 1;
-  while ( board->getIndice(pos).first == board->getIndice(i).first
-          && b->getLetter(i) != 0) {
-    temp = couple(i,b->getLetter(i));
-    l.push_back(temp);
+  else {
     i += 1;
+    while ( board->getIndice(pos).first == board->getIndice(i).first
+            && b->getLetter(i) != 0) {
+      temp = couple(i,b->getLetter(i));
+      l.push_back(temp);
+      played.push_back(board->getLetter(i) != b->getLetter(i));
+      i += 1;
+    }
   }
-  return score(l);
-
+  return score(l,played);
 }
 
 
@@ -164,13 +196,13 @@ unsigned short int Game::score (const Move & m) const {
 
   std::string word = m.word;
   unsigned int pos = static_cast<unsigned int> (m.first_square);
-
   unsigned short int points = 0;
   unsigned short int nb_letters_used = 0;
   unsigned int board_pos = pos;
   couple temp_couple;
   unsigned int temp_pos = 0;
   std::list<couple> move;
+  std::list<bool> played;
 
   if (m.direction == 'H') {               //On joue vers le HAUT
 
@@ -180,6 +212,7 @@ unsigned short int Game::score (const Move & m) const {
             && board_pos < 225) {
 
       if (board->getLetter(board_pos) == 0) {
+        played.push_back(true);
         nb_letters_used++;
         if ( board->getIndice(pos).first == board->getIndice(board_pos - 1).first
               && board->getLetter(board_pos - 1) != 0) { //lettre à gauche
@@ -202,6 +235,8 @@ unsigned short int Game::score (const Move & m) const {
         }
 
       }
+      else
+        played.push_back(false);
       temp_couple = couple (board_pos,word[word_pos]);
       move.push_back(temp_couple);
       board_pos -= 15;
@@ -219,23 +254,22 @@ unsigned short int Game::score (const Move & m) const {
             && board_pos < 225) {
 
       if (board->getLetter(board_pos) == 0) {
+        played.push_back(true);
         nb_letters_used++;
         if ( board->getIndice(pos).first == board->getIndice(board_pos - 1).first
             &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
-
           temp_pos = board_pos;
           while ( board->getIndice(pos).first == board->getIndice(temp_pos + 1).first
                   && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
-
           Board * b_copy = new Board(*board);
           b_copy->setLetter(temp_pos,word[word_pos]);
           points += score(b_copy,temp_pos,'G');
           delete b_copy;
         }
 
-        else if ( board->getIndice(pos).first == board->getIndice(board_pos + 1).first
+        else if ( board->getIndice(board_pos).first == board->getIndice(board_pos + 1).first
                   && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
           Board * b_copy = new Board(*board);
           b_copy->setLetter(board_pos,word[word_pos]);
@@ -244,6 +278,8 @@ unsigned short int Game::score (const Move & m) const {
         }
 
       }
+      else 
+        played.push_back(false);
       temp_couple = couple (board_pos,word[word_pos]);
       move.push_back(temp_couple);
       board_pos += 15;
@@ -256,9 +292,10 @@ unsigned short int Game::score (const Move & m) const {
     int word_pos = static_cast<int>(word.size() - 1);
 
     while ( word_pos >= 0
-            && board->getIndice(board_pos).second == board->getIndice(pos).second ) {
+            && board->getIndice(board_pos).first == board->getIndice(pos).first ) {
 
       if (board->getLetter(board_pos) == 0) {
+        played.push_back(true);
           nb_letters_used++;
           if ( board_pos > 14 && board_pos < 225
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
@@ -284,6 +321,8 @@ unsigned short int Game::score (const Move & m) const {
         }
 
       }
+      else
+        played.push_back(false);
       temp_couple = couple (board_pos,word[word_pos]);
       move.push_back(temp_couple);
       board_pos--;
@@ -294,11 +333,12 @@ unsigned short int Game::score (const Move & m) const {
 
   else {                           //On joue vers la DROITE
     unsigned int word_pos = 0;
-
+  
     while ( word_pos < word.size()
             && board->getIndice(pos).first == board->getIndice(board_pos).first) {
-
+      
       if (board->getLetter(board_pos) == 0) {
+        played.push_back(true);
         nb_letters_used++;
           if ( board_pos > 14 && board_pos < 225
               &&  board->getLetter(board_pos - 15) != 0) {   //lettre en haut
@@ -322,14 +362,16 @@ unsigned short int Game::score (const Move & m) const {
           delete b_copy;
         }
       }
+      else {
+        played.push_back(false);
+      }
       temp_couple = couple (board_pos,word[word_pos]);
       move.push_back(temp_couple);
       board_pos++;
       word_pos++;
     }
-
   }
-  points += score(move);
+  points += score(move,played);
   if (nb_letters_used == 7)
     points += 50;
   return points;
@@ -864,11 +906,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                 if((new_arc->isFinal())
                   && ((y-pos+1 >14) || ((y-pos+1 <=14)
                   && ((b->getSpot(b->getIndice(x,y-pos+1)))->getLetter() == 0)))){
+                    //recordplay
                     //appel de la fonction qui calcule le score
                     Move temp_move (word,b->getIndice(x, y),'D');
                     unsigned short int new_points = score(temp_move); // = l'appel récursif
-                    //std::cout << "Dun coup possible " << word
-                              //<< " ; qui donne : " << new_points <<  " points" << std::endl;
+                    //std::cout << "Dun coup possible " << word << " à partir de " << b->getIndice(x, y)
+                    //          << " ; qui donne : " << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = temp_move;
                       points = new_points;
@@ -905,11 +948,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                 if((new_arc->isFinal())
                   && ((x-pos+1 >14) || ((x-pos+1 <=14)
                   && ((b->getSpot(b->getIndice(x-pos+1,y)))->getLetter() == 0)))){
+                    //recordplay
                     //appel de la fonction qui calcule le score
                     Move new_move(word,b->getIndice(x, y),'B');
                     unsigned short int new_points = score(new_move); // = l'appel récursif
                     //std::cout << "Bun coup possible " << word
-                              //<< " ; qui donne : " << new_points <<  " points" << std::endl;
+                    //          << " ; qui donne : " << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -942,8 +986,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //recordplay
               Move new_move (word,square,'G');
               unsigned short int new_points = score(new_move); // = l'appel récursif
-              //std::cout << "Gun coup possible " << word
-                        //<< " ; qui donne : " << new_points <<  " points" << std::endl;
+              //std::cout << "Gun coup possible " << word << " à partir de " << b->getIndice(x, y)
+              //          << " ; qui donne : " << new_points <<  " points" << std::endl;
 
               if (new_points > points){
                 move = new_move;
@@ -959,7 +1003,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               Move new_move = Move (word,b->getIndice(x, y),'H');
               unsigned short int new_points = score(new_move); // = l'appel récursif
               //std::cout << "Hun coup possible " << word
-                        //<< " ; qui donne : " << new_points <<  " points" << std::endl;
+              //          << " ; qui donne : " << new_points <<  " points" << std::endl;
               if (new_points > points){
                 move = new_move;
                 points = new_points;
@@ -1003,15 +1047,6 @@ void Game::moveTurn() {
 
   std::string word;
   char table[7];
-
-  player->setLetter(0,'D');
-  player->setLetter(1,'T');
-  player->setLetter(2,'L');
-  player->setLetter(3,'G');
-  player->setLetter(4,'A');
-  player->setLetter(5,'Q');
-  player->setLetter(6,'N');
-
 
   for (unsigned short int i = 0; i < 7; i++) {
     table[i] = player->getLetter(i);
@@ -1067,14 +1102,104 @@ void Game::moveTurn() {
 
 
 void Game::end() {
-  if (bag->isEmpty()) {
-    std::cout << "Le sac de lettre est vide, la partie est terminée..."
+  if (ended && bag->isEmpty()) {
+    std::cout << "Le joueur ne peut plus jouer et le sac et vide."
               << std::endl;
   }
   else {
-    std::cout << "Le joueur ne peut plus jouer, la partie est terminée..."
+    std::cout << "Le joueur est bloqué ! (nul...)"
               << std::endl;
   }
-  std::cout << "Le joueur termine avec un score de "
+  std::cout << "Partie terminée..." << std::endl 
+            << "Le joueur termine avec un score de "
             << player->getPoints() << std::endl;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static void printList(const std::list<couple> & l) {
+  std::list<couple> copy(l);
+  std::cout << std::endl <<  "print list couple" << std::endl;
+  while(!copy.empty()) {
+    std::cout << copy.back().first << " ; " << copy.back().second << std::endl;
+    copy.pop_back();
+  }
+  std::cout << std::endl;
+}
+
+
+static void printList(const std::list<bool> & l) {
+  std::list<bool> copy(l);
+  std::cout << std::endl <<  "print list bool" << std::endl;
+  while(!copy.empty()) {
+    std::cout << copy.back() << std::endl;
+    copy.pop_back();
+  }
+  std::cout << std::endl;
+}
+
+
+
+void Game::attribueLettre(const std::string & s) {
+  player->setLetter(0,s[0]);
+  player->setLetter(1,s[1]);
+  player->setLetter(2,s[2]);
+  player->setLetter(3,s[3]);
+  player->setLetter(4,s[4]);
+  player->setLetter(5,s[5]);
+  player->setLetter(6,s[6]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

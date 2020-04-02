@@ -10,46 +10,73 @@
 #include <list>
 
 int main() {
-  Bag * b = new Bag("data/letters.txt","data/points.txt");
-  b->printPoints();
-  /*std::stringstream ss ;
 
-  ss << "F.............." << std::endl ;
-  ss << "I....WAPS......" << std::endl ;
-  ss << "N......I......." << std::endl ;
-  ss << "I......FIQHS..." << std::endl ;
-  ss << "ES..ME.A..OUIE." << std::endl ;
-  ss << ".H.POU.M......." << std::endl ;
-  ss << "DOTAL.BEY......" << std::endl ;
-  ss << ".NOVERAS......." << std::endl ;
-  ss << ".ACE..R........" << std::endl ;
-  ss << ".S.R..D........" << std::endl ;
-  ss << "..NACREZ......." << std::endl ;
-  ss << "..AI..N........" << std::endl ;
-  ss << "..VS..T........" << std::endl ;
-  ss << ".JE............" << std::endl ;
-  ss << "GELEE.........." << std::endl ;
+  Game g;
+  g.init();
 
+  //Bag * bag = new Bag ("./data/letters.txt","./data/points.txt");
+  //bag->printPoints();
+
+
+
+  Board * bo = new Board;
+
+  std::stringstream ss2 ;
+
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+
+  bo->load(ss2);
+  std::cout << *bo << std::endl;
+
+  std::stringstream ss ;
+
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "...JESUS......." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
   g.board->load(ss) ;
-  std::cout <<*(g.board)<< std::endl ;
 
-  std::string word;
-  char table[7];
 
-  for (unsigned short int i = 0; i < 7; i++) {
-    table[i] = g.player->getLetter(i);
-  }
+  g.attribueLettre("NEPDNEQ");
+  g.print();
 
-  Node * parcours = g.gad->getFirst();
-  Board b(*(g.board));
-  unsigned short int s = 0;
-  Move m("MALT",82,'D');
+/*
+  Move m ("NEPE",94,'D');
+  unsigned short int s = g.score(m);
+  std::cout << std::endl << "Score final : " << s << std::endl;
+  */
 
-  //g.Gen(223,0,word,table,parcours,1,&b,s,m);
   g.moveTurn();
-  g.makeMove(m);
-
-  std::cout <<*(g.board)<< std::endl ;*/
+  g.print();
+  
 
 
 

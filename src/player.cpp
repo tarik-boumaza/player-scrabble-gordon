@@ -51,7 +51,6 @@ void Player::removeLetter(const char & c) {
   if (hand_pointer[c - 'A'].empty() ){
     std::cerr << c << " : Erreur liste, lettre non disponible... Suppression avortée"
               << std::endl;
-    //printHand();
     exit(EXIT_FAILURE);
   }
 

@@ -13,7 +13,7 @@ Board::Board() {
     static const unsigned char sz = 9 ;
     static unsigned char triple_words[sz] = {
       0, 7, 14,
-      105, 112, 119,
+      105, 119,
       210, 217, 224
     } ;
     for(unsigned char i = 0; i < sz; ++i) {
@@ -123,8 +123,6 @@ char Board::getLetter(const unsigned char & i) const {
 void Board::setLetter(const unsigned char & n, const char & c) {
   spots[n].setLetter(c);
 }
-
-
 
 
 std::list<unsigned char> Board::getAnchorSquares(){

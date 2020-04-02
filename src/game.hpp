@@ -23,7 +23,7 @@ public:
   Player * player;
   Bag * bag;
   Gaddag * gad;
-  bool ended;   //signale la fin de partie : joueur bloqué ou sac vide
+  bool ended;   //signale la fin de partie : joueur bloqué
 
 
 public:
@@ -50,9 +50,12 @@ public:
 
   bool isFinished() const;
 
-  couple score (const couple & c) const;
+  bool emptyBag() const;
 
-  unsigned short int score(const std::list<couple> & l) const;
+  couple score (const couple & c, const bool & played) const;
+
+  unsigned short int score(const std::list<couple> & l,
+                            const std::list<bool> & played) const;
 
   unsigned short int score (const Board * b, const int & pos,
                             const char & direction) const;
@@ -77,9 +80,6 @@ public:
             unsigned int direction, Board * b,unsigned short int& score,
             Move& move);
 
-  //fonction qui joue le premier coup, lorsque le plateau est vierge
-  void firstMove();
-
   //fonction appelée à chaque tour de jeu
   void moveTurn();
 
@@ -87,6 +87,7 @@ public:
   void end();
 
 
+  void attribueLettre(const std::string & s);
 
 
 };

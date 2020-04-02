@@ -27,13 +27,13 @@ void ScrabbleTXT::play() {
   g->print();
   unsigned short int i = 1;
   while (!g->isFinished()) {
-    clean();
+    //clean();
     std::cout << "Coup n° " << i << std::endl << std::endl;
     g->moveTurn();
     g->print();
     g->draw();
     i++;
-    usleep(1500000);
+    //usleep(1500000);
   }
   g->print();
   g->end();

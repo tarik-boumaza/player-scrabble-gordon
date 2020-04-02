@@ -14,8 +14,6 @@ private:
 
 public:
 
-  Bag();
-
   Bag(const std::string & file_l, const std::string & file_p);
 
   unsigned short int getPoints(const unsigned char & c) const;
