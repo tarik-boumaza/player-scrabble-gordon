@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file gaddag.hpp
+*/
+
+
 #include <list>
 #include <string>
 #include <queue>
@@ -8,12 +13,21 @@
 
 class Node;
 
+
+/**
+ * @class Gaddag
+ * @brief Classe représentant la structure de gaddag
+*/
+
 class Gaddag {
 
 
 private:
-
-  Node * first;
+  
+  /**
+   * @brief Racine du gaddag
+  */
+  Node * first; 
 
 
 
@@ -21,14 +35,16 @@ private:
 
   /**
    * @brief Renvoie une liste contenant les mots contenant les '+' à ajouter dans le Gaddag
-   * @param[in] \e std::string : mot à ajouter dans le gaddag
-   * @return \e std::list<std::string> : liste de mots
+   * @param[in] std::string : mot à ajouter dans le gaddag
+   * @return std::list<std::string> : liste de mots
   */ 
   std::list<std::string> mirror(const std::string & word) ;
 
   /**
    * @brief Fonction récursive d'affichage du gaddag
-   * @param[in-out] * \e Node , \e std::list<std::pair<char,Node*>> , \e char
+   * @param[in-out] *Node
+   * @param[in-out] std::list<std::pair<char,Node*>>
+   * @param[in] char
   */  
   void print_letters(Node* node,
                     std::list<std::pair<char,Node*>> & l,
@@ -48,14 +64,14 @@ public:
 
   /**
    * @brief Renvoie la lettre correspondant à un indice donné
-   * @param[in] \e unsigned \e short \e int 
-   * @return \e char
+   * @param[in] unsigned-short-int 
+   * @return  char
   */  
   char getLetter(const unsigned short int & n) const;
 
   /**
    * @brief Ajoute un mot avec l'insertion de '+' dans la Gaddag
-   * @param[in] \e std::string 
+   * @param[in] std::string 
   */ 
   void addNodePlus(const std::string & s);
 
@@ -71,7 +87,7 @@ public:
 
   /**
    * @brief Accesseur, renvoie le noeud racine du gaddag
-   * @return * \e Node
+   * @return *Node
   */ 
   Node* getFirst();
 

@@ -1,16 +1,35 @@
 #pragma once
 
+/**
+ * @file bag.hpp
+*/
+
 #include <string>
+
+
+
+/**
+ * @class Bag
+ * @brief Classe représentant le sac de lettre
+*/
 
 class Bag {
 
 private:
 
-  //nombre de pts rapportés par une lettre
+  /** 
+   * @brief nombre de points rapportés par une lettre
+  */
   unsigned int points[27]; //points[26] pour le Joker 
-  //tableau de caractères qui contient toutes les lettres
+  
+  /** 
+   * @brief tableau de caractères qui contient toutes les lettres du sac
+  */
   char letters[104]; //seules les premières nb_letters sont remplies
-  //nombre de lettres présentes dans le sac
+  
+  /**
+   * @brief nombre de lettres présentes dans le sac
+  */
   unsigned int nb_letters;
 
 
@@ -19,30 +38,31 @@ public:
 
   /**
    * @brief Constructeur
-   * @param[in] \e std::string : chemin vers le fichier qui contient les lettres, 
-   *             l'attribut file_l doit être exact et fourni avec l'extension \file fichier.txt
-   * @param[in] \e std::string : chemin vers le fichier qui contient les points,
-   *             l'attribut file_p doit être exact et fourni avec l'extension \file fichier.txt
+   * @param[in] std::string : chemin vers le fichier qui contient les lettres 
+   * l'attribut file_l doit être exact et fourni avec l'extension \file fichier.txt
+   * @param[in] std::string : chemin vers le fichier qui contient les points
+   * l'attribut file_p doit être exact et fourni avec l'extension \file fichier.txt
   */
   Bag(const std::string & file_l, const std::string & file_p);
 
 
   /**
    * @brief Accesseur
-   * @param[in] \e char : indice de la case ou lettre
-   * @return \e unsigned \e short \e int
+   * @param[in] char : indice de la case ou lettre
+   * @return unsigned short int
   */
   unsigned short int getPoints(const unsigned char & c) const;
 
   /**
    * @brief Teste si le sac est vide
-   * @return \e bool 
+   * @return bool 
   */
   bool isEmpty() const;
 
   /**
-   * @brief Effectue un tirage aléatoire dans le sac en O(1)
-   * @return \e char
+   * @brief Effectue un tirage aléatoire dans le sac
+   * @details complexité : O(1)
+   * @return char
   */
   char randomDraw();
 

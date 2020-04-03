@@ -1,3 +1,7 @@
+/**
+ * @file player.cpp
+*/
+
 #include <cstdlib>
 #include <iostream>
 #include <ctime>

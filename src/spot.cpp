@@ -1,3 +1,7 @@
+/**
+ * @file spot.cpp
+*/
+
 #include "spot.hpp"
 
 
@@ -27,7 +31,7 @@ Spot& Spot::operator= (const Spot& s){
 }
 
 //display of the spot contents
-std::ostream& operator<<(std::ostream& out, Spot s) {
+std::ostream& operator<<(std::ostream& out, const Spot & s) {
 
   //triple word color
   static const char* tw = "\033[1;91m" ;

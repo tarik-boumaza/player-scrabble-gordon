@@ -12,7 +12,7 @@ LD_FLAGS = -g -Werror -Wextra -std=c++11 -pedantic
 
 CLEAN_FLAGS = -v -r -f
 
-all : main
+all : main doc
 
 
 main: bin/main
@@ -62,8 +62,12 @@ obj/map.o : src/map.cpp src/map.hpp
 
 
 
+doc : src/documentation.h
+	doxygen doc/scrabbleTXT.doxy
 
 
-
-clean:
+clean :
 	rm $(CLEAN_FLAGS) $(OBJ_DIR)/*
+
+veryclean :
+	rm $(CLEAN_FLAGS) $(OBJ_DIR)/* doc/html

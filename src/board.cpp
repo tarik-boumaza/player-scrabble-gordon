@@ -1,3 +1,8 @@
+/**
+ * @file board.cpp
+*/
+
+
 #include "board.hpp"
 
 #include <fstream>

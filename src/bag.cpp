@@ -1,3 +1,8 @@
+/**
+ * @file bag.cpp
+*/
+
+
 #include <iostream>
 #include <fstream>
 #include <random>

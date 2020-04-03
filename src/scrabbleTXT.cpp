@@ -1,3 +1,8 @@
+/**
+ * @file scrabbleTXT.cpp
+*/
+
+
 #include <iostream>
 #include <unistd.h>
 #include "game.hpp"
