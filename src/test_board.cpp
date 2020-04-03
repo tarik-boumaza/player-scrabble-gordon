@@ -13,8 +13,8 @@ int main() {
 
  
 
-  //Bag * bag = new Bag ("./data/letters.txt","./data/points.txt");
-  //bag->printPoints();
+  Bag * bag = new Bag ("./data/letters.txt","./data/points.txt");
+  bag->printPoints();
 
   Game g;
   g.init();
@@ -47,34 +47,34 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "...JESUS......." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".LPHABETIQUE..." << std::endl ;
+  ss << "H.............." << std::endl ;
+  ss << "P.............." << std::endl ;
+  ss << "H.............." << std::endl ;
+  ss << "A.............." << std::endl ;
+  ss << ".ETISE........." << std::endl ;
+  ss << "E.............." << std::endl ;
+  ss << "T.............." << std::endl ;
+  ss << "I.............." << std::endl ;
+  ss << "Q.............." << std::endl ;
+  ss << "U.............." << std::endl ;
+  ss << "E.............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   g.board->load(ss) ;
 
 
-  g.attribueLettre("NEPDNEQ");
+  //g.attribueLettre("A");
   g.print();
 
-/*
-  Move m ("NEPE",94,'D');
-  unsigned short int s = g.score(m);
-  std::cout << std::endl << "Score final : " << s << std::endl;
-  */
 
-  g.moveTurn();
+  Move m ("ALPHABETIQUE",0,'B');
+  unsigned short int s = g.score(m,0);
+  std::cout << std::endl << "Score final : " << s << std::endl;
+  
+
+  //g.moveTurn();
   g.print();
   
 

@@ -24,6 +24,8 @@ public:
 
   void removeLetter(const char & c);
 
+  void removeLetterIndice(const char & c);
+
   void printHand() const;
 
 };

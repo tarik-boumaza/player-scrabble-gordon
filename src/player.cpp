@@ -37,7 +37,7 @@ void Player::setLetter(const unsigned short int n, const char & c) {
       hand_pointer[26].push_front(n);
     }
     else {
-      std::cerr << "Caractère spécial détecté." << std::endl 
+      std::cerr << "Caractère spécial détecté : " << c << std::endl 
                 << "Sortie..." << std::endl;
       exit(EXIT_FAILURE);
     }
@@ -75,6 +75,17 @@ void Player::removeLetter(const char & c) {
     hand_pointer[c - 'A'].pop_back();
   }
 
+}
+
+
+void Player::removeLetterIndice(const char & n) {
+  if (n < 7) {
+    hand[n] = '/';
+  }
+  else {
+    std::cerr << "Problème indice" << std::endl;
+    exit(EXIT_FAILURE);
+  }
 }
 
 
