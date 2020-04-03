@@ -28,11 +28,11 @@ unsigned short int Player::getPoints() const {
 
 void Player::setLetter(const unsigned short int n, const char & c) {
   if (n < 7) {
-    if (c >= 'A' && c <= 'Z') {
+    if (c >= 'A' && c <= 'Z') {   // c est une lettre
       hand[n] = c;
       hand_pointer[c - 'A'].push_front(n);
     }
-    else if (c == '*') {
+    else if (c == '*') {     // c est un joker
       hand[n] = '*';
       hand_pointer[26].push_front(n);
     }
@@ -55,29 +55,29 @@ void Player::addPoints(const unsigned short int & s) {
 
 
 void Player::removeLetter(const char & c) {
-  if (c < 'A' || c > 'Z') {
-    if (c == '*' && !hand_pointer[26].empty()) {
-      hand[hand_pointer[26].back()] = '/';
-      hand_pointer[26].pop_back();
+  if (c < 'A' || c > 'Z') {   // c n'est pas une lettre
+    if (c == '*' && !hand_pointer[26].empty()) {   // c est un joker et le joueur en compte dans sa main
+      hand[hand_pointer[26].front()] = '/';
+      hand_pointer[26].pop_front();
     }
-    else {
+    else {     // c n'est pas un joker, ou c est un joker et le joueur n'en a pas dans sa main
       std::cerr << "Lettre non disponible... Suppression avortée" << std::endl;
       exit(EXIT_FAILURE);
     }
   }
-  else if (hand_pointer[c - 'A'].empty() && c != '*' ){
+  else if (hand_pointer[c - 'A'].empty()) {    //c est une lettre que ne possède pas le joueur
     std::cerr << c << " : Erreur liste, lettre non disponible... Suppression avortée"
               << std::endl;
     exit(EXIT_FAILURE);
   }
-  else {
-    hand[hand_pointer[c - 'A'].back()] = '/';
-    hand_pointer[c - 'A'].pop_back();
+  else {   // c est une lettre et le joueur en possède
+    hand[hand_pointer[c - 'A'].front()] = '/';
+    hand_pointer[c - 'A'].pop_front();
   }
 
 }
 
-
+/////////// A SUPPRIMER \\\\\\\\\\\\//
 void Player::removeLetterIndice(const char & n) {
   if (n < 7) {
     hand[n] = '/';

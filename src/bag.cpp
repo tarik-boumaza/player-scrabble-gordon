@@ -70,18 +70,6 @@ unsigned short int Bag::getPoints(const unsigned char & c) const {
 }
 
 
-unsigned short int Bag::getPoints(const unsigned short int & c) const {
-  if (c < 26)
-    return points[c];
-  if (c == static_cast<int>('*'))
-    return points[26];
-  if (c >= 'A' && c <= 'Z')
-    return points[c - 'A'];
-  std::cerr << c << " est une case non déclarée!!" << std::endl;
-  exit(EXIT_FAILURE);
-}
-
-
 bool Bag::isEmpty() const {
   return (nb_letters == 0);
 }
@@ -104,15 +92,17 @@ char Bag::randomDraw() {
 
 void Bag::printLetters() const {
   for(unsigned short int i = 0; i < nb_letters; i++) {
-    std::cout << letters[i] << " " << std::flush;
+    std::cout << letters[i] << " , " << std::flush;
   }
-  std::cout << std::endl << "Nombre total de lettres " << nb_letters << std::endl;
+  std::cout << std::endl << "Nombre total de lettres " 
+            << nb_letters << std::endl;
 }
 
 
 void Bag::printPoints() const {
   for(unsigned int i = 0; i < 26; i++) {
-    std::cout << static_cast<char>('A' + i) << " : " << points[i] << std::endl;
+    std::cout << static_cast<char>('A' + i) << " : " 
+              << points[i] << std::endl;
   }
   std::cout << "Joker : " << points[26] << std::endl << std::endl;
 }

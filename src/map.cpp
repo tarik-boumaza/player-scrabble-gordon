@@ -54,10 +54,11 @@ void Node::addNode(const std::string & s) {
   Node * tmp = this;
 
   for (i = 0; i < size; i++) {
-    if (s[i] > 'Z' || s[i] < 'A')
-      c = 'Z' - 'A' + 1;
-    else
+    if (s[i] == '+')  //il s'agit d'un '+'
+      c = 26;   
+    else        // il s'agit d'une lettre
       c = s[i] - 'A';
+    
     if (tmp->tab[c] == nullptr)
       tmp->tab[c] = addNode( (i == size - 1) );
 
