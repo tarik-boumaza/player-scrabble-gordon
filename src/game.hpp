@@ -71,7 +71,9 @@ public:
                             char tab_vertical[], bool final, Board * b) const;
 
   //fonction qui joue un coup sur le plateau
-  void makeMove(const Move & m);
+  void makeMove(const Move & m,
+                const unsigned char & j1 = static_cast<unsigned char>(255),
+                const unsigned char & j2 = static_cast<unsigned char>(255));
 
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned int direction,

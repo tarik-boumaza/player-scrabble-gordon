@@ -463,7 +463,9 @@ unsigned short int Game::score (const Move & m,
 }
 
 
-void Game::makeMove(const Move & m) {
+void Game::makeMove(const Move & m,
+                    const unsigned char & j1,
+                    const unsigned char & j2) {
 
   unsigned char board_pos = m.first_square;
 
@@ -471,9 +473,11 @@ void Game::makeMove(const Move & m) {
     short int word_pos = static_cast<int>(m.word.size() - 1);
     while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
-        player->removeLetter(m.word[word_pos]);
+        board->setLetter(board_pos,m.word[word_pos]);
+        if (board_pos != j1 && board_pos != j2)
+          player->removeLetter(m.word[word_pos]);
       }
-      board->setLetter(board_pos,m.word[word_pos]);
+      
       word_pos--;
       board_pos -= 15;
     }
@@ -483,9 +487,10 @@ void Game::makeMove(const Move & m) {
       unsigned short int word_pos = 0;
       while (word_pos < m.word.size()) {
         if (board->getLetter(board_pos) == 0) {
-          player->removeLetter(m.word[word_pos]);
+          board->setLetter(board_pos,m.word[word_pos]);
+          if (board_pos != j1 && board_pos != j2)
+            player->removeLetter(m.word[word_pos]);
         }
-        board->setLetter(board_pos,m.word[word_pos]);
         word_pos++;
         board_pos += 15;
       }
@@ -495,9 +500,10 @@ void Game::makeMove(const Move & m) {
         unsigned short int word_pos = 0;
         while (word_pos < m.word.size()) {
           if (board->getLetter(board_pos) == 0) {
-            player->removeLetter(m.word[word_pos]);
+            board->setLetter(board_pos,m.word[word_pos]);
+            if (board_pos != j1 && board_pos != j2)
+              player->removeLetter(m.word[word_pos]);
           }
-          board->setLetter(board_pos,m.word[word_pos]);
           word_pos++;
           board_pos++;
         }
@@ -507,9 +513,10 @@ void Game::makeMove(const Move & m) {
           int word_pos = static_cast<int>(m.word.size() - 1);
           while (word_pos >= 0) {
             if (board->getLetter(board_pos) == 0) {
-              player->removeLetter(m.word[word_pos]);
+              board->setLetter(board_pos,m.word[word_pos]);
+              if (board_pos != j1 && board_pos != j2)
+                player->removeLetter(m.word[word_pos]);
             }
-            board->setLetter(board_pos,m.word[word_pos]);
             word_pos--;
             board_pos--;
           }
