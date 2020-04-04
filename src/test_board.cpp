@@ -12,37 +12,32 @@
 
 
 std::list<std::string> test(const std::string & word ){
-    std::list<std::string> l;
-    std::string temp(word);
-    std::string beginning;
-    std::string result;
-    int i,j, z;
-    std::cout<<temp[0]<<std::endl;
-    for (i = temp.size()-1 ; i > -1; i--){
-      result.clear();
-      for (j = temp.size()-1 ; j >= i; j--){
-        result = temp[j] + result;
-        std::cout<<"je sors de la première boucle : " << result <<std::endl;
+    std::list<std::string> result;
+    std::string temp;
+    int i, j, z;
+    int size = word.size();
+    
+    for (i = size ; i > 0; i--) {
+      temp.clear();
+      for (j = size ; j >= i; j--) {
+        temp = word[j] + temp;
       }
-
-      result =  "+" + result;
-      //result =  temp[0] + result;
-      std::cout<<"j'ajoute le + : " << result <<std::endl;
+      temp =  "+" + temp;
       z  = 0;
-      while(z > i){
-        result = temp[z] + result;
+      while(z < i){
+        temp = word[z] + temp;
+        z++;
       }
-
-      std::cout<<"j'ajoute le reste : " << beginning + result <<std::endl;
-      l.push_back(result);
+      std::cout << temp << std::endl;
+      result.push_back(temp);
     }
-    return l;
+    return result;
 }
 
 int main() {
 
 
-  std::list<std::string> res = test("HANA");
+  std::list<std::string> res = test("NOUNOURSOUNET");
   /*while(!res.empty()){
     std::cout<< res.front()<<std::endl;
     res.pop_front();

@@ -34,28 +34,25 @@ char Gaddag::getLetter(const unsigned short int & n) const {
 
 
 std::list<std::string> Gaddag::mirror(const std::string & word ){
-  std::list<std::string> l;
-  std::string temp(word);
-  std::stack<char> beginning;
-  std::string result;
-  unsigned int i,j;
-
-  for (i = 0; i < temp.size(); i++){
-    result.clear();
-    for (j = 0; j <= i; j++){
-      beginning.push(temp[j]);
+  std::list<std::string> result;
+  std::string temp;
+  int i, j, z;
+  int size = word.size();
+    
+  for (i = size ; i > 0; i--) {
+    temp.clear();
+    for (j = size ; j >= i; j--) {
+      temp = word[j] + temp;
     }
-    while(!beginning.empty()){
-      result += beginning.top();
-      beginning.pop();
+    temp =  "+" + temp;
+    z  = 0;
+    while(z < i){
+      temp = word[z] + temp;
+      z++;
     }
-    result += "+";
-    for(j = i + 1; j < temp.size(); j++){
-      result += temp[j];
-    }
-    l.push_back(result);
+    result.push_back(temp);
   }
-  return l;
+  return result;
 }
 
 
