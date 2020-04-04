@@ -75,12 +75,15 @@ public:
 
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned int direction,
-          Board * b, unsigned short int& score, Move& move);
+          Board * b, unsigned short int& score, Move& move,
+          unsigned char & j1,
+          unsigned char & j2 );
 
   void GoOn(unsigned char square, int pos, char L, std::string & word,
             char rack[],Node * new_arc,Node * old_arc,
             unsigned int direction, Board * b,unsigned short int& score,
-            Move& move);
+            Move& move, unsigned char & j1,
+            unsigned char & j2);
 
   //fonction appelée à chaque tour de jeu
   void moveTurn();

@@ -105,7 +105,7 @@ bool Game::isFinished() const {
 
 bool Game::emptyBag() const {
   return (bag->isEmpty());
-} 
+}
 
 
 
@@ -122,7 +122,7 @@ couple Game::score (const couple & c, const bool & played) const {
     wf = 1;
   }
   return couple (res,wf);
-    
+
   //res.first est le score que donne la lettre multiplié par le letter_factor
   //res.second est le word_factor
 }
@@ -143,7 +143,7 @@ unsigned short int Game::score(const std::list<couple> & l,
   while(!l_copy.empty()) {
     temp = score(l_copy.back(),played_copy.back()); //temp.first est le score, temp.second est le word_factor
     //std::cout << "Lettre " << static_cast<int>((l_copy.back().second))
-    //                        << " : + " << static_cast<int>(temp.first) 
+    //                        << " : + " << static_cast<int>(temp.first)
     //                        << " pts" << std::endl;
     res += temp.first;
     if (temp.second > wf)
@@ -240,11 +240,11 @@ unsigned short int Game::score (const Move & m,
 
     while ( word_pos >= 0
             && board_pos < 225) {
-      
+
       if (board->getLetter(board_pos) == 0) {
         played.push_back(true);
         nb_letters_used++;
-        
+
         if (board_pos == j1 || board_pos == j2) {
           temp_word = '*';
         }
@@ -844,7 +844,9 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
          char rack[], Node* arc, unsigned int direction,
-         Board* b,unsigned short int& points, Move& move){
+         Board* b,unsigned short int& points, Move& move,
+         unsigned char & j1,
+         unsigned char & j2){
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -858,7 +860,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
   {
     //std::cout<<"la case contient une lettre "<<std::endl;
     Node* next_arc = arc->getNode(letter);
-    GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b, points, move);
+    GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b, points, move, j1, j2);
 
   }
   else
@@ -911,7 +913,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     char rack_copy[7];
     unsigned short int points_copy = points;
 
-    unsigned short int i,j;
+    unsigned short int i,j,k;
 
     for (i = 0; i < 7; i++){
       rack_copy[i] = rack[i];
@@ -936,15 +938,47 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
         rack[j] = rack_copy[j];
       }
 
-      if((rack[i] != '/')
-        && (tab_horizontal[rack[i] - 'A'] != '/')
-        && (tab_vertical[rack[i] - 'A'] != '/')){
+      if(rack[i] = '*'){
+        if (j1 == 255)
+          j1 = square;
+        else
+          j2 = square;
+
+        unsigned char j1_copy = j1;
+        unsigned char j2_copy = j2;
+
+        for(j = 0; j < 26; j++){
+
+          square = square_copy;
+          pos = pos_copy;
+          word = word_copy;
+          *b = b_copy;
+          arc = arc_copy;
+          j1 = j1_copy;
+          j2 = j2_copy;
+
+          for (k = 0; k < 7; k++) {
+            rack[k] = rack_copy[k];
+          }
+
+          if(tab_horizontal[j] != '/' && tab_vertical[j] != '/'){
+            rack[i] = '/';
+            Node* next_arc = arc->getNode(i);
+            b->getSpot(square)->setLetter('A' + i);
+            GoOn(square, pos, temp, word, rack, next_arc, arc, direction, b, points,move, j1, j2);
+          }
+        }
+      }
+
+      else if((rack[i] != '/')
+              && (tab_horizontal[rack[i] - 'A'] != '/')
+              && (tab_vertical[rack[i] - 'A'] != '/')){
           //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
           temp = rack[i];
           rack[i] = '/';
           Node* next_arc = arc->getNode(temp - 'A');
           b->getSpot(square)->setLetter(temp);
-          GoOn(square, pos, temp, word, rack, next_arc, arc, direction, b, points,move);
+          GoOn(square, pos, temp, word, rack, next_arc, arc, direction, b, points,move, j1, j2);
         }
     }
 
@@ -955,7 +989,9 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           char rack[],Node* new_arc,
           Node* old_arc,unsigned int direction,
-          Board* b,unsigned short int& points, Move& move) {
+          Board* b,unsigned short int& points, Move& move,
+          unsigned char & j1,
+          unsigned char & j2) {
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
@@ -972,7 +1008,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           if(y-1 >= 0){
             // je continue à gauche
             unsigned int suivant = b->getIndice(x,y-1);
-            Gen(suivant, pos-1, word, rack, new_arc, direction, b, points, move);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b, points, move, j1, j2);
           }
            //j'avance à droite
           //std::cout<<"je change de direction... vers la droite"<<std::endl;
@@ -995,7 +1031,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     Move new_move (word,b->getIndice(x, y),'D');
                     //std::cout << "Dun coup possible " << word << " à partir de " << b->getIndice(x, y)
                     //          << " ; qui donne : " << std::flush;
-                    unsigned short int new_points = score(new_move); // = l'appel récursif
+                    unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
                     //std::cout << points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
@@ -1005,7 +1041,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
                 if(y-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x,y-pos+1);
-                  Gen(suivant, 1, word, rack, new_arc, direction, b, points, move);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b, points, move, j1, j2);
                 }
 
               }
@@ -1016,7 +1052,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           if(x-1 >= 0){
             // je continue à gauche
             unsigned int suivant = b->getIndice(x-1,y);
-            Gen(suivant, pos-1, word, rack, new_arc, direction, b, points, move);
+            Gen(suivant, pos-1, word, rack, new_arc, direction, b, points, move, j1, j2);
           }
           // j'avance à droite
           new_arc = new_arc->getNode('+');
@@ -1038,8 +1074,8 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     Move new_move(word,b->getIndice(x, y),'B');
                     //std::cout << "Bun coup possible " << word
                     //          << " ; qui donne : " << std::flush;
-                    unsigned short int new_points = score(new_move); // = l'appel récursif
-                    //std::cout << new_points <<  " points" << std::endl;                  
+                    unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
+                    //std::cout << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -1048,7 +1084,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
                 if(x-pos+1 <= 14){
                   unsigned int suivant = b->getIndice(x-pos+1,y);
-                  Gen(suivant, 1, word, rack, new_arc, direction, b, points, move);
+                  Gen(suivant, 1, word, rack, new_arc, direction, b, points, move, j1, j2);
                 }
               }
         }
@@ -1073,7 +1109,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               Move new_move (word,square,'G');
               //std::cout << "Gun coup possible " << word << " à partir de " << b->getIndice(x, y)
               //          << " ; qui donne : " << std::flush;
-              unsigned short int new_points = score(new_move); // = l'appel récursif
+              unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
               //std::cout << new_points <<  " points" << std::endl;
 
               if (new_points > points){
@@ -1090,7 +1126,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               Move new_move = Move (word,b->getIndice(x, y),'H');
               //std::cout << "Hun coup possible " << word
               //          << " ; qui donne : " << std::flush;
-              unsigned short int new_points = score(new_move); // = l'appel récursif
+              unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
               //std::cout << new_points <<  " points" << std::endl;
               if (new_points > points){
                 move = new_move;
@@ -1105,14 +1141,14 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       if(direction == 1){
         if(y+1 <= 14){
           unsigned int suivant = b->getIndice(x,y+1);
-          Gen(suivant, pos+1, word, rack, new_arc, direction, b, points, move);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b, points, move, j1, j2);
         }
 
       }
       else{
         if(x+1 <= 14){
           unsigned int suivant = b->getIndice(x+1,y);
-          Gen(suivant, pos+1, word, rack, new_arc, direction, b, points, move);
+          Gen(suivant, pos+1, word, rack, new_arc, direction, b, points, move, j1, j2 );
         }
       }
     }
@@ -1144,11 +1180,12 @@ void Game::moveTurn() {
   Board b(*(board));
   unsigned short int s = 0;
   Move m;
+  unsigned char j1 = 255, j2 = 255;
 
   std::list<unsigned char> anchor_squares = board->getAnchorSquares();
 
   if (anchor_squares.empty()){
-    Gen(112,0,word,table,parcours,1,&b,s,m);
+    Gen(112,0,word,table,parcours,1,&b,s,m, j1, j2);
   }
 
   while(!anchor_squares.empty()){
@@ -1159,7 +1196,7 @@ void Game::moveTurn() {
     }
     b = *board;
 
-    Gen(anchor_squares.back(),0,word,table,parcours,1,&b,s,m);
+    Gen(anchor_squares.back(),0,word,table,parcours,1,&b,s,m,j1,j2);
 
     word = "";
     for (unsigned short int i = 0; i < 7; i++) {
@@ -1167,7 +1204,7 @@ void Game::moveTurn() {
     }
     b = *board;
 
-    Gen(anchor_squares.back(),0,word,table,parcours,0,&b,s,m);
+    Gen(anchor_squares.back(),0,word,table,parcours,0,&b,s,m,j1,j2);
 
     anchor_squares.pop_back();
   }
@@ -1198,7 +1235,7 @@ void Game::end() {
     std::cout << "Le joueur est bloqué ! (nul...)"
               << std::endl;
   }
-  std::cout << "Partie terminée..." << std::endl 
+  std::cout << "Partie terminée..." << std::endl
             << "Le joueur termine avec un score de "
             << player->getPoints() << std::endl;
 }
@@ -1234,7 +1271,7 @@ void Game::end() {
 void Game::attribueLettre(const std::string & s) {
   unsigned int i = 0;
   unsigned int size = s.size();
-  
+
   for (i = 0; i < size; i++) {
     player->setLetter(i,s[i]);
   }
@@ -1243,37 +1280,5 @@ void Game::attribueLettre(const std::string & s) {
     player->removeLetterIndice(i);
     i++;
   }
-  
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -56,7 +56,7 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
           this->points[i] = std::stoi(temp);
           i++;
         }
-        
+
         file_p.close();
       }
     }
@@ -65,12 +65,12 @@ Bag::Bag(const std::string & filename_l, const std::string & filename_p) {
 
 unsigned short int Bag::getPoints(const unsigned char & c) const {
   if (c >= 'A' && c <= 'Z')
-    return points[c - 'A'];  
+    return points[c - 'A'];
   if (static_cast<int>(c) < 26)
     return points[c];
   if (c == '*')
     return points[26];
-  std::cerr << "Case non déclarée!" << std::endl;
+  std::cerr << static_cast<int>(c) << "Case non déclarée!" << std::endl;
   exit(EXIT_FAILURE);
 }
 
@@ -99,14 +99,14 @@ void Bag::printLetters() const {
   for(unsigned short int i = 0; i < nb_letters; i++) {
     std::cout << letters[i] << " , " << std::flush;
   }
-  std::cout << std::endl << "Nombre total de lettres " 
+  std::cout << std::endl << "Nombre total de lettres "
             << nb_letters << std::endl;
 }
 
 
 void Bag::printPoints() const {
   for(unsigned int i = 0; i < 26; i++) {
-    std::cout << static_cast<char>('A' + i) << " : " 
+    std::cout << static_cast<char>('A' + i) << " : "
               << points[i] << std::endl;
   }
   std::cout << "Joker : " << points[26] << std::endl << std::endl;

@@ -38,10 +38,10 @@ std::list<std::string> Gaddag::mirror(const std::string & word ){
   std::string temp;
   int i, j, z;
   int size = word.size();
-    
+
   for (i = size ; i > 0; i--) {
     temp.clear();
-    for (j = size ; j >= i; j--) {
+    for (j = size - 1; j >= i; j--) {
       temp = word[j] + temp;
     }
     temp =  "+" + temp;
