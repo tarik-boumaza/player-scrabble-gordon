@@ -912,6 +912,8 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     Node* arc_copy = arc;
     char rack_copy[7];
     unsigned short int points_copy = points;
+    unsigned char j1_copy = j1;
+    unsigned char j2_copy = j2;
 
     unsigned short int i,j,k;
 
@@ -932,40 +934,43 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       word = word_copy;
       *b = b_copy;
       arc = arc_copy;
-
+      j1 = j1_copy;
+      j2 = j2_copy;
 
       for (j = 0; j < 7; j++) {
         rack[j] = rack_copy[j];
       }
 
-      if(rack[i] = '*'){
-        if (j1 == 255)
-          j1 = square;
-        else
+      if(rack[i] == '*'){
+        //std::cout<<"je rentre dans * "<<std::endl;
+        if (j1 != 255)
           j2 = square;
+        else
+          j1 = square;
 
-        unsigned char j1_copy = j1;
-        unsigned char j2_copy = j2;
+        unsigned char j1_copy2 = j1;
+        unsigned char j2_copy2 = j2;
 
         for(j = 0; j < 26; j++){
-
+          //std::cout<<"je rentre dans la boucle de * pour j =  "<< j<<std::endl;
           square = square_copy;
           pos = pos_copy;
           word = word_copy;
           *b = b_copy;
           arc = arc_copy;
-          j1 = j1_copy;
-          j2 = j2_copy;
+          j1 = j1_copy2;
+          j2 = j2_copy2;
 
           for (k = 0; k < 7; k++) {
             rack[k] = rack_copy[k];
           }
 
           if(tab_horizontal[j] != '/' && tab_vertical[j] != '/'){
+            //std::cout<<"je rentre dans le if de * pour j =  "<< j<<std::endl;
             rack[i] = '/';
-            Node* next_arc = arc->getNode(i);
-            b->getSpot(square)->setLetter('A' + i);
-            GoOn(square, pos, temp, word, rack, next_arc, arc, direction, b, points,move, j1, j2);
+            Node* next_arc = arc->getNode(j);
+            b->getSpot(square)->setLetter('A' + j);
+            GoOn(square, pos,'A' + j, word, rack, next_arc, arc, direction, b, points,move, j1, j2);
           }
         }
       }
@@ -1029,10 +1034,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //recordplay
                     //appel de la fonction qui calcule le score
                     Move new_move (word,b->getIndice(x, y),'D');
-                    //std::cout << "Dun coup possible " << word << " à partir de " << b->getIndice(x, y)
-                    //          << " ; qui donne : " << std::flush;
+                    std::cout << "Dun coup possible " << word << " à partir de " << b->getIndice(x, y)
+                            << " ; qui donne : " << std::flush;
+                    //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
+                    //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
                     unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
-                    //std::cout << points <<  " points" << std::endl;
+                    std::cout << points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -1072,10 +1079,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //recordplay
                     //appel de la fonction qui calcule le score
                     Move new_move(word,b->getIndice(x, y),'B');
-                    //std::cout << "Bun coup possible " << word
-                    //          << " ; qui donne : " << std::flush;
+                    std::cout << "Bun coup possible " << word
+                            << " ; qui donne : " << std::flush;
+                    //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
+                    //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
                     unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
-                    //std::cout << new_points <<  " points" << std::endl;
+                    std::cout << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -1107,10 +1116,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(y + 1 > 14)){
               //recordplay
               Move new_move (word,square,'G');
-              //std::cout << "Gun coup possible " << word << " à partir de " << b->getIndice(x, y)
-              //          << " ; qui donne : " << std::flush;
-              unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
-              //std::cout << new_points <<  " points" << std::endl;
+              std::cout << "Gun coup possible " << word << " à partir de " << b->getIndice(x, y)
+                        << " ; qui donne : " << std::flush;
+              //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
+              //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
+              unsigned short int new_points = score(new_move, j1,j2); // = l'appel récursif
+              std::cout << new_points <<  " points" << std::endl;
 
               if (new_points > points){
                 move = new_move;
@@ -1124,10 +1135,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(x + 1 > 14)){
               //recordplay
               Move new_move = Move (word,b->getIndice(x, y),'H');
-              //std::cout << "Hun coup possible " << word
-              //          << " ; qui donne : " << std::flush;
+              std::cout << "Hun coup possible " << word
+                        << " ; qui donne : " << std::flush;
+              //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
+              //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
               unsigned short int new_points = score(new_move, j1, j2); // = l'appel récursif
-              //std::cout << new_points <<  " points" << std::endl;
+              std::cout << new_points <<  " points" << std::endl;
               if (new_points > points){
                 move = new_move;
                 points = new_points;

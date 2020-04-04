@@ -18,7 +18,7 @@ int main() {
   Game g;
   g.init();
 
-  Board * bo = new Board;
+  /*Board * bo = new Board;
 
   std::stringstream ss2 ;
 
@@ -42,12 +42,12 @@ int main() {
   ss2 << "..............." << std::endl ;
 
   bo->load(ss2);
-  std::cout << *bo << std::endl;
+  std::cout << *bo << std::endl;*/
 
   std::stringstream ss ;
 
-  ss << ".LPHABETIQUE..." << std::endl ;
-  ss << "H.............." << std::endl ;
+  ss << "ALPHABETIQUE..." << std::endl ;
+  ss << "L.............." << std::endl ;
   ss << "P.............." << std::endl ;
   ss << "H.............." << std::endl ;
   ss << "A.............." << std::endl ;
@@ -63,18 +63,40 @@ int main() {
   ss << "..............." << std::endl ;
   g.board->load(ss) ;
 
-
+  Board b(*(g.board));
   //g.attribueLettre("A");
-  g.print();
+  //g.print();
 
 
-  Move m ("ALPHABETIQUE",0,'B');
+  /*Move m ("ALPHABETIQUE",0,'B');
   unsigned short int s = g.score(m,0);
   std::cout << std::endl << "Score final : " << s << std::endl;
 
 
   //g.moveTurn();
-  g.print();
+  g.print();*/
+  char table[7];
+  for(int i=0; i < 7; i++){
+    table[i] = '/';
+  }
+  table[3]='*';
+  table[4] = '*';
+  Node* arc = g.gad->getFirst();
+  Move m("",0,'B');
+  unsigned char j1 = 255, j2=255;
+  unsigned short int s = 0;
+  std::string word;
+
+
+
+  g.Gen(180,0,word,table,arc,0,&b,s,m,j1,j2);
+
+
+
+
+
+
+
 
 
 
