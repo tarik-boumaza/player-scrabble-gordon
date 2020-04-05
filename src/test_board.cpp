@@ -82,7 +82,7 @@ int main() {
   table[3]='*';
   table[4] = '*';
   Node* arc = g.gad->getFirst();
-  Move m("",0,'B');
+  Move m("",0,'B',255,255);
   unsigned char j1 = 255, j2=255;
   unsigned short int s = 0;
   std::string word;
@@ -90,8 +90,13 @@ int main() {
 
 
   g.Gen(180,0,word,table,arc,0,&b,s,m,j1,j2);
+  std::cout <<" move " << m.word << std::endl;
+  std::cout <<" j1 " <<static_cast<int> (m.j1) << std::endl;
+  std::cout <<" j2 " <<static_cast<int>(m.j2) << std::endl;
 
+  g.makeMove(m,m.j1, m.j2);
 
+  std::cout << *(g.board) << std::endl;
 
 
 

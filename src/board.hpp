@@ -8,20 +8,28 @@
 struct Move{
   std::string word;
   unsigned char first_square;
+  unsigned char j1;
+  unsigned char j2;
   char direction;
 
   Move(){};
 
-  Move(const std::string w, const unsigned char & fq, const char & d) {
+  Move(const std::string w, const unsigned char & fq,
+      const char & d, const unsigned char & j1p,
+      const unsigned char &  j2p) {
     word = w;
     first_square = fq;
     direction = d;
+    j1 = j1p;
+    j2 = j2p;
   }
 
   Move& operator = (const Move& m){
     word = m.word;
     first_square = m.first_square;
     direction = m.direction;
+    j1 = m.j1;
+    j2 = m.j2;
   }
 
 };
