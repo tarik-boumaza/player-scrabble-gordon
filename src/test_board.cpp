@@ -94,7 +94,7 @@ int main() {
   std::cout <<" j1 " <<static_cast<int> (m.j1) << std::endl;
   std::cout <<" j2 " <<static_cast<int>(m.j2) << std::endl;
 
-  g.makeMove(m,m.j1, m.j2);
+  g.makeMove(m);
 
   std::cout << *(g.board) << std::endl;
 

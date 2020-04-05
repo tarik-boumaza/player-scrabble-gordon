@@ -463,11 +463,11 @@ unsigned short int Game::score (const Move & m,
 }
 
 
-void Game::makeMove(const Move & m,
-                    const unsigned char & j1,
-                    const unsigned char & j2) {
+void Game::makeMove(const Move & m) {
 
   unsigned char board_pos = m.first_square;
+  unsigned char j1 = m.j1;
+  unsigned char j2 = m.j2;
 
   if (m.direction == 'H') {
     short int word_pos = static_cast<int>(m.word.size() - 1);
@@ -477,7 +477,6 @@ void Game::makeMove(const Move & m,
         if (board_pos != j1 && board_pos != j2)
           player->removeLetter(m.word[word_pos]);
       }
-
       word_pos--;
       board_pos -= 15;
     }
@@ -521,6 +520,11 @@ void Game::makeMove(const Move & m,
             board_pos--;
           }
         }
+
+  if (m.j1 != 255)
+    player->removeLetter('*');
+  if (m.j2 != 255)
+    player->removeLetter('*');
 
 }
 
@@ -1239,7 +1243,7 @@ void Game::moveTurn() {
 
 
   player->addPoints(s);
-  makeMove(m, m.j1, m.j2);
+  makeMove(m);
   draw();
 
 }

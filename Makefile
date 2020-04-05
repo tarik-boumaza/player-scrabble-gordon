@@ -12,7 +12,7 @@ LD_FLAGS = -g -Werror -Wextra -std=c++11 -pedantic
 
 CLEAN_FLAGS = -v -r -f
 
-all : main doc
+all : main
 
 
 main: bin/main
