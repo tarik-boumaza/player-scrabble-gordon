@@ -36,7 +36,6 @@ void ScrabbleTXT::play(const bool & b) {
     std::cout << "Coup n° " << i << std::endl << std::endl;
     g->moveTurn();
     g->print();
-    g->draw();
     i++;
     if (b)
       usleep(1500000);
