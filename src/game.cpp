@@ -534,9 +534,10 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
 
-  // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-  // à gauche
+  //dans le cas ou la case est vide
   if(((b->getSpot(b->getIndice(x,y)))->getLetter() == 0)){
+    // dans le cas où la case est adjacente à une case vide
+    //directement à gauche (case non vide à droite)
     if( (((y < 14) && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() == 0))
         || (y >= 14))
         && (y > 0)
@@ -545,21 +546,22 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupère les lettres présentes sur le plateau
+          //en avançant simultanément sur le gaddag
           while((parcours->getLetter() != 0)
                 && (y - i >= 0) ) {
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x, y-1-i));
             i++;
           }
-
+          // je change de direction
           if(gad_parcours != nullptr)
             gad_parcours = gad_parcours->getNode('+');
 
           for(int i = 0; i < 26; i++) {
-
+            // je récupère les noeuds fils du '+'
             if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
-              if(final){
+              if(final){ //dans le cas où je cherche des lettres finales
                 if((gad_parcours->getNode(i))->isFinal())
                   tab_horizontal[i] = gad->getLetter(i);
                 else
@@ -572,11 +574,9 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
               tab_horizontal[i] = '/';
             }
           }
-
     }
-
-    // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-    // à droite
+    // dans le cas où la case est adjacente à une case vide
+    // directement à droite (case non vide à gauche)
     else if( (y < 14)
           && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() != 0)
           && (((y > 0)
@@ -587,23 +587,23 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x, y+1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupère les lettres présentes sur le plateau dans une pile
           while((parcours->getLetter() != 0)
                 && (y + i <= 14) ) {
             pile.push(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x, y+1+i));
             i++;
           }
-
+          //J'avance dans le gaddag en dépilant
           while (!pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
-
+          //je récupère les noeuds fils accesible depuis le noeud courant
           for(int i = 0; i < 26; i++) {
 
             if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
-              if(final){
+              if(final){ //dans le cas où je cherche des lettres finales
                 if(gad_parcours->getNode(i)->getNode('+') != nullptr &&
                   (gad_parcours->getNode(i)->getNode('+'))->isFinal())
                   tab_horizontal[i] = gad->getLetter(i);
@@ -618,7 +618,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             }
           }
     }
-
+    //dans le cas où la case se trouve entre deux cases non vides
     else if ((y < 14)
             && ((b->getSpot(b->getIndice(x,y+1)))->getLetter() != 0)
             && (y > 0)
@@ -627,14 +627,15 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupére la premier mot sur le plateau à l'envers
+          //en avançant simultanément sur le gaddag
           while((parcours->getLetter() != 0)
                 && (y - i >= 0)){
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x, y-1-i));
             i++;
           }
-
+          //je change de direction
           gad_parcours = gad_parcours->getNode('+');
           Node * copy = gad_parcours;
 
@@ -643,19 +644,19 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
             copy = gad_parcours;
 
             if (copy != nullptr && copy->getNode(i) != nullptr) {
-
+              //j'avance sur le gaddag avec la lettre 'A' + i
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
               parcours = b->getSpot(b->getIndice(x,y+1));
               int j = 1;
-
+              //j'avance sur le gaddag avec le deuxième mot présent sur le plateau
               while( gad_coup_possible != nullptr
                     && parcours->getLetter() != 0 ) {
                 gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
                 parcours = b->getSpot(b->getIndice(x, y+1+j));
                 j++;
               }
-
+              //je teste si je forme un mot existant dans le dictionnaire
               if (gad_coup_possible != nullptr
                   && parcours->getLetter() == 0
                   && gad_coup_possible->isFinal() ) {
@@ -666,7 +667,6 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
                 tab_horizontal[i] = '/';
               }
             }
-
             else
             {
                 tab_horizontal[i] = '/';
@@ -674,16 +674,18 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           }
     }
     else
-    {
+    { //dans le cas où la case est vide, avec des cases vides autour
       for(int i = 0; i < 26; i++){
+        //toutes les lettres sont jouables
         tab_horizontal[i] = gad->getLetter(i);
       }
     }
 
   }
   else
-  {
+  { //dans le cas où la case est non vide
     for(int i = 0; i < 26; i++){
+      //aucune lettre n'est jouable sur cette case
       tab_horizontal[i] = '/';
     }
   }
@@ -695,10 +697,11 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
   unsigned char x = (b->getIndice(square)).first;
   unsigned char y = (b->getIndice(square)).second;
-  // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-  // à gauche
-  if (((b->getSpot(b->getIndice(x,y)))->getLetter() == 0)){
 
+  //dans le cas ou la case est vide
+  if (((b->getSpot(b->getIndice(x,y)))->getLetter() == 0)){
+    // dans le cas où la case est adjacente à une case vide
+    //directement à gauche (case non vide à droite)
     if( (((x < 14) && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() == 0))
         || (x >= 14))
         && (x > 0)
@@ -707,22 +710,22 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupère les lettres présentes sur le plateau
+          //en avançant simultanément sur le gaddag
           while((parcours->getLetter() != 0)
                 && (x - i >= 0) ) {
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x-1-i, y));
             i++;
           }
-
+          //je change de direction
           if(gad_parcours != nullptr)
             gad_parcours = gad_parcours->getNode('+');
 
           for(int i = 0; i < 26; i++) {
-
+            // je récupère les noeuds fils du '+'
             if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
-
-              if(final){
+              if(final){//dans le cas où je cherche des lettres finales
                 if((gad_parcours->getNode(i))->isFinal())
                   tab_vertical[i] = gad->getLetter(i);
                 else
@@ -737,8 +740,8 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             }
           }
     }
-    // dans le cas où ma case n'est adjacente qu'à une seule case vide directement
-    // à droite
+    // dans le cas où la case est adjacente à une case vide
+    // directement à droite (case non vide à gauche)
     else if( (x < 14)
           && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() != 0)
           && (((x > 0)
@@ -749,24 +752,23 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x+1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupère les lettres présentes sur le plateau dans une pile
           while((parcours->getLetter() != 0)
                 && (x + i <= 14) ) {
             pile.push(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x+1+i, y));
             i++;
           }
-
+          //J'avance dans le gaddag en dépilant
           while (!pile.empty()) {
             gad_parcours = gad_parcours->getNode(pile.top());
             pile.pop();
           }
-
+          //je récupère les noeuds fils accesible depuis le noeud courant
           for(int i = 0; i < 26; i++) {
 
             if(gad_parcours != nullptr && gad_parcours->getNode(i) != nullptr){
-
-              if(final){
+              if(final){//dans le cas où je cherche des lettres finales
                 if(gad_parcours->getNode(i)->getNode('+') != nullptr &&
                   (gad_parcours->getNode(i)->getNode('+'))->isFinal())
                   tab_vertical[i] = gad->getLetter(i);
@@ -782,7 +784,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             }
           }
     }
-
+    //dans le cas où la case se trouve entre deux cases non vides
     else if ((x < 14)
             && ((b->getSpot(b->getIndice(x+1,y)))->getLetter() != 0)
             && (x > 0)
@@ -791,14 +793,15 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           Spot* parcours = b->getSpot(b->getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
           int i = 1;
-
+          //je récupére la premier mot sur le plateau à l'envers
+          //en avançant simultanément sur le gaddag
           while((parcours->getLetter() != 0)
                 && (x - i >= 0)){
             gad_parcours = gad_parcours->getNode(parcours->getLetter());
             parcours = b->getSpot(b->getIndice(x-1-i, y));
             i++;
           }
-
+          //je chande de direction
           gad_parcours = gad_parcours->getNode('+');
           Node * copy = gad_parcours;
 
@@ -807,19 +810,19 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             copy = gad_parcours;
 
             if (copy != nullptr && copy->getNode(i) != nullptr) {
-
+              //j'avance sur le gaddag avec la lettre 'A' + i
               copy = copy->getNode(i);
               Node* gad_coup_possible = copy;
               parcours = b->getSpot(b->getIndice(x+1,y));
               int j = 1;
-
+              //j'avance sur le gaddag avec le deuxième mot présent sur le plateau
               while( gad_coup_possible != nullptr
                     && parcours->getLetter() != 0 ) {
                 gad_coup_possible = gad_coup_possible->getNode(parcours->getLetter());
                 parcours = b->getSpot(b->getIndice(x+1+j, y));
                 j++;
               }
-
+              //je teste si je forme un mot existant dans le dictionnaire
               if (gad_coup_possible != nullptr
                   && parcours->getLetter() == 0
                   && gad_coup_possible->isFinal() ) {
@@ -838,15 +841,17 @@ void Game::getCrossSetsVertical(const unsigned char & square,
             }
           }
     }
-    else {
+    else { //dans le cas où la case est vide, avec des cases vides autour
       for(int i = 0; i < 26; i++) {
+        // toutes les lettres sont jouables
         tab_vertical[i] = gad->getLetter(i);
       }
     }
 
   }
-  else {
+  else { //dans le cas où la case est non vide
     for(int i = 0; i < 26; i++) {
+      //aucune lettre n'est jouable sur cette case
       tab_vertical[i] = '/';
     }
   }
@@ -1180,17 +1185,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 }
 
 
-
-/*
-
-void Game::firstMove() {
-
-
-  draw();
-}
-
-*/
-
 void Game::moveTurn() {
 
   std::string word;
@@ -1247,7 +1241,6 @@ void Game::moveTurn() {
   draw();
 
 }
-
 
 
 void Game::end() {
