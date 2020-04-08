@@ -1213,6 +1213,8 @@ void Game::moveTurn() {
       table[i] = player->getLetter(i);
     }
     b = *board;
+    j1 = 255;
+    j2 = 255;
 
     Gen(anchor_squares.back(),0,word,table,parcours,1,&b,s,m,j1,j2);
 
@@ -1221,6 +1223,8 @@ void Game::moveTurn() {
       table[i] = player->getLetter(i);
     }
     b = *board;
+    j1 = 255;
+    j2 = 255;
 
     Gen(anchor_squares.back(),0,word,table,parcours,0,&b,s,m,j1,j2);
 
