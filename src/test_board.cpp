@@ -46,21 +46,21 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "ALPHABETIQUE..." << std::endl ;
-  ss << "L.............." << std::endl ;
-  ss << "P.............." << std::endl ;
-  ss << "H.............." << std::endl ;
-  ss << "A.............." << std::endl ;
-  ss << ".ETISE........." << std::endl ;
-  ss << "E.............." << std::endl ;
-  ss << "T.............." << std::endl ;
-  ss << "I.............." << std::endl ;
-  ss << "Q.............." << std::endl ;
-  ss << "U.............." << std::endl ;
-  ss << "E.............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "....M.........." << std::endl ;
+  ss << "....O.........." << std::endl ;
+  ss << "....L.V........" << std::endl ;
+  ss << "...KYRIES......" << std::endl ;
+  ss << "...ES.N........" << std::endl ;
+  ss << "...T..G........" << std::endl ;
+  ss << "...J..TO......." << std::endl ;
+  ss << "...E...C......." << std::endl ;
+  ss << ".......U......." << std::endl ;
+  ss << ".......L......." << std::endl ;
+  ss << ".......E......." << std::endl ;
   g.board->load(ss) ;
 
   Board b(*(g.board));
@@ -71,10 +71,13 @@ int main() {
   /*Move m ("ALPHABETIQUE",0,'B');
   unsigned short int s = g.score(m,0);
   std::cout << std::endl << "Score final : " << s << std::endl;
+  */
 
+  g.print();
+  g.moveTurn();
+  g.print();
 
-  //g.moveTurn();
-  g.print();*/
+  /*
   char table[7];
   for(int i=0; i < 7; i++){
     table[i] = '/';
@@ -99,7 +102,7 @@ int main() {
   std::cout << *(g.board) << std::endl;
 
 
-
+*/
 
 
 
