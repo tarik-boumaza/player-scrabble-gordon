@@ -74,16 +74,23 @@ int main() {
   */
 
   g.print();
+  g.attribueLettre("TRMHTI*");
   g.moveTurn();
   g.print();
 
-  /*
-  char table[7];
+
+  /*char table[7];
   for(int i=0; i < 7; i++){
     table[i] = '/';
   }
-  table[3]='*';
-  table[4] = '*';
+  table[0]= 'T';
+  table[1]= 'R';
+  table[2]= 'M';
+  table[3]= 'H';
+  table[4]= 'T';
+  table[5]= 'I';
+  table[6]= '*';
+
   Node* arc = g.gad->getFirst();
   Move m("",0,'B',255,255);
   unsigned char j1 = 255, j2=255;
