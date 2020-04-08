@@ -1,8 +1,0 @@
-bin/*
-obj/*
-gmon.out
-res.txt
-main.make
-data/dico_test.txt
-test_board.make
-src/.vscode/

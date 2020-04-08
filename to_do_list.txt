@@ -1,7 +1,0 @@
-1) Game::firstMove -> fonction qui joue le premier coup
-
-2) Game::moveTurn -> fonction qui fait TOUT ce qu'il faut pour jouer un coup
-                    du début à la fin
-
-3) Mettre le boolean ended à true au bon endroit pour signaler la fin de partie
-      -> autrement dit lorsqu'aucun coup n'est jouable
