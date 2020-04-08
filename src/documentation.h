@@ -42,11 +42,11 @@
 	Le fichier de configuration <B>Doxygen</B> se trouve dans le répertoire <B>doc/image.doxy</B>\n
 	La documentation est automatiquement générée grâce à la commande :
 
-		$ doxygen doc/doxyfile
+		$ doxygen doc/scrabbleTXT.doxy
 
 	Ou bien comme mentionné plus haut :
 
-		$ make docs
+		$ make doc
 
 	Egalement vous pouvez télécharger l'outil <B>doxygen</B> via les commandes :
 

@@ -38,9 +38,9 @@ public:
 
   /**
    * @brief Constructeur
-   * @param[in] std::string : chemin vers le fichier qui contient les lettres 
+   * @param[in] file_l ( \e std::string) : chemin vers le fichier qui contient les lettres 
    * l'attribut file_l doit être exact et fourni avec l'extension 'fichier.txt'
-   * @param[in] std::string : chemin vers le fichier qui contient les points
+   * @param[in] file_p ( \e std::string) : chemin vers le fichier qui contient les points
    * l'attribut file_p doit être exact et fourni avec l'extension 'fichier.txt'
   */
   Bag(const std::string & file_l, const std::string & file_p);
@@ -51,9 +51,9 @@ public:
 
 
   /**
-   * @fn unsigned short int getPoints(const unsigned char & c) const
+   * @fn unsigned short int getPoints(const unsigned char & id) const
    * @brief Accesseur
-   * @param[in] id ( \e char) : indice de la case ou lettre
+   * @param[in] id ( \e unsigned \e char) : indice de la case ou lettre
    * @return unsigned short int
   */
   unsigned short int getPoints(const unsigned char & id) const;

@@ -77,7 +77,7 @@ public:
   char getLetter(const unsigned short int & n) const;
 
   /**
-   * @fn void addNodePlus(const std::string & s)
+   * @fn void addNodePlus(const std::string & word)
    * @brief Ajoute un mot avec l'insertion de '+' dans la Gaddag
    * @param[in] word ( \e std::string) mot à ajouter
   */ 

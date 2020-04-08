@@ -7,7 +7,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "map.hpp"
+#include "node.hpp"
 #include "gaddag.hpp"
 
 

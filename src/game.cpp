@@ -1,5 +1,5 @@
 #include <iostream>
-#include "map.hpp"
+#include "node.hpp"
 #include "board.hpp"
 #include "player.hpp"
 #include "bag.hpp"

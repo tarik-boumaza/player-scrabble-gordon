@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @file scrabble.hpp
+ * @file scrabbleTXT.hpp
 */
 
 

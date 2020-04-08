@@ -17,11 +17,11 @@
 */
 
 struct Move{
-  std::string word;
-  unsigned char first_square;
-  unsigned char j1;
-  unsigned char j2;
-  char direction;
+  std::string word; /*!< mot à jouer */ 
+  unsigned char first_square;  /*!< case à partir de laquelle on joue */
+  unsigned char j1; /*!< indice de la case où un éventuel bonus serait joué */
+  unsigned char j2; /*!< indice de la case où un éventuel bonus serait joué */
+  char direction; /*!< direction dans laquelle le coup est joué ('H' / 'B' / 'G' / 'D') */ 
 
   /**
    * @brief Constructeur par défaut
@@ -30,16 +30,16 @@ struct Move{
 
   /**
    * @brief Constructeur avec paramètres
-   * @param std::string : mot à jouer
-   * @param unsigned char : case qui contient la première lettre du mot
-   * @param unsigned char : direction ('H' / 'B' / 'G' / 'D')
-   * @param unsigned char : position d'un éventuel 1er joker
-   * @param unsigned char : position d'un éventuel 2ème joker
+   * @param _word ( \e std::string) : mot à jouer
+   * @param fq ( \e unsigned \e char) : case qui contient la première lettre du mot
+   * @param d ( \e unsigned \e char) : direction ('H' / 'B' / 'G' / 'D')
+   * @param _j1 ( \e unsigned \e char) : position d'un éventuel 1er joker
+   * @param _j2 ( \e unsigned \e char) : position d'un éventuel 2ème joker
   */
-  Move(const std::string w, const unsigned char & fq,
+  Move(const std::string _word, const unsigned char & fq,
       const char & d, const unsigned char & _j1,
       const unsigned char & _j2) {
-    word = w;
+    word = _word;
     first_square = fq;
     direction = d;
     j1 = _j1;
@@ -47,8 +47,9 @@ struct Move{
   }
 
   /**
+   * @fn Move& operator = (const Move& m)
    * @brief Opérateur d'affection
-   * @param Move
+   * @param m ( \e Move) : coup à copier
    * @return Move&
   */
   Move& operator = (const Move& m){
@@ -95,7 +96,7 @@ public:
   /**************** METHODES *****************/
   
   /**
-   * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n)
+   * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id)
    * @brief Renvoie un couple de coordonnées à partir d'un indice de case
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return std::pair<unsigned char, unsigned char>
@@ -103,7 +104,7 @@ public:
   std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id);
   
   /**
-   * @fn unsigned short int getIndice(const unsigned char & x,const unsigned char &y)
+   * @fn unsigned short int getIndice(const unsigned char & l,const unsigned char & c)
    * @brief Renvoie un indice de case à partir d'un couple de coordonnées
    * @param[in] l ( \e unsigned \e char) : ligne
    * @param[in] c ( \e unsigned \e char) : colonne
@@ -112,7 +113,7 @@ public:
   unsigned short int getIndice(const unsigned char & l,const unsigned char & c);
   
   /**
-   * @fn Spot* getSpot(const unsigned char & i)
+   * @fn Spot* getSpot(const unsigned char & id)
    * @brief Accesseur
    * @details Renvoie la cellule pour un indice donné
    * @param[in] id ( \e unsigned \e char) : indice de la case
@@ -121,7 +122,7 @@ public:
   Spot* getSpot(const unsigned char & id);
 
   /**
-   * @fn char getLetter(const unsigned char & i) const
+   * @fn char getLetter(const unsigned char & id) const
    * @brief Retourne la lettre contenue par une cellule
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return char
@@ -145,7 +146,7 @@ public:
   unsigned short int getLetterFactor(const unsigned char & id) const;
 
   /**
-   * @fn void setLetter(const unsigned char & n, const char & c)
+   * @fn void setLetter(const unsigned char & id, const char & c)
    * @brief Mutateur, pose une lettre sur une cellule
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @param[in] c ( \e char) : lettre
@@ -183,7 +184,7 @@ public:
   Spot operator()(unsigned char l, unsigned char c) const ;
   
     /**
-   * @fn Spot& operator()(unsigned char l, unsigned char c) const
+   * @fn Spot& operator()(unsigned char l, unsigned char c)
    * @brief Operator ()
    * @param[in] l ( \e unsigned \e char) : ligne
    * @param[in] c ( \e unsigned \e char) : colonne
@@ -204,11 +205,11 @@ public:
 
 
 /**
- * @fn
+ * @fn std::ostream& operator<<(std::ostream& out, const Board& b)
  * @brief Operateur << 
  * @details Permet l'affichage du plateau
  * @param out ( \e std::ostream)
- * @param Board ( \e Board)
+ * @param b ( \e Board)
  * @return std::ostream
 */
 std::ostream& operator<<(std::ostream& out, const Board& b) ;

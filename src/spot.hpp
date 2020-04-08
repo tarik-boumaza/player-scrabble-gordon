@@ -81,6 +81,7 @@ public:
 } ;
 
 /**
+ * @fn std::ostream& operator<<(std::ostream& out, const Spot & s)
  * @brief Operateur << pour l'affichage de la case
  * @param[in-out] out ( \e std::ostream&) 
  * @param[in] s ( \e Spot) : cellule à afficher

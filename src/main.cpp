@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
       delete scrabble;
     }
     else {
-      std::cerr << "OPTION INCONNUE " << argv[1] << std::endl;
+      std::cerr << "OPTION INCONNUE : " << argv[1] << std::endl;
       exit(EXIT_FAILURE);
     }
   } 

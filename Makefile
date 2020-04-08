@@ -20,10 +20,10 @@ main: bin/main
 test_board : bin/test_board
 
 
-bin/main : obj/main.o obj/bonus.o obj/spot.o obj/board.o obj/bag.o obj/player.o obj/map.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o
+bin/main : obj/main.o obj/bonus.o obj/spot.o obj/board.o obj/bag.o obj/player.o obj/node.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o
 	$(LD) $(LD_FLAGS) $^ -o $@
 
-bin/test_board : obj/test_board.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/map.o obj/spot.o obj/game.o obj/board.o
+bin/test_board : obj/test_board.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
 	$(LD) $(LD_FLAGS) $^ -o $@
 
 
@@ -33,10 +33,10 @@ obj/main.o : src/main.cpp src/scrabbleTXT.hpp
 obj/test_board.o : src/test_board.cpp src/game.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
-obj/scrabbleTXT.o : src/scrabbleTXT.cpp src/scrabbleTXT.hpp src/game.hpp src/gaddag.hpp src/bonus.hpp src/bag.hpp src/player.hpp src/board.hpp src/spot.hpp src/map.hpp
+obj/scrabbleTXT.o : src/scrabbleTXT.cpp src/scrabbleTXT.hpp src/game.hpp src/gaddag.hpp src/bonus.hpp src/bag.hpp src/player.hpp src/board.hpp src/spot.hpp src/node.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
-obj/game.o : src/game.cpp src/game.hpp src/gaddag.hpp src/bonus.hpp src/bag.hpp src/player.hpp src/board.hpp src/spot.hpp src/map.hpp
+obj/game.o : src/game.cpp src/game.hpp src/gaddag.hpp src/bonus.hpp src/bag.hpp src/player.hpp src/board.hpp src/spot.hpp src/node.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
 obj/bag.o : src/bag.cpp src/bag.hpp
@@ -54,10 +54,10 @@ obj/spot.o : src/spot.cpp src/spot.hpp src/bonus.hpp
 obj/bonus.o : src/bonus.cpp src/bonus.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
-obj/gaddag.o : src/gaddag.cpp src/gaddag.hpp src/map.hpp
+obj/gaddag.o : src/gaddag.cpp src/gaddag.hpp src/node.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
-obj/map.o : src/map.cpp src/map.hpp
+obj/node.o : src/node.cpp src/node.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
 
 
@@ -67,7 +67,4 @@ doc : src/documentation.h doc/scrabbleTXT.doxy
 
 
 clean :
-	rm $(CLEAN_FLAGS) $(OBJ_DIR)/*
-
-veryclean :
 	rm $(CLEAN_FLAGS) $(OBJ_DIR)/*
