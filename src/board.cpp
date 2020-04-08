@@ -87,13 +87,6 @@ Board::Board(const Board& copy){
 }
 
 
-Board& Board::operator = (const Board& b){
-  for(int i = 0; i < 225; i++){
-    this->spots[i] = b.spots[i];
-  }
-  return *this;
-}
-
 std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
   unsigned char x = n / 15;
   unsigned char y = n % 15;
@@ -180,16 +173,25 @@ void Board::load(std::istream& in) {
   }
 }
 
-//access to the spots by coordinates
+
 Spot Board::operator()(unsigned char l, unsigned char c) const {
   return spots[l*15 + c] ;
 }
+
 
 Spot& Board::operator()(unsigned char l, unsigned char c) {
   return spots[l*15 + c] ;
 }
 
-//display on the console
+
+Board& Board::operator = (const Board& b){
+  for(int i = 0; i < 225; i++){
+    this->spots[i] = b.spots[i];
+  }
+  return *this;
+}
+
+
 std::ostream& operator<<(std::ostream& out, const Board& b) {
 
   static const char* grey = "\033[1;90m" ;

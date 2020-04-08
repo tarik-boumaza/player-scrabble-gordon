@@ -33,7 +33,7 @@ char Gaddag::getLetter(const unsigned short int & n) const {
 }
 
 
-std::list<std::string> Gaddag::mirror(const std::string & word ){
+static std::list<std::string> mirror(const std::string & word ){
   std::list<std::string> result;
   std::string temp;
   int i, j, z;
@@ -84,6 +84,12 @@ void Gaddag::addDictionnary() {
 }
 
 
+void Gaddag::print() {
+  std::list<std::pair<char,Node*>> f;
+  print_letters(this->first,f,' ');
+}
+
+
 void Gaddag::print_letters(Node* node,
                           std::list<std::pair<char,Node*>> & l,
                           const char & c) {
@@ -107,10 +113,4 @@ void Gaddag::print_letters(Node* node,
 
   }
   l.pop_back();
-}
-
-
-void Gaddag::print() {
-  std::list<std::pair<char,Node*>> f;
-  print_letters(this->first,f,' ');
 }

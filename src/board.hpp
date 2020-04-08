@@ -77,6 +77,8 @@ private:
 
 public:
 
+  /**************** CONSTRUCTEURS *****************/
+
   /**
    * @brief Constructeur par défaut
   */
@@ -88,26 +90,9 @@ public:
   */
   Board(const Board& copy);
 
-  /**
-   * @fn void save(std::ostream& out)
-   * @brief Permet la sauvegarde d'un plateau
-   * @param[out] std::ostream&
-  */
-  void save(std::ostream& out) ;
 
-  /**
-   * @fn void load (std::istream& in)
-   * @brief  Permet la lecture d'un plateau
-   * @param[in] std::istream&
-  */
-  void load(std::istream& in) ;
 
-  /**
-   * @fn std::list<unsigned char> getAnchorSquares()
-   * @brief Renvoie une liste qui contient les positions des anchor squares
-   * @return std::list<unsigned char>
-  */
-  std::list<unsigned char> getAnchorSquares();
+  /**************** METHODES *****************/
   
   /**
    * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n)
@@ -144,14 +129,6 @@ public:
   char getLetter(const unsigned char & i) const;
 
   /**
-   * @fn void setLetter(const unsigned char & n, const char & c)
-   * @brief Mutateur, pose une lettre sur une cellule
-   * @param[in] unsigned char : indice de la case
-   * @param[in] char : lettre
-  */
-  void setLetter(const unsigned char & n, const char & c);
-
-  /**
    * @fn unsigned short int getWordFactor(const unsigned char & id) const
    * @brief Renvoie le word factor d'une cellule
    * @param[in] unsigned char : indice de la case
@@ -166,6 +143,35 @@ public:
    * @return unsigned short int
   */
   unsigned short int getLetterFactor(const unsigned char & id) const;
+
+  /**
+   * @fn void setLetter(const unsigned char & n, const char & c)
+   * @brief Mutateur, pose une lettre sur une cellule
+   * @param[in] unsigned char : indice de la case
+   * @param[in] char : lettre
+  */
+  void setLetter(const unsigned char & n, const char & c);
+
+  /**
+   * @fn std::list<unsigned char> getAnchorSquares()
+   * @brief Renvoie une liste qui contient les positions des anchor squares
+   * @return std::list<unsigned char>
+  */
+  std::list<unsigned char> getAnchorSquares();
+
+  /**
+   * @fn void save(std::ostream& out)
+   * @brief Permet la sauvegarde d'un plateau
+   * @param[out] std::ostream&
+  */
+  void save(std::ostream& out) ;
+
+  /**
+   * @fn void load (std::istream& in)
+   * @brief  Permet la lecture d'un plateau
+   * @param[in] std::istream&
+  */
+  void load(std::istream& in) ;
 
   /**
    * @fn Spot operator()(unsigned char l, unsigned char c) const
@@ -194,6 +200,8 @@ public:
   Board& operator = (const Board& b);
 
 } ;
+
+
 
 /**
  * @fn

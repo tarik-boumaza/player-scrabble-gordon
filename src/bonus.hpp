@@ -11,8 +11,18 @@
 */
 class Bonus {
 
+
+private:
+
+  unsigned char letter_factor ;
+  unsigned char word_factor ;
+
+
+
 public:
   
+  /************************ CONSTRUCTEURS ************************/
+
   /**
    * @brief Constructeur par défaut
    * @details Bonus par défauts : facteur 1 pour lettre et pour mot
@@ -30,10 +40,16 @@ public:
     letter_factor(lf), word_factor(wf)
   {}
 
+
+
+  /************************ METHODES ************************/
+
+
   /**
    * @fn unsigned char getLetterFactor() const
    * @brief Accesseur
    * @details Renvoie le facteur lettre
+   * @return unsigned char
   */
   unsigned char getLetterFactor() const;
 
@@ -41,20 +57,16 @@ public:
    * @fn unsigned char getWordFactor() const
    * @brief Accesseur
    * @details Renvoie le facteur mot
+   * @return unsigned char
   */
   unsigned char getWordFactor() const;
 
   /**
    * @fn Bonus& operator = (const Bonus & b)
    * @brief Operateur d'affectation
-   * @param[in] b \e Bonus
+   * @param[in] b \e Bonus à affecter
    * @return Bonus&
   */
   Bonus& operator = (const Bonus & b);
-
-private:
-
-  unsigned char letter_factor ;
-  unsigned char word_factor ;
 
 } ;
