@@ -1,11 +1,11 @@
-#pragma once
-
 /**
  * @file bag.hpp
 */
 
-#include <string>
+#pragma once
 
+
+#include <string>
 
 
 /**
@@ -20,7 +20,7 @@ private:
   /** 
    * @brief nombre de points rapportés par une lettre
   */
-  unsigned int points[27]; //points[26] pour le Joker 
+  unsigned int points[27]; // points[26] pour le Joker
   
   /** 
    * @brief tableau de caractères qui contient toutes les lettres du sac
@@ -39,14 +39,15 @@ public:
   /**
    * @brief Constructeur
    * @param[in] std::string : chemin vers le fichier qui contient les lettres 
-   * l'attribut file_l doit être exact et fourni avec l'extension \file fichier.txt
+   * l'attribut file_l doit être exact et fourni avec l'extension 'fichier.txt'
    * @param[in] std::string : chemin vers le fichier qui contient les points
-   * l'attribut file_p doit être exact et fourni avec l'extension \file fichier.txt
+   * l'attribut file_p doit être exact et fourni avec l'extension 'fichier.txt'
   */
   Bag(const std::string & file_l, const std::string & file_p);
 
 
   /**
+   * @fn unsigned short int getPoints(const unsigned char & c) const
    * @brief Accesseur
    * @param[in] char : indice de la case ou lettre
    * @return unsigned short int
@@ -54,12 +55,14 @@ public:
   unsigned short int getPoints(const unsigned char & c) const;
 
   /**
+   * @fn bool isEmpty()
    * @brief Teste si le sac est vide
    * @return bool 
   */
   bool isEmpty() const;
 
   /**
+   * @fn char randomDraw()
    * @brief Effectue un tirage aléatoire dans le sac
    * @details complexité : O(1)
    * @return char
@@ -67,11 +70,13 @@ public:
   char randomDraw();
 
   /** 
+   * @fn void printLetters() const
    * @brief Affiche les lettres présentes dans le sac
   */
   void printLetters() const;
 
   /**
+   * @fn void printPoints() const
    * @brief Affiche les lettres présentes dans le sac
   */
   void printPoints() const;

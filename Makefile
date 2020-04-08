@@ -62,7 +62,7 @@ obj/map.o : src/map.cpp src/map.hpp
 
 
 
-doc : src/documentation.h
+doc : src/documentation.h doc/scrabbleTXT.doxy
 	doxygen doc/scrabbleTXT.doxy
 
 
@@ -70,4 +70,4 @@ clean :
 	rm $(CLEAN_FLAGS) $(OBJ_DIR)/*
 
 veryclean :
-	rm $(CLEAN_FLAGS) $(OBJ_DIR)/* doc/html
+	rm $(CLEAN_FLAGS) $(OBJ_DIR)/*
