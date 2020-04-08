@@ -53,10 +53,10 @@ public:
   /**
    * @fn unsigned short int getPoints(const unsigned char & c) const
    * @brief Accesseur
-   * @param[in] char : indice de la case ou lettre
+   * @param[in] id ( \e char) : indice de la case ou lettre
    * @return unsigned short int
   */
-  unsigned short int getPoints(const unsigned char & c) const;
+  unsigned short int getPoints(const unsigned char & id) const;
 
   /**
    * @fn bool isEmpty()

@@ -39,9 +39,9 @@ private:
   /**
    * @fn void print_letters(Node* node, std::list<std::pair<char,Node*>> & l, const char & c)
    * @brief Fonction récursive d'affichage du gaddag
-   * @param[in-out] *Node
-   * @param[in-out] std::list<std::pair<char,Node*>>
-   * @param[in] char
+   * @param[in-out] node ( \e *Node) 
+   * @param[in-out] l ( \e std::list<std::pair<char,Node*>>)
+   * @param[in] c ( \e char)
   */  
   void print_letters(Node* node,
                     std::list<std::pair<char,Node*>> & l,

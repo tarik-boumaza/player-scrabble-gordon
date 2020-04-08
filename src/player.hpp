@@ -36,45 +36,51 @@ private:
 
 public:
 
+  /************************ CONSTRUCTEUR ************************/
+
   /**
    * @brief Constructeur par défaut, sans paramètre
   */
   Player();
 
+
+  /************************ METHODES ************************/
+
   /**
-   * @brief Accesseur, renvoie la lettre stockée à un indice donné
-   * @param[in] unsigned short int : indice de la case
+   * @brief Accesseur
+   * @details Renvoie la lettre stockée à un indice donné
+   * @param[in] n (\e unsigned \e short \e int) : indice de la case
    * @return char
   */
   char getLetter(const unsigned short int & n) const;
 
   /**
    * @brief Accesseur, renvoie l'attribut points du joueur
-   * @return unsigned-short-int
+   * @return unsigned short int
   */
   unsigned short int getPoints() const;
 
   /**
    * @brief Mutateur, attribue une lettre au joueur
-   * @param[in] unsigned-short-int  : indice de la case
-   * @param[in] char : lettre à attriber au joueur
+   * @param[in] n ( \e unsigned \e short \e int) : indice de la case
+   * @param[in] c ( \e char) : lettre à attribuer au joueur
   */
   void setLetter(const unsigned short int n, const char & c);
 
   /**
    * @brief Incrémente les points du joueur
-   * @param[in] unsigned-short-int : nombre de points à ajouter
+   * @param[in] pts ( \e unsigned \e short \e int) : nombre de points à ajouter
   */
-  void addPoints(const unsigned short int & s);
+  void addPoints(const unsigned short int & pts);
 
   /**
    * @brief Retire une lettre au joueur
-   * @param[in] char
+   * @param[in] c ( \e char) : lettre à retirer
   */
   void removeLetter(const char & c);
 
 
-//////// A SUPPRIMER /////////////
+//////// !!!!!!!!!!!!!!!!!!!!!!A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! /////////////
   void removeLetterIndice(const char & c);
 
 

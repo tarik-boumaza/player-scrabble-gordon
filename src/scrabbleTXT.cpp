@@ -27,7 +27,7 @@ static void clean() {
 }
 
 
-void ScrabbleTXT::play() {
+void ScrabbleTXT::play(const bool & b) {
   clean();
   g->print();
   unsigned short int i = 1;
@@ -38,7 +38,8 @@ void ScrabbleTXT::play() {
     g->print();
     g->draw();
     i++;
-    //usleep(1500000);
+    if (b)
+      usleep(1500000);
   }
   g->print();
   g->end();

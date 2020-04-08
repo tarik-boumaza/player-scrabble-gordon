@@ -86,7 +86,7 @@ public:
 
   /**
    * @brief Constructeur par copie
-   * @param Board&
+   * @param copy ( \e Board&) : plateau à copier
   */
   Board(const Board& copy);
 
@@ -97,41 +97,41 @@ public:
   /**
    * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n)
    * @brief Renvoie un couple de coordonnées à partir d'un indice de case
-   * @param[in] unsigned char
+   * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return std::pair<unsigned char, unsigned char>
   */
-  std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n);
+  std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id);
   
   /**
    * @fn unsigned short int getIndice(const unsigned char & x,const unsigned char &y)
    * @brief Renvoie un indice de case à partir d'un couple de coordonnées
-   * @param[in] unsigned char : ligne
-   * @param[in] unsigned char : colonne
+   * @param[in] l ( \e unsigned \e char) : ligne
+   * @param[in] c ( \e unsigned \e char) : colonne
    * @return unsigned short int
   */
-  unsigned short int getIndice(const unsigned char & x,const unsigned char &y);
+  unsigned short int getIndice(const unsigned char & l,const unsigned char & c);
   
   /**
    * @fn Spot* getSpot(const unsigned char & i)
    * @brief Accesseur
    * @details Renvoie la cellule pour un indice donné
-   * @param[in] unsigned char : indice de la case
+   * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return Spot*
   */
-  Spot* getSpot(const unsigned char & i);
+  Spot* getSpot(const unsigned char & id);
 
   /**
    * @fn char getLetter(const unsigned char & i) const
    * @brief Retourne la lettre contenue par une cellule
-   * @param[in] unsigned char : indice de la case
+   * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return char
   */
-  char getLetter(const unsigned char & i) const;
+  char getLetter(const unsigned char & id) const;
 
   /**
    * @fn unsigned short int getWordFactor(const unsigned char & id) const
    * @brief Renvoie le word factor d'une cellule
-   * @param[in] unsigned char : indice de la case
+   * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return unsigned short int
   */
   unsigned short int getWordFactor(const unsigned char & id) const;
@@ -139,7 +139,7 @@ public:
   /**
    * @fn unsigned short int getLetterFactor(const unsigned char & id) const
    * @brief Renvoie le letter factor d'une cellule
-   * @param[in] unsigned char : indice de la case
+   * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return unsigned short int
   */
   unsigned short int getLetterFactor(const unsigned char & id) const;
@@ -147,10 +147,10 @@ public:
   /**
    * @fn void setLetter(const unsigned char & n, const char & c)
    * @brief Mutateur, pose une lettre sur une cellule
-   * @param[in] unsigned char : indice de la case
-   * @param[in] char : lettre
+   * @param[in] id ( \e unsigned \e char) : indice de la case
+   * @param[in] c ( \e char) : lettre
   */
-  void setLetter(const unsigned char & n, const char & c);
+  void setLetter(const unsigned char & id, const char & c);
 
   /**
    * @fn std::list<unsigned char> getAnchorSquares()
@@ -162,22 +162,22 @@ public:
   /**
    * @fn void save(std::ostream& out)
    * @brief Permet la sauvegarde d'un plateau
-   * @param[out] std::ostream&
+   * @param[out] out ( \e std::ostream&)
   */
   void save(std::ostream& out) ;
 
   /**
    * @fn void load (std::istream& in)
    * @brief  Permet la lecture d'un plateau
-   * @param[in] std::istream&
+   * @param[in] in ( \e std::istream&)
   */
   void load(std::istream& in) ;
 
   /**
    * @fn Spot operator()(unsigned char l, unsigned char c) const
    * @brief Operator ()
-   * @param[in] unsigned char : ligne
-   * @param[in] unsigned char : colonne
+   * @param[in] l ( \e unsigned \e char) : ligne
+   * @param[in] c ( \e unsigned \e char) : colonne
    * @return Spot
   */
   Spot operator()(unsigned char l, unsigned char c) const ;
@@ -185,8 +185,8 @@ public:
     /**
    * @fn Spot& operator()(unsigned char l, unsigned char c) const
    * @brief Operator ()
-   * @param[in] unsigned char : ligne
-   * @param[in] unsigned char : colonne
+   * @param[in] l ( \e unsigned \e char) : ligne
+   * @param[in] c ( \e unsigned \e char) : colonne
    * @return Spot&
   */
   Spot& operator()(unsigned char l, unsigned char c) ;
@@ -194,7 +194,7 @@ public:
   /**
    * @fn Board& operator = (const Board& b)
    * @brief Operator = d'affectation
-   * @param[in] Board
+   * @param[in] b ( \e Board) : plateau à copier
    * @return Board&
   */
   Board& operator = (const Board& b);
@@ -207,8 +207,8 @@ public:
  * @fn
  * @brief Operateur << 
  * @details Permet l'affichage du plateau
- * @param std::ostream
- * @param Board
+ * @param out ( \e std::ostream)
+ * @param Board ( \e Board)
  * @return std::ostream
 */
 std::ostream& operator<<(std::ostream& out, const Board& b) ;

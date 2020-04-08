@@ -36,8 +36,9 @@ public:
 
   /**
    * @brief Fonction principale qui déroule le jeu
+   * @param[in] b ( \e bool) : est à true si le jeu est lancé au ralenti ou pas
   */
-  void play();
+  void play(const bool & b);
 
 
 };

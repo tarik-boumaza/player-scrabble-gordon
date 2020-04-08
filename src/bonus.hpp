@@ -33,8 +33,8 @@ public:
 
   /**
    * @brief Constructeur avec initialisation des facteurs
-   * @param[in] lf : facteur lettre
-   * @param[in] wf : facteur mot
+   * @param[in] lf ( \e unsigned \e char) : facteur lettre
+   * @param[in] wf ( \e unsigned \e char) : facteur mot
   */
   Bonus(unsigned char lf, unsigned char wf) :
     letter_factor(lf), word_factor(wf)
@@ -64,7 +64,7 @@ public:
   /**
    * @fn Bonus& operator = (const Bonus & b)
    * @brief Operateur d'affectation
-   * @param[in] b \e Bonus à affecter
+   * @param[in] b ( \e Bonus) à affecter
    * @return Bonus&
   */
   Bonus& operator = (const Bonus & b);

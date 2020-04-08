@@ -29,15 +29,22 @@ private:
 
 private:
 
+  /************************ METHODE PRIVEE ************************/
+
   /**
+   * @fn Node* addNode(const bool & b)
    * @brief Crée et retourne un nouveau noeud
-   * @param[in] bool : correspond à l'attribut is_final de la classe Node
+   * @param[in] b ( \e bool) : correspond à l'attribut is_final de la classe Node
    * @return *Node
   */ 
   Node* addNode(const bool & b);
 
 
+
 public:
+
+  /************************ CONSTRUCTEUR / DESTRUCTEUR ************************/
+
   /**
    * @brief Constructeur par défaut, sans paramètre
   */ 
@@ -48,26 +55,32 @@ public:
   */ 
   ~Node();
 
-  /**
-   * @brief Accesseur
-   * @details Renvoie le noeud stocké à un indice donné
-   * @param[in] unsigned-short-int : indice ('A'->0,..., 'Z'->25, '+'->26)
-   * @return * Node
-  */  
-  Node* getNode(const unsigned short int & i) const;
+
+  /************************ METHODES PUBLIQUES ************************/
 
   /**
+   * @fn Node* getNode(const unsigned short int & id) const
+   * @brief Accesseur
+   * @details Renvoie le noeud stocké à un indice donné
+   * @param[in] id ( \e unsigned \e short \e int) : indice ('A'->0,..., 'Z'->25, '+'->26)
+   * @return * Node
+  */  
+  Node* getNode(const unsigned short int & id) const;
+
+  /**
+   * @fn bool isFinal() const
    * @brief Accesseur. 
    * @details Renvoie vrai si noeud est final, faux sinon
-   * @return bool 
+   * @return bool : \e true si le noeud est final, \e faux
   */ 
   bool isFinal() const;
 
   /**
+   * @fn void addNode(const std::string & word)
    * @brief Ajoute un mot au gaddag
-   * @param[in] std::string : mot à ajouter
+   * @param[in] word ( \e std::string) : mot à ajouter
   */ 
-  void addNode(const std::string & s);
+  void addNode(const std::string & word);
 
 
 };
