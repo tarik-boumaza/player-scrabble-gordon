@@ -1,12 +1,13 @@
+/**
+ * @file game.hpp
+*/
+
+
 #pragma once
+
 
 #include <list>
 #include <utility>
-
-
-typedef std::pair<unsigned short int, unsigned short int> couple;
-            ///   <case,lettre>
-
 
 
 class Node;
@@ -16,29 +17,44 @@ class Bag;
 class Gaddag;
 struct Move;
 
+
+
+/**
+ * typedef qui représente une association <case, lettre> 
+*/ 
+typedef std::pair<unsigned short int, unsigned short int> couple;
+
+
 class Game {
 
-public:
-  Board * board;
-  Player * player;
-  Bag * bag;
-  Gaddag * gad;
-  bool ended;   //signale la fin de partie : joueur bloqué
+private:
+
+  Board * board; /*!< plateau du jeu */
+  Player * player; /*!< joueur */
+  Bag * bag; /*!< sac de lettre */
+  Gaddag * gad; /*!< structure de gaddag */
+  bool ended;  /*!< signale la fin de partie (joueur bloqué) */ 
 
 
 public:
+
+  /****************** CONSTRUCTEURS / DESTRUCTEUR ******************/
 
   Game();
-
-  ~Game();
 
   Game(const char & nb_players);
 
   Game(const Board& b);
 
-  void draw();
+  ~Game();
 
-  void init();
+
+
+  /****************** METHODES PRIVEES ******************/
+
+
+private :
+
 
   void printDico();
 
@@ -46,14 +62,18 @@ public:
 
   void printBag() const;
 
-  void print() const;
-
-  bool isFinished() const;
-
-  bool emptyBag() const;
+  void draw();
 
   couple score (const couple & c, const bool & played) const;
 
+  /**
+   * @fn unsigned short int score(const std::list<couple> & l,
+                            const std::list<bool> & played) const
+   * @brief Calcule le score
+   * @param[in] l ( \e std::list<couple>) : liste qui contient des \e couple
+   * @param[in] played ( \e std::list<bool>) : liste qui contient des booléens : \e true si la case contient déjà la lettre, \e false sinon
+   * @return unsigned short int
+  */ 
   unsigned short int score(const std::list<couple> & l,
                             const std::list<bool> & played) const;
 
@@ -85,11 +105,33 @@ public:
             Move& move, unsigned char & j1,
             unsigned char & j2);
 
+
+
+
+  /****************** METHODES PUBLIQUES ******************/
+
+
+public :
+
+  void init();
+
+  void print() const;
+
+  bool isFinished() const;
+
+  bool emptyBag() const;
+
   //fonction appelée à chaque tour de jeu
   void moveTurn();
 
   //informations de fin de partie
   void end();
+
+
+
+
+
+
 
 
   void attribueLettre(const std::string & s);

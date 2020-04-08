@@ -1,3 +1,8 @@
+/**
+ * @file game.cpp
+*/
+
+
 #include <iostream>
 #include "node.hpp"
 #include "board.hpp"
@@ -6,7 +11,6 @@
 #include "gaddag.hpp"
 #include "game.hpp"
 #include <stack>
-
 
 
 
