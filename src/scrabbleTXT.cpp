@@ -41,5 +41,5 @@ void ScrabbleTXT::play(const bool & b) {
       usleep(1500000);
   }
   g->print();
-  g->end();
+  g->finalPrint();
 }

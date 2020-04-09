@@ -20,7 +20,7 @@ struct Move;
 
 
 /**
- * typedef qui représente une association <case, lettre> 
+ * typedef qui représente une association <cellule, lettre> 
 */ 
 typedef std::pair<unsigned short int, unsigned short int> couple;
 
@@ -38,14 +38,16 @@ private:
 
 public:
 
-  /****************** CONSTRUCTEURS / DESTRUCTEUR ******************/
+  /****************** CONSTRUCTEUR / DESTRUCTEUR ******************/
 
+  /**
+   * @brief Constructeur par défaut, sans paramètre 
+  */
   Game();
 
-  Game(const char & nb_players);
-
-  Game(const Board& b);
-
+  /**
+   * @brief Destructeur
+  */ 
   ~Game();
 
 
@@ -55,15 +57,39 @@ public:
 
 private :
 
+  /**
+   * @fn void printDico() const
+   * @brief Affiche l'intégralité des mots contenus dans le gaddag
+  */ 
+  void printDico() const;
 
-  void printDico();
-
+  /**
+   * @fn void printHand() const
+   * @brief Affiche les lettres que possède le joueur
+  */
   void printHand() const;
 
+  /**
+   * @fn void printBag() const
+   * @brief Affichage le contenu du sac
+  */
   void printBag() const;
 
-  void draw();
+  /**
+   * @fn void draw(const char & letter)
+   * @brief Tirage aléatoire des lettres
+   * @details Remplace une lettre jouée en attribuant au joueur une lettre aléatoirement tirée parmi les lettres restantes dans le sac
+   * @param[in] letter ( \e char) : lettre à remplacer
+  */
+  void draw(const char & letter);
 
+  /**
+   * @fn couple score (const couple & c, const bool & played) const
+   * @brief Calcule le score
+   * @param[in] c ( \e couple) : association <cellule, lettre>
+   * @param[in] played ( \e bool) : \e true si la lettre est posée par le joueur, \e false sinon
+   * @return \e couple : paire <score, facteur mot>
+  */ 
   couple score (const couple & c, const bool & played) const;
 
   /**
@@ -72,26 +98,47 @@ private :
    * @brief Calcule le score
    * @param[in] l ( \e std::list<couple>) : liste qui contient des \e couple
    * @param[in] played ( \e std::list<bool>) : liste qui contient des booléens : \e true si la case contient déjà la lettre, \e false sinon
-   * @return unsigned short int
+   * @return \e unsigned \e short \e int : points rapportés
   */ 
   unsigned short int score(const std::list<couple> & l,
                             const std::list<bool> & played) const;
 
+  /**
+   * @fn unsigned short int score (const Board * b, const int & pos,
+                            const char & direction) const
+   * @brief Calcule le score
+   * @details Cas où on complète un autre mot
+   * @param[in] b (* \e Board)
+   * @param[in] pos ( \e int) : indice de la case à  partir de laquelle on calcule le score
+   * @param[in] direction ( \e char) : direction vers laquelle le mot est joué
+   * @return \e unsigned \e short \e int : points rapporté par le coup
+  */
   unsigned short int score (const Board * b, const int & pos,
                             const char & direction) const;
 
-  unsigned short int score (const Move & move,
-                            const unsigned char & j1 = 255,
-                            const unsigned char & j2 = 255) const;
+  /**
+   * @fn unsigned short int score (const Move & move) const
+   * @brief Calcule le score
+   * @param[in] move ( \e Move) : coup joué 
+   * @return \e unsigned \e short \e int : points rapporté par le coup
+  */ 
+  unsigned short int score (const Move & move) const;
 
   void getCrossSetsHorizontal(const unsigned char & square,
-                              char tab_horizontal[], bool final, Board* b) const;
+                              char tab_horizontal[], bool final, 
+                              Board* b) const;
 
   void getCrossSetsVertical(const unsigned char & square,
-                            char tab_vertical[], bool final, Board * b) const;
+                            char tab_vertical[], bool final, 
+                            Board * b) const;
 
-  //fonction qui joue un coup sur le plateau
-  void makeMove(const Move & m);
+  /**
+   * @fn void makeMove(const Move & move)
+   * @brief Applique un coup sur le plateau
+   * @details Met à jour le plateau et les lettres que possèdent le joueur
+   * @param[in] move ( \e Move) : coup à jouer
+  */ 
+  void makeMove(const Move & move);
 
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned char direction,
@@ -113,19 +160,47 @@ private :
 
 public :
 
+  /**
+   * @fn void init()
+   * @brief Initialise le jeu
+   * @details Initialise le plateau, le sac de lettres, les lettres du joueur ainsi que le plateau
+  */ 
   void init();
 
+  /**
+   * @fn void print() const
+   * @brief Affiche les paramètres du jeu
+   * @details Affiche les lettres que possède le joueur, le plateau et le score
+  */
   void print() const;
 
+  /**
+   * @fn bool isFinished() const
+   * @brief Teste si la partie est terminée
+   * @return \e bool : \e true si la partie est terminée, \e false sinon
+  */
   bool isFinished() const;
 
+  /**
+   * @fn bool emptyBag() const
+   * @brief Teste si le sac de lettres est vide
+   * @return \e bool : \e true si le sac est vide, \e false sinon
+  */
   bool emptyBag() const;
 
-  //fonction appelée à chaque tour de jeu
+  /**
+   * @fn void moveTurn()
+   * @brief Fonction qui joue un tour
+   * @details Fonction appelée à chaque tour
+   * Elle exécute la recherche du meilleur coup, le joue, effectue le tirage des lettres et met à jour le score
+  */
   void moveTurn();
 
-  //informations de fin de partie
-  void end();
+  /**
+   * @fn void finalPrint() const
+   * @brief Affiche les informations en fin de partie
+  */
+  void finalPrint() const;
 
 
 

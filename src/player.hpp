@@ -76,8 +76,9 @@ public:
   /**
    * @brief Retire une lettre au joueur
    * @param[in] c ( \e char) : lettre à retirer
+   * @return unsigned short int
   */
-  void removeLetter(const char & c);
+  unsigned short int removeLetter(const char & c);
 
 
 //////// !!!!!!!!!!!!!!!!!!!!!!A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! /////////////
