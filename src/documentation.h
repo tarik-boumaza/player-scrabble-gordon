@@ -8,11 +8,12 @@
 
 \date 20 Avril 2020
 
+\n
 \section Introduction
 		    ScrabbleTXT est une simulation du jeu de scrabble réalisée dans le cadre de l’UE LIFAP6 au cours du printemps 2020.\n
 		    En utilisant la technique de Gordon, le joueur automatique cherche les coups jouables à partir d'un dictionnaire
         et des lettres piochées afin de jouer le coup le plus intelligent.\n
-		    Le code est écrit en C++.\n
+		    Le code est écrit en C++.\n \n
 
 	<H3><B>ATTENTION</B></H3>Toutes les commandes doivent être exécutées depuis le répertoire courant de l'application !
 
@@ -37,9 +38,20 @@
 
 
 \n
+\section Exécution
+
+  Pour exécuter le projet normalement, exécuter :
+
+		$ bin/scrabbleTXT
+
+    Pour exécuter le projet en slow motion, exécuter :
+
+  		$ bin/scrabbleTXT --sm
+
+\n
 \section Documentation
 	Afin de fournir de la documentation de ce programme, nous avons utilisé l’outil <B>Doxygen</B>.\n
-	Le fichier de configuration <B>Doxygen</B> se trouve dans le répertoire <B>doc/image.doxy</B>\n
+	Le fichier de configuration <B>Doxygen</B> se trouve dans le répertoire <B>doc/scra.doxy</B>\n
 	La documentation est automatiquement générée grâce à la commande :
 
 		$ doxygen doc/scrabbleTXT.doxy
@@ -48,7 +60,7 @@
 
 		$ make doc
 
-	Egalement vous pouvez télécharger l'outil <B>doxygen</B> via les commandes :
+  Cette commande requiet l'installation de l'outil <B>doxygen</B> via la commande :
 
 		$ sudo apt-get install doxygen
 

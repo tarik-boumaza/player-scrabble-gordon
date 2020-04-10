@@ -49,7 +49,7 @@ public:
    * @fn unsigned char getLetterFactor() const
    * @brief Accesseur
    * @details Renvoie le facteur lettre
-   * @return unsigned char
+   * @return \e unsigned \e char
   */
   unsigned char getLetterFactor() const;
 
@@ -57,7 +57,7 @@ public:
    * @fn unsigned char getWordFactor() const
    * @brief Accesseur
    * @details Renvoie le facteur mot
-   * @return unsigned char
+   * @return \e unsigned \e char
   */
   unsigned char getWordFactor() const;
 
@@ -65,7 +65,7 @@ public:
    * @fn Bonus& operator = (const Bonus & b)
    * @brief Operateur d'affectation
    * @param[in] b ( \e Bonus) à affecter
-   * @return Bonus&
+   * @return \e Bonus&
   */
   Bonus& operator = (const Bonus & b);
 

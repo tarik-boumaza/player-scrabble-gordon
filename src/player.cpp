@@ -58,10 +58,12 @@ void Player::addPoints(const unsigned short int & s) {
 }
 
 
-void Player::removeLetter(const char & c) {
+unsigned short int Player::removeLetter(const char & c) {
+  unsigned short int id;
   if (c < 'A' || c > 'Z') {   // c n'est pas une lettre
     if (c == '*' && !hand_pointer[26].empty()) {   // c est un joker et le joueur en compte dans sa main
-      hand[hand_pointer[26].front()] = '/';
+      id = hand_pointer[26].front();
+      hand[id] = '/';
       hand_pointer[26].pop_front();
     }
     else {     // c n'est pas un joker, ou c est un joker et le joueur n'en a pas dans sa main
@@ -75,10 +77,11 @@ void Player::removeLetter(const char & c) {
     exit(EXIT_FAILURE);
   }
   else {   // c est une lettre et le joueur en possède
-    hand[hand_pointer[c - 'A'].front()] = '/';
+    id = hand_pointer[c - 'A'].front();
+    hand[id] = '/';
     hand_pointer[c - 'A'].pop_front();
   }
-
+  return id;
 }
 
 /////////// A SUPPRIMER \\\\\\\\\\\\//
