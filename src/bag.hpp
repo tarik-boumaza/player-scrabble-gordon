@@ -54,14 +54,14 @@ public:
    * @fn unsigned short int getPoints(const unsigned char & id) const
    * @brief Accesseur
    * @param[in] id ( \e unsigned \e char) : indice de la case ou lettre
-   * @return unsigned short int
+   * @return \e unsigned \e short \e int : nombre de points rapportés par une lettre
   */
   unsigned short int getPoints(const unsigned char & id) const;
 
   /**
    * @fn bool isEmpty()
    * @brief Teste si le sac est vide
-   * @return bool 
+   * @return \e bool : \e true si le sac est vide, \e false sinon 
   */
   bool isEmpty() const;
 
@@ -69,7 +69,7 @@ public:
    * @fn char randomDraw()
    * @brief Effectue un tirage aléatoire dans le sac
    * @details complexité : O(1)
-   * @return char
+   * @return \e char : lettre tirée aléatoirement
   */
   char randomDraw();
 

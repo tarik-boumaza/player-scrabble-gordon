@@ -25,9 +25,13 @@ struct Move;
 typedef std::pair<unsigned short int, unsigned short int> couple;
 
 
+/**
+ * @class Game
+ * @brief Classe représentant le jeu de scrabble
+*/
 class Game {
 
-private:
+public:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -55,7 +59,7 @@ public:
   /****************** METHODES PRIVEES ******************/
 
 
-private :
+public :
 
   /**
    * @fn void printDico() const
@@ -117,6 +121,22 @@ private :
                             const char & direction) const;
 
   /**
+   * @fn unsigned short int bonusScore(const unsigned char & pos,
+                                const unsigned char & board_pos,
+                                const char & temp_word,
+                                const char & direction) const
+   * @brief Calcule le score
+   * @details Cas où le joueur complète un autre mot, organise l'appel à la fonction ci-dessus)
+   * @param[in] board_pos ( \e unsigned \e char) : position à partir de laquelle se joue le mot
+   * @param[in] temp_word ( \e char) : lettre qui complète le mot
+   * @param[in] direction ( \e char) : direction vers laquelle se trouve le mot complété
+   * @return \e unsigned \e short \e int : points rapportés
+  */
+  unsigned short int bonusScore(const unsigned char & board_pos,
+                                const char & temp_word,
+                                const char & direction) const;
+
+  /**
    * @fn unsigned short int score (const Move & move) const
    * @brief Calcule le score
    * @param[in] move ( \e Move) : coup joué 
@@ -124,10 +144,16 @@ private :
   */ 
   unsigned short int score (const Move & move) const;
 
+  /**
+   * A FAIRE 
+  */ 
   void getCrossSetsHorizontal(const unsigned char & square,
                               char tab_horizontal[], bool final, 
                               Board* b) const;
 
+  /**
+   * A FAIRE
+  */
   void getCrossSetsVertical(const unsigned char & square,
                             char tab_vertical[], bool final, 
                             Board * b) const;
@@ -140,12 +166,18 @@ private :
   */ 
   void makeMove(const Move & move);
 
+  /**
+   * A FAIRE
+  */ 
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned char direction,
           Board * b, unsigned short int& score, Move& move,
           unsigned char & j1,
           unsigned char & j2 );
 
+  /**
+   * A FAIRE
+  */ 
   void GoOn(unsigned char square, int pos, char L, std::string & word,
             char rack[],Node * new_arc,Node * old_arc,
             unsigned char direction, Board * b,unsigned short int& score,

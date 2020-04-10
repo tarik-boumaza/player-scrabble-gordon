@@ -36,9 +36,9 @@ struct Move{
    * @param _j1 ( \e unsigned \e char) : position d'un éventuel 1er joker
    * @param _j2 ( \e unsigned \e char) : position d'un éventuel 2ème joker
   */
-  Move(const std::string _word, const unsigned char & fq,
-      const char & d, const unsigned char & _j1,
-      const unsigned char & _j2) {
+  Move(const std::string _word, const unsigned char & fq, const char & d, 
+      const unsigned char & _j1 = static_cast<unsigned char>(255),
+      const unsigned char & _j2 = static_cast<unsigned char>(255)) {
     word = _word;
     first_square = fq;
     direction = d;
@@ -99,7 +99,7 @@ public:
    * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id)
    * @brief Renvoie un couple de coordonnées à partir d'un indice de case
    * @param[in] id ( \e unsigned \e char) : indice de la case
-   * @return std::pair<unsigned char, unsigned char>
+   * @return \e std::pair<unsigned char, unsigned char> : paire <ligne,colonne>
   */
   std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id);
   
@@ -108,7 +108,7 @@ public:
    * @brief Renvoie un indice de case à partir d'un couple de coordonnées
    * @param[in] l ( \e unsigned \e char) : ligne
    * @param[in] c ( \e unsigned \e char) : colonne
-   * @return unsigned short int
+   * @return \e unsigned \e short \e int : indice dans le tableau
   */
   unsigned short int getIndice(const unsigned char & l,const unsigned char & c);
   
@@ -147,7 +147,7 @@ public:
 
   /**
    * @fn void setLetter(const unsigned char & id, const char & c)
-   * @brief Mutateur, pose une lettre sur une cellule
+   * @brief Mutateur, affecte une lettre sur une cellule
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @param[in] c ( \e char) : lettre
   */
@@ -156,7 +156,7 @@ public:
   /**
    * @fn std::list<unsigned char> getAnchorSquares()
    * @brief Renvoie une liste qui contient les positions des anchor squares
-   * @return std::list<unsigned char>
+   * @return \e std::list<unsigned char> : liste qui contient l'indice de anchor squares
   */
   std::list<unsigned char> getAnchorSquares();
 
