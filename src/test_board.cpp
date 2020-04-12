@@ -18,7 +18,7 @@ int main() {
   Game g;
   g.init();
 
-  Board * bo = new Board;
+  /*Board * bo = new Board;
 
   std::stringstream ss2 ;
 
@@ -41,42 +41,81 @@ int main() {
   ss2 << "..............." << std::endl ;
   ss2 << "..............." << std::endl ;
 
+
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << ".........G....." << std::endl ;
+  ss << "........LOS...." << std::endl ;
+  ss << "........IDE...." << std::endl ;
+  ss << "........TEX...." << std::endl ;
+  ss << ".......US.I...." << std::endl ;
+  ss << "CILS...N..E...." << std::endl ;
+  ss << "...EMBOIREZ...." << std::endl ;
+  ss << "......MEUH....." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+
+  ss << "..............." << std::endl ;
+  ss << "GENTIL........." << std::endl ;
+  ss << "..O............" << std::endl ;
+  ss << "..T............" << std::endl ;
+  ss << "..E............" << std::endl ;
+  ss << "..S............" << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+
+
+
   bo->load(ss2);
-  std::cout << *bo << std::endl;
+  std::cout << *bo << std::endl;*/
+
+
 
   std::stringstream ss ;
 
-  ss << ".LPHABETIQUE..." << std::endl ;
-  ss << "L....E........." << std::endl ;
-  ss << "P....T........." << std::endl ;
-  ss << "H....I........." << std::endl ;
-  ss << "A....S........." << std::endl ;
-  ss << "BETISE........." << std::endl ;
-  ss << "E.............." << std::endl ;
-  ss << "T.............." << std::endl ;
-  ss << "I.............." << std::endl ;
-  ss << "Q.............." << std::endl ;
-  ss << "U.............." << std::endl ;
-  ss << "E.............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".......B.EFFARA" << std::endl ;
+  ss << ".....AGIS..E..U." << std::endl ;
+  ss << ".....N.P.G.D..N" << std::endl ;
+  ss << "...Q.N.ALOSE..E" << std::endl ;
+  ss << "...U.I..IDES..." << std::endl ;
+  ss << "S.ME.VU.TEX...." << std::endl ;
+  ss << "I.E...DUS.I...." << std::endl ;
+  ss << "CILS...N..EPURE" << std::endl ;
+  ss << ".N.EMBOIREZ...U" << std::endl ;
+  ss << ".H.R..MEUH....T" << std::endl ;
+  ss << ".A.O..........." << std::endl ;
+  ss << ".L.N..........." << std::endl ;
+  ss << "WATT..........." << std::endl ;
+  ss << "ET............." << std::endl ;
+  ss << "B.............." << std::endl ;
 
   g.board->load(ss) ;
-
   Board b(*(g.board));
 
 
-
-  Move m ("ALPHABETIQUE",0,'B');
-  unsigned short int s = g.score(m);
+  /*Move m ("ALPHABETIQUE",0,'B');
+  unsigned short int s = g.score(m,0);
   std::cout << std::endl << "Score final : " << s << std::endl;
-  
-/*
-  g.attribueLettre("AB");
+  */
+
+  g.attribueLettre("OOATOIV");
   g.print();
+  std::cout << "appel à moveTurn" << std::endl;
   g.moveTurn();
-  g.print();*/
+  g.print();
 
 
   /*char table[7];
