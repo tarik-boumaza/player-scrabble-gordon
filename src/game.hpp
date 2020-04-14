@@ -31,7 +31,7 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-public:
+private:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -59,7 +59,7 @@ public:
   /****************** METHODES PRIVEES ******************/
 
 
-public:
+private:
 
   /**
    * @fn void printDico() const
@@ -227,7 +227,7 @@ public:
    * @param[out] score ( \e unsigned \e short \e int) : meilleur score
    * @param[out] move ( \e Move) : meilleur coup
    * @param[out] j1 ( \e unsigned \e char) : indice du premier joker utilisé
-   * @param[out] j2 ( \e unsigned \e char) : indice du deuxième joker utilisé           
+   * @param[out] j2 ( \e unsigned \e char) : indice du deuxième joker utilisé
   */
   void GoOn(unsigned char square, int pos, char L, std::string & word,
             char rack[],Node * new_arc,Node * old_arc,
@@ -294,5 +294,22 @@ public :
 
   void attribueLettre(const std::string & s);
 
-
 };
+
+
+
+
+/**
+ * @fn static std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id)
+ * @brief Renvoie un couple de coordonnées à partir d'un indice de case
+ * @param[in] id ( \e unsigned \e char) : indice de la case
+ * @return \e std::pair<unsigned char, unsigned char> : paire <ligne,colonne>
+*/
+
+/**
+ * @fn static unsigned short int getIndice(const unsigned char & l,const unsigned char & c)
+ * @brief Renvoie un indice de case à partir d'un couple de coordonnées
+ * @param[in] l ( \e unsigned \e char) : ligne
+ * @param[in] c ( \e unsigned \e char) : colonne
+ * @return \e unsigned \e short \e int : indice dans le tableau
+*/

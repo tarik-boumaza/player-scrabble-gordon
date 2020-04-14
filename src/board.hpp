@@ -17,11 +17,11 @@
 */
 
 struct Move{
-  std::string word; /*!< mot à jouer */ 
+  std::string word; /*!< mot à jouer */
   unsigned char first_square;  /*!< case à partir de laquelle on joue */
   unsigned char j1; /*!< indice de la case où un éventuel bonus serait joué */
   unsigned char j2; /*!< indice de la case où un éventuel bonus serait joué */
-  char direction; /*!< direction dans laquelle le coup est joué ('H' / 'B' / 'G' / 'D') */ 
+  char direction; /*!< direction dans laquelle le coup est joué ('H' / 'B' / 'G' / 'D') */
 
   /**
    * @brief Constructeur par défaut
@@ -36,7 +36,7 @@ struct Move{
    * @param _j1 ( \e unsigned \e char) : position d'un éventuel 1er joker
    * @param _j2 ( \e unsigned \e char) : position d'un éventuel 2ème joker
   */
-  Move(const std::string _word, const unsigned char & fq, const char & d, 
+  Move(const std::string _word, const unsigned char & fq, const char & d,
       const unsigned char & _j1 = static_cast<unsigned char>(255),
       const unsigned char & _j2 = static_cast<unsigned char>(255)) {
     word = _word;
@@ -94,24 +94,7 @@ public:
 
 
   /**************** METHODES *****************/
-  
-  /**
-   * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id) const
-   * @brief Renvoie un couple de coordonnées à partir d'un indice de case
-   * @param[in] id ( \e unsigned \e char) : indice de la case
-   * @return \e std::pair<unsigned char, unsigned char> : paire <ligne,colonne>
-  */
-  std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id) const;
-  
-  /**
-   * @fn unsigned short int getIndice(const unsigned char & l,const unsigned char & c) const
-   * @brief Renvoie un indice de case à partir d'un couple de coordonnées
-   * @param[in] l ( \e unsigned \e char) : ligne
-   * @param[in] c ( \e unsigned \e char) : colonne
-   * @return \e unsigned \e short \e int : indice dans le tableau
-  */
-  unsigned short int getIndice(const unsigned char & l,const unsigned char & c) const;
-  
+
   /**
    * @fn Spot* getSpot(const unsigned char & id)
    * @brief Accesseur
@@ -193,7 +176,7 @@ public:
    * @return Spot
   */
   Spot operator()(unsigned char l, unsigned char c) const ;
-  
+
     /**
    * @fn Spot& operator()(unsigned char l, unsigned char c)
    * @brief Operator ()
@@ -214,13 +197,30 @@ public:
 } ;
 
 
-
 /**
  * @fn std::ostream& operator<<(std::ostream& out, const Board& b)
- * @brief Operateur << 
+ * @brief Operateur <<
  * @details Permet l'affichage du plateau
  * @param out ( \e std::ostream)
  * @param b ( \e Board)
  * @return std::ostream
 */
 std::ostream& operator<<(std::ostream& out, const Board& b) ;
+
+
+
+
+/**
+ * @fn static std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id)
+ * @brief Renvoie un couple de coordonnées à partir d'un indice de case
+ * @param[in] id ( \e unsigned \e char) : indice de la case
+ * @return \e std::pair<unsigned char, unsigned char> : paire <ligne,colonne>
+*/
+
+/**
+ * @fn static unsigned short int getIndice(const unsigned char & l,const unsigned char & c)
+ * @brief Renvoie un indice de case à partir d'un couple de coordonnées
+ * @param[in] l ( \e unsigned \e char) : ligne
+ * @param[in] c ( \e unsigned \e char) : colonne
+ * @return \e unsigned \e short \e int : indice dans le tableau
+*/

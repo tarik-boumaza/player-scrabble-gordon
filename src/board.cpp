@@ -88,14 +88,14 @@ Board::Board(const Board& copy) {
 }
 
 
-std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n) const {
+static std::pair<unsigned char,unsigned char> getIndice(const unsigned char& n) {
   unsigned char x = n / 15;
   unsigned char y = n % 15;
   return std::pair<unsigned char,unsigned char>(x,y);
 }
 
-unsigned short int Board::getIndice(const unsigned char & x,
-                                    const unsigned char &y) const {
+static unsigned short int getIndice(const unsigned char & x,
+                                    const unsigned char &y) {
   return (x * 15 + y);
 }
 
