@@ -2,10 +2,10 @@
  * @file main.cpp
 */
 
-#include <iostream>
-#include <cstring>
 
 #include "scrabbleTXT.hpp"
+#include <iostream>
+#include <cstring>
 
 
 int main(int argc, char** argv) {

@@ -2,9 +2,8 @@
  * @file node.cpp
 */
 
-
-#include <cstring>
 #include "node.hpp"
+#include <cstring>
 #include <iostream>
 
 

@@ -5,17 +5,17 @@
 
 #pragma once
 
-
+#include <string>
 #include <list>
 #include <utility>
 
 
 class Node;
+struct Move;
 class Board;
 class Player;
 class Bag;
 class Gaddag;
-struct Move;
 
 
 
@@ -31,7 +31,7 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-public:
+private:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -59,7 +59,7 @@ public:
   /****************** METHODES PRIVEES ******************/
 
 
-public :
+private :
 
   /**
    * @fn void printDico() const
@@ -83,6 +83,7 @@ public :
    * @fn void draw(const char & letter)
    * @brief Tirage aléatoire des lettres
    * @details Remplace une lettre jouée en attribuant au joueur une lettre aléatoirement tirée parmi les lettres restantes dans le sac
+   * Complexité : O(1)
    * @param[in] letter ( \e char) : lettre à remplacer
   */
   void draw(const char & letter);

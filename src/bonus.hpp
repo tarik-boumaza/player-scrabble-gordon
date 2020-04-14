@@ -14,8 +14,8 @@ class Bonus {
 
 private:
 
-  unsigned char letter_factor ;
-  unsigned char word_factor ;
+  unsigned char letter_factor ; /**< Facteur lettre*/
+  unsigned char word_factor ; /**<Facteur mot*/
 
 
 

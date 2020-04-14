@@ -3,12 +3,12 @@
 */
 
 
+#include "node.hpp"
+#include "gaddag.hpp"
 #include <stack>
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "node.hpp"
-#include "gaddag.hpp"
 
 
 Gaddag::Gaddag() {

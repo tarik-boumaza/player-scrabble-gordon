@@ -22,23 +22,48 @@ int main() {
 
   std::stringstream ss2 ;
 
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+  ss2 << "..............." << std::endl ;
+
+
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".........G....." << std::endl ;
+  ss << "........LOS...." << std::endl ;
+  ss << "........IDE...." << std::endl ;
+  ss << "........TEX...." << std::endl ;
+  ss << ".......US.I...." << std::endl ;
+  ss << "CILS...N..E...." << std::endl ;
+  ss << "...EMBOIREZ...." << std::endl ;
+  ss << "......MEUH....." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
 
-
+  ss << "..............." << std::endl ;
+  ss << "GENTIL........." << std::endl ;
+  ss << "..O............" << std::endl ;
+  ss << "..T............" << std::endl ;
+  ss << "..E............" << std::endl ;
+  ss << "..S............" << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -46,47 +71,11 @@ int main() {
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << "...DIOLAS......" << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-
-  ss << ".......B.EFFARA" << std::endl ;
-  ss << ".L..VAGIS..E..U" << std::endl ;
-  ss << "OYE..N.P.G.D..N" << std::endl ;
-  ss << ".C.Q.N.ALOSE..E" << std::endl ;
-  ss << ".R.U.I..IDES..." << std::endl ;
-  ss << "SAME.VU.TEX...." << std::endl ;
-  ss << "I.E...DUS.I...." << std::endl ;
-  ss << "CILS...N..EPURE" << std::endl ;
-  ss << ".N.EMBOIREZ...U" << std::endl ;
-  ss << ".H.R..MEUH....T" << std::endl ;
-  ss << ".A.O..........." << std::endl ;
-  ss << ".L.N..........." << std::endl ;
-  ss << "WATT..........." << std::endl ;
-  ss << "ET............." << std::endl ;
-  ss << "B.............." << std::endl ;
-
-
-  ss << ".......B.EFFARA" << std::endl ;
-  ss << ".L..VAGIS..E.AU" << std::endl ;
-  ss << "OYE..N.P.G.D.IN" << std::endl ;
-  ss << ".C.Q.N.ALOSE.TE" << std::endl ;
-  ss << ".R.U.I..IDES..." << std::endl ;
-  ss << "SAME.VU.TEX..J." << std::endl ;
-  ss << "I.E...DUS.I.RA." << std::endl ;
-  ss << "CILS...N..EPURE" << std::endl ;
-  ss << ".N.EMBOIREZ...U" << std::endl ;
-  ss << ".H.R..MEUH....T" << std::endl ;
-  ss << ".A.O..........." << std::endl ;
-  ss << ".L.N..........." << std::endl ;
-  ss << "WATT..........." << std::endl ;
-  ss << "ET............." << std::endl ;
-  ss << "B.............." << std::endl ;
 
 
 
@@ -97,34 +86,34 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << ".........G....." << std::endl ;
-  ss << "........LOS...." << std::endl ;
-  ss << "........IDE...." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-
+  ss << ".......B.EFFARA" << std::endl ;
+  ss << ".....AGIS..E..U." << std::endl ;
+  ss << ".....N.P.G.D..N" << std::endl ;
+  ss << "...Q.N.ALOSE..E" << std::endl ;
+  ss << "...U.I..IDES..." << std::endl ;
+  ss << "S.ME.VU.TEX...." << std::endl ;
+  ss << "I.E...DUS.I...." << std::endl ;
+  ss << "CILS...N..EPURE" << std::endl ;
+  ss << ".N.EMBOIREZ...U" << std::endl ;
+  ss << ".H.R..MEUH....T" << std::endl ;
+  ss << ".A.O..........." << std::endl ;
+  ss << ".L.N..........." << std::endl ;
+  ss << "WATT..........." << std::endl ;
+  ss << "ET............." << std::endl ;
+  ss << "B.............." << std::endl ;
 
   g.board->load(ss) ;
   Board b(*(g.board));
 
 
-  /*Move m ("FEDES",11,'B',255,255);
-  unsigned short int s = g.score(m);
-  std::cout << std::endl << "Score final : " << s << std::endl;*/
+  /*Move m ("ALPHABETIQUE",0,'B');
+  unsigned short int s = g.score(m,0);
+  std::cout << std::endl << "Score final : " << s << std::endl;
+  */
 
-
-  g.attribueLettre("FEDES");
+  g.attribueLettre("OOATOIV");
   g.print();
+  std::cout << "appel à moveTurn" << std::endl;
   g.moveTurn();
   g.print();
 

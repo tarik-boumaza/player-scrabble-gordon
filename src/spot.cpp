@@ -2,6 +2,7 @@
  * @file spot.cpp
 */
 
+
 #include "spot.hpp"
 
 

@@ -49,6 +49,17 @@ private:
 
 
 
+private:
+
+  /**
+   * @fn void addNodePlus(const std::string & word)
+   * @brief Ajoute un mot avec l'insertion de '+' dans la Gaddag
+   * @param[in] word ( \e std::string) mot à ajouter
+  */ 
+  void addNodePlus(const std::string & word);
+
+
+
 public:
 
   /************************ CONSTRUCTEUR/DESTRUCTEUR ************************/
@@ -67,6 +78,13 @@ public:
 
   /************************ METHODES ************************/
 
+  /**
+   * @fn Node* getFirst()
+   * @brief Accesseur, renvoie le noeud racine du gaddag
+   * @return *Node
+  */ 
+  Node* getFirst();
+
 
   /**
    * @fn char getLetter(const unsigned short int & n) const
@@ -75,13 +93,6 @@ public:
    * @return char
   */  
   char getLetter(const unsigned short int & n) const;
-
-  /**
-   * @fn void addNodePlus(const std::string & word)
-   * @brief Ajoute un mot avec l'insertion de '+' dans la Gaddag
-   * @param[in] word ( \e std::string) mot à ajouter
-  */ 
-  void addNodePlus(const std::string & word);
 
   /**
    * @fn void addDictionnary()
@@ -94,14 +105,6 @@ public:
    * @brief Affiche l'ensemble des mots contenus dans le Gaddag
   */ 
   void print();
-
-  /**
-   * @fn Node* getFirst()
-   * @brief Accesseur, renvoie le noeud racine du gaddag
-   * @return *Node
-  */ 
-  Node* getFirst();
-
 
 };
 

@@ -3,10 +3,10 @@
 */
 
 
-#include <iostream>
-#include <unistd.h>
 #include "game.hpp"
 #include "scrabbleTXT.hpp"
+#include <iostream>
+#include <unistd.h>
 
 
 ScrabbleTXT::ScrabbleTXT() {

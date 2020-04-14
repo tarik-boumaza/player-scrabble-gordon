@@ -2,10 +2,10 @@
  * @file player.cpp
 */
 
+#include "player.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
-#include "player.hpp"
 
 
 Player::Player() {
