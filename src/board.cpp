@@ -120,6 +120,11 @@ char Board::getLetter(const unsigned char & i) const {
 }
 
 
+char Board::getLetter(const unsigned char & l, const unsigned char & c) const {
+  return spots[getIndice(l,c)].getLetter();
+}
+
+
 void Board::setLetter(const unsigned char & n, const char & c,
                       const bool & _joker) {
   spots[n].setLetter(c,_joker);

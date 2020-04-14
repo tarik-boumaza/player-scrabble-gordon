@@ -100,7 +100,7 @@ public:
    * @brief Accesseur
    * @details Renvoie la cellule pour un indice donné
    * @param[in] id ( \e unsigned \e char) : indice de la case
-   * @return Spot*
+   * @return \e Spot*
   */
   Spot* getSpot(const unsigned char & id) ;
 
@@ -108,9 +108,18 @@ public:
    * @fn char getLetter(const unsigned char & id) const
    * @brief Retourne la lettre contenue par une cellule
    * @param[in] id ( \e unsigned \e char) : indice de la case
-   * @return char
+   * @return \e char
   */
   char getLetter(const unsigned char & id) const;
+
+  /**
+   * @fn char Board::getLetter(const unsigned char & l, const unsigned char & c) const
+   * @brief Retourne la lettre contenue par une cellule
+   * @param[in] l ( \e unsigned \e char) : indice de la ligne
+   * @param[in] c ( \e unsigned \e char) : indice de la colonne
+   * @return \e char
+  */
+  char Board::getLetter(const unsigned char & l, const unsigned char & c) const;
 
   /**
    * @fn unsigned short int getWordFactor(const unsigned char & id) const
