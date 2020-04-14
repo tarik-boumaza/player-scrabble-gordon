@@ -96,21 +96,21 @@ public:
   /**************** METHODES *****************/
   
   /**
-   * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id)
+   * @fn std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id) const
    * @brief Renvoie un couple de coordonnées à partir d'un indice de case
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return \e std::pair<unsigned char, unsigned char> : paire <ligne,colonne>
   */
-  std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id);
+  std::pair<unsigned char,unsigned char> getIndice(const unsigned char& id) const;
   
   /**
-   * @fn unsigned short int getIndice(const unsigned char & l,const unsigned char & c)
+   * @fn unsigned short int getIndice(const unsigned char & l,const unsigned char & c) const
    * @brief Renvoie un indice de case à partir d'un couple de coordonnées
    * @param[in] l ( \e unsigned \e char) : ligne
    * @param[in] c ( \e unsigned \e char) : colonne
    * @return \e unsigned \e short \e int : indice dans le tableau
   */
-  unsigned short int getIndice(const unsigned char & l,const unsigned char & c);
+  unsigned short int getIndice(const unsigned char & l,const unsigned char & c) const;
   
   /**
    * @fn Spot* getSpot(const unsigned char & id)
@@ -119,7 +119,7 @@ public:
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @return Spot*
   */
-  Spot* getSpot(const unsigned char & id);
+  Spot* getSpot(const unsigned char & id) ;
 
   /**
    * @fn char getLetter(const unsigned char & id) const
@@ -146,12 +146,23 @@ public:
   unsigned short int getLetterFactor(const unsigned char & id) const;
 
   /**
-   * @fn void setLetter(const unsigned char & id, const char & c)
+   * @fn void setLetter(const unsigned char & id, const char & c,
+                  const bool & _joker = false)
    * @brief Mutateur, affecte une lettre sur une cellule
    * @param[in] id ( \e unsigned \e char) : indice de la case
    * @param[in] c ( \e char) : lettre
+   * @param[in] _joker ( \e bool) : indique si la lettre jouée est un joker
   */
-  void setLetter(const unsigned char & id, const char & c);
+  void setLetter(const unsigned char & id, const char & c,
+                  const bool & _joker = false);
+
+  /**
+   * @fn bool isJoker(const unsigned char & id) const
+   * @brief Indique si la case contient un joker
+   * @param[in] id ( \e unsigned \e char) : indice de la case dans le tableau
+   * @return \e bool : \e true si la case contient un joker, \e false sinon
+  */
+  bool isJoker(const unsigned char & id) const;
 
   /**
    * @fn std::list<unsigned char> getAnchorSquares()

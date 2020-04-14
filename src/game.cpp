@@ -98,6 +98,7 @@ couple Game::score (const couple & c, const bool & played) const {
   else {
     wf = 1;
   }
+
   return couple (res,wf);
 
 }
@@ -114,9 +115,10 @@ unsigned short int Game::score(const std::list<couple> & l,
   while(!l_copy.empty()) {
     // calcul des points rapportés par chaque lettre
     temp = score(l_copy.back(),played_copy.back()); //temp.first est le score, temp.second est le word_factor
-    //std::cout << "Lettre " << static_cast<int>((l_copy.back().second))
+    //std::cout << "Lettre " << static_cast<char>((l_copy.back().second))
     //                        << " : + " << static_cast<int>(temp.first)
     //                        << " pts" << std::endl;
+
     res += temp.first;
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
@@ -136,8 +138,6 @@ unsigned short int Game::score(const Board * b, const int & pos,
   std::list<bool> played;
   couple temp;
 
-  std::cout << std::endl << std::endl << std::endl;
-
   temp = couple(i,b->getLetter(i));
   l.push_back(temp);
   played.push_back(true);
@@ -146,7 +146,10 @@ unsigned short int Game::score(const Board * b, const int & pos,
     i -= 15;
     while (i >= 0
            && b->getLetter(i) != 0) {
-      temp = couple(i,b->getLetter(i));
+      if (board->isJoker(i))
+        temp = couple(i,'*');
+      else
+        temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       played.push_back(false);
       i -=15 ;
@@ -157,7 +160,10 @@ unsigned short int Game::score(const Board * b, const int & pos,
     i += 15;
     while ( i < 225
             && b->getLetter(i) != 0) {
-      temp = couple(i,b->getLetter(i));
+      if (board->isJoker(i))
+        temp = couple(i,'*');
+      else
+        temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       played.push_back(false);
       i +=15 ;
@@ -168,7 +174,11 @@ unsigned short int Game::score(const Board * b, const int & pos,
     i -= 1;
     while ( board->getIndice(pos).first == board->getIndice(i).first
             && b->getLetter(i) != 0) {
-      temp = couple(i,b->getLetter(i));
+      if (board->isJoker(i))
+        temp = couple(i,'*');
+      else
+        temp = couple(i,b->getLetter(i));
+      
       l.push_back(temp);
       played.push_back(false);
       i -= 1 ;
@@ -179,7 +189,10 @@ unsigned short int Game::score(const Board * b, const int & pos,
     i += 1;
     while ( board->getIndice(pos).first == board->getIndice(i).first
             && b->getLetter(i) != 0) {
-      temp = couple(i,b->getLetter(i));
+      if (board->isJoker(i))
+        temp = couple(i,'*');
+      else
+        temp = couple(i,b->getLetter(i));
       l.push_back(temp);
       played.push_back(false);
       i += 1;
@@ -389,6 +402,8 @@ unsigned short int Game::score (const Move & m) const {
       else {
         played.push_back(false);
         temp_word = m.word[word_pos];
+        if (board->isJoker(board_pos))
+          temp_word = '*';
       }
       temp_couple = couple (board_pos,temp_word);
       move.push_back(temp_couple);
@@ -396,6 +411,7 @@ unsigned short int Game::score (const Move & m) const {
       word_pos++;
     }
   }
+
   points += score(move,played);
   if (nb_letters_used == 7)
     points += 50;
@@ -407,14 +423,15 @@ unsigned short int Game::score (const Move & m) const {
 void Game::makeMove(const Move & m) {
 
   unsigned short int board_pos = static_cast<unsigned short int>(m.first_square);
+  bool joker;
 
   if (m.direction == 'H') {  // On joue vers le HAUT
-
-    short int word_pos = static_cast<int>(m.word.size() - 1);
+    int word_pos = static_cast<int>(m.word.size() - 1);
     while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
-        board->setLetter(board_pos,m.word[word_pos]);
-        if (board_pos != m.j1 && board_pos != m.j2) {
+        joker = (board_pos != m.j1 && board_pos != m.j2);
+        board->setLetter(board_pos,m.word[word_pos],joker);
+        if (joker) {
           draw(m.word[word_pos]);
         }
         else {
@@ -430,8 +447,9 @@ void Game::makeMove(const Move & m) {
       unsigned short int word_pos = 0;
       while (word_pos < m.word.size()) {
         if (board->getLetter(board_pos) == 0) {
-          board->setLetter(board_pos,m.word[word_pos]);
-          if (board_pos != m.j1 && board_pos != m.j2) {
+          joker = (board_pos != m.j1 && board_pos != m.j2);
+          board->setLetter(board_pos,m.word[word_pos],joker);
+          if (joker) {
             draw(m.word[word_pos]);
           }
           else {
@@ -447,8 +465,9 @@ void Game::makeMove(const Move & m) {
         unsigned short int word_pos = 0;
         while (word_pos < m.word.size()) {
           if (board->getLetter(board_pos) == 0) {
-            board->setLetter(board_pos,m.word[word_pos]);
-            if (board_pos != m.j1 && board_pos != m.j2) {
+            joker = (board_pos != m.j1 && board_pos != m.j2);
+            board->setLetter(board_pos,m.word[word_pos],joker);
+            if (joker) {
               draw(m.word[word_pos]);
             }
             else {
@@ -464,8 +483,9 @@ void Game::makeMove(const Move & m) {
           int word_pos = static_cast<int>(m.word.size() - 1);
           while (word_pos >= 0) {
             if (board->getLetter(board_pos) == 0) {
-              board->setLetter(board_pos,m.word[word_pos]);
-              if (board_pos != m.j1 && board_pos != m.j2) {
+              joker = (board_pos != m.j1 && board_pos != m.j2);
+              board->setLetter(board_pos,m.word[word_pos],joker);
+              if (joker) {
                 draw(m.word[word_pos]);
               }
               else {

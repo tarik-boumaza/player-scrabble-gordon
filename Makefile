@@ -7,12 +7,12 @@ SRC_DIR = src
 CC = g++
 LD = g++
 
-CC_FLAGS = -g -Werror -Wextra -std=c++11 -pedantic -c
-LD_FLAGS = -g -Werror -Wextra -std=c++11 -pedantic
+CC_FLAGS = -O2 -Wextra -std=c++11 -pedantic -c
+LD_FLAGS = -O2 -Wextra -std=c++11 -pedantic
 
-CLEAN_FLAGS = -v -r -f
+CLEAN_FLAGS = -v -r
 
-all : main
+all : main doc
 
 
 main: bin/main
@@ -62,7 +62,7 @@ obj/node.o : src/node.cpp src/node.hpp
 
 
 
-doc : src/documentation.h doc/scrabbleTXT.doxy
+doc : doc/scrabbleTXT.doxy src/*.hpp
 	doxygen doc/scrabbleTXT.doxy
 
 

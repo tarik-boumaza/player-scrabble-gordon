@@ -31,7 +31,7 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-private:
+public:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -59,7 +59,7 @@ public:
   /****************** METHODES PRIVEES ******************/
 
 
-private :
+public:
 
   /**
    * @fn void printDico() const
@@ -150,10 +150,10 @@ private :
                               char tab_horizontal[], bool final,
                               Board* b) const
    * @brief Retourne l'ensemble des lettres jouable à partir d'une case horizontalement
-   * @param[in] square (\e unsigned \e char) : case courante
-   * @param[out] tab_horizontal (\e char[]) : les lettres jouables à partir ce cette case
-   * @param[in] final (\e bool) : indique si les lettres recherchées doivent être finales
-   * @param[in] b (\e Bord*) : plateau utilisé pour la recherche des lettres
+   * @param[in] square ( \e unsigned \e char) : case courante
+   * @param[out] tab_horizontal ( \e char[]) : les lettres jouables à partir ce cette case
+   * @param[in] final ( \e bool) : indique si les lettres recherchées doivent être finales
+   * @param[in] b ( \e Bord*) : plateau utilisé pour la recherche des lettres
   */
   void getCrossSetsHorizontal(const unsigned char & square,
                               char tab_horizontal[], bool final,
@@ -161,13 +161,13 @@ private :
 
   /**
   * @fn void getCrossSetsVertical(const unsigned char & square,
-                             char tab_horizontal[], bool final,
+                             char tab_vertical[], bool final,
                              Board* b) const
   * @brief Retourne l'ensemble des lettres jouable à partir d'une case verticalement
-  * @param[in] square (\e unsigned \e char) : case courante
-  * @param[out] tab_vertical (\e char[]) : les lettres jouables à partir ce cette case
-  * @param[in] final (\e bool) : indique si les lettres recherchées doivent être finales
-  * @param[in] b (\e Bord*) : plateau utilisé pour la recherche des lettres
+  * @param[in] square ( \e unsigned \e char) : case courante
+  * @param[out] tab_vertical ( \e char[]) : les lettres jouables à partir ce cette case
+  * @param[in] final ( \e bool) : indique si les lettres recherchées doivent être finales
+  * @param[in] b ( \e Bord*) : plateau utilisé pour la recherche des lettres
   */
   void getCrossSetsVertical(const unsigned char & square,
                             char tab_vertical[], bool final,
@@ -183,23 +183,23 @@ private :
 
   /**
    * @fn void Gen(unsigned char square,int pos, std::string& word,
-           char rack[],Node* arc, unsigned char direction,
-           Board * b, unsigned short int& score, Move& move,
-           unsigned char & j1,
-           unsigned char & j2 )
+          char rack[],Node* arc, unsigned char direction,
+          Board * b, unsigned short int& score, Move& move,
+          unsigned char & j1,
+          unsigned char & j2 )
    * @brief fonction récursive de géneration de coups possible
    * @details effectue un appel de fonction avec des paramètres différents selon le contenu de la case courante
-   * @param[in] square (\e unsigned \e char) : case courante
-   * @param[in] pos (\e int) : positionement dans un mot, permet de savoir si on a rencontré le '+'
-   * @param[out] word (\e string) : mot construit pendant la géneration des coups possibles
-   * @param[in] rack (\e char[]) : ensemble de lettres que possède le joueur
-   * @param[in] arc (\e Node*) : positionnement dans le gaddag
-   * @param[in] direction (\e unsigned \e char) : horizontale 'H' ou verticale 'V'
-   * @param[in] b (\e Board*) : plateau du jeu
-   * @param[in-out] score (\unsigned \e short \e int) : meilleur score
-   * @param[in-out] move (\e Move) : meilleur coup
-   * @param[in-out] j1 (\e unsigned \e char) : indice du premier joker utilisé
-   * @param[in-out] j2 (\e unsigned \e char) : indice du deuxième joker utilisé
+   * @param[in] square ( \e unsigned \e char) : case courante
+   * @param[in] pos ( \e int) : positionement dans un mot, permet de savoir si on a rencontré le '+'
+   * @param[out] word ( \e string) : mot construit pendant la géneration des coups possibles
+   * @param[in] rack ( \e char[]) : ensemble de lettres que possède le joueur
+   * @param[in] arc ( \e Node*) : positionnement dans le gaddag
+   * @param[in] direction ( \e unsigned \e char) : horizontale 'H' ou verticale 'V'
+   * @param[in] b ( \e Board*) : plateau du jeu
+   * @param[out] score ( \e unsigned \e short \e int) : meilleur score
+   * @param[out] move ( \e Move) : meilleur coup
+   * @param[out] j1 ( \e unsigned \e char) : indice du premier joker utilisé
+   * @param[out] j2 ( \e unsigned \e char) : indice du deuxième joker utilisé
   */
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned char direction,
@@ -215,19 +215,19 @@ private :
              unsigned char & j2 )
    * @brief fonction récursive de géneration de coups possible
    * @details explore toutes les possibilités pour former un mot, en continuant à avancer dans un sens ou en changeant de direction
-   * @param[in] square (\e unsigned \e char) : case courante
-   * @param[in] pos (\e int) : positionement dans un mot, permet de savoir si on a rencontré le '+'
-   * @param[in] L (\e char) : lettre courante ajoutée au mot formé
-   * @param[out] word (\e string) : mot construit pendant la géneration des coups possibles
-   * @param[in] rack (\e char[]) : ensemble de lettres que possède le joueur
-   * @param[in] new_arc (\e Node*) : positionnement dans le gaddag
-   * @param[in] old_arc (\e Node*) : noeud parent de L dans le gaddag
-   * @param[in] direction (\e unsigned \e char) : horizontale 'H' ou verticale 'V'
+   * @param[in] square ( \e unsigned \e char) : case courante
+   * @param[in] pos ( \e int) : positionement dans un mot, permet de savoir si on a rencontré le '+'
+   * @param[in] L ( \e char) : lettre courante ajoutée au mot formé
+   * @param[out] word ( \e string) : mot construit pendant la géneration des coups possibles
+   * @param[in] rack ( \e char[]) : ensemble de lettres que possède le joueur
+   * @param[in] new_arc ( \e Node*) : positionnement dans le gaddag
+   * @param[in] old_arc ( \e Node*) : noeud parent de L dans le gaddag
+   * @param[in] direction ( \e unsigned \e char) : horizontale 'H' ou verticale 'V'
    * @param[in] b (\e Board*) : plateau du jeu
-   * @param[in-out] score (\unsigned \e short \e int) : meilleur score
-   * @param[in-out] move (\e Move) : meilleur coup
-   * @param[in-out] j1 (\e unsigned \e char) : indice du premier joker utilisé
-   * @param[in-out] j2 (\e unsigned \e char) : indice du deuxième joker utilisé           
+   * @param[out] score ( \e unsigned \e short \e int) : meilleur score
+   * @param[out] move ( \e Move) : meilleur coup
+   * @param[out] j1 ( \e unsigned \e char) : indice du premier joker utilisé
+   * @param[out] j2 ( \e unsigned \e char) : indice du deuxième joker utilisé           
   */
   void GoOn(unsigned char square, int pos, char L, std::string & word,
             char rack[],Node * new_arc,Node * old_arc,

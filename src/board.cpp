@@ -81,20 +81,21 @@ Board::Board() {
 }
 
 
-Board::Board(const Board& copy){
+Board::Board(const Board& copy) {
   for(int i = 0; i < 225; i++){
     this->spots[i] = copy.spots[i];
   }
 }
 
 
-std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n){
+std::pair<unsigned char,unsigned char> Board::getIndice(const unsigned char& n) const {
   unsigned char x = n / 15;
   unsigned char y = n % 15;
   return std::pair<unsigned char,unsigned char>(x,y);
 }
 
-unsigned short int Board::getIndice(const unsigned char & x,const unsigned char &y){
+unsigned short int Board::getIndice(const unsigned char & x,
+                                    const unsigned char &y) const {
   return (x * 15 + y);
 }
 
@@ -109,7 +110,7 @@ unsigned short int Board::getWordFactor(const unsigned char & id) const {
 }
 
 
-Spot* Board::getSpot(const unsigned char & i)  {
+Spot* Board::getSpot(const unsigned char & i) {
   return &spots[i];
 }
 
@@ -119,8 +120,14 @@ char Board::getLetter(const unsigned char & i) const {
 }
 
 
-void Board::setLetter(const unsigned char & n, const char & c) {
-  spots[n].setLetter(c);
+void Board::setLetter(const unsigned char & n, const char & c,
+                      const bool & _joker) {
+  spots[n].setLetter(c,_joker);
+}
+
+
+bool Board::isJoker(const unsigned char & id) const {
+  return spots[id].isJoker();
 }
 
 

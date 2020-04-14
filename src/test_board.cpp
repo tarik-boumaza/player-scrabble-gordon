@@ -99,9 +99,9 @@ int main() {
 
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << ".........G....." << std::endl ;
-  ss << "........LOS...." << std::endl ;
-  ss << "........IDE...." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << ".............EE" << std::endl ;
+  ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -116,17 +116,18 @@ int main() {
 
   g.board->load(ss) ;
   Board b(*(g.board));
+  g.board->setLetter(5,'R',true);
 
-
-  /*Move m ("FEDES",11,'B',255,255);
+  std::cout << *g.board << std::endl << std::endl;
+  Move m ("ENSOUFREE",51,'D',255,255);
   unsigned short int s = g.score(m);
-  std::cout << std::endl << "Score final : " << s << std::endl;*/
+  std::cout << std::endl << "Score final : " << s << std::endl;
 
 
-  g.attribueLettre("FEDES");
+/*  g.attribueLettre("FEDES");
   g.print();
   g.moveTurn();
-  g.print();
+  g.print();*/
 
 
   /*char table[7];

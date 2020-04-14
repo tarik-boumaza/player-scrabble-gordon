@@ -21,9 +21,16 @@ char Spot::getLetter() const {
 }
 
 
-void Spot::setLetter(const char & c) {
-  letter = c;
+bool Spot::isJoker() const {
+  return joker;
 }
+
+
+void Spot::setLetter(const char & c, const bool & _joker) {
+  letter = c;
+  joker = _joker;
+}
+
 
 Spot& Spot::operator= (const Spot& s){
   this->letter = s.letter;
