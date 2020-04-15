@@ -97,17 +97,17 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << ".............EE" << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << "..H..HELA......" << std::endl ;
+  ss << ".BOULETE.T....." << std::endl ;
+  ss << "..A....SCIAGE.." << std::endl ;
+  ss << "TEXANE...R....." << std::endl ;
+  ss << "R......QUELS..." << std::endl ;
+  ss << "A........F....." << std::endl ;
+  ss << "Q........O....." << std::endl ;
+  ss << "U......QING...." << std::endl ;
+  ss << "E........DU...." << std::endl ;
+  ss << "..........N...." << std::endl ;
+  ss << "..........Z...." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -116,18 +116,18 @@ int main() {
 
   g.board->load(ss) ;
   Board b(*(g.board));
-  g.board->setLetter(5,'R',true);
+  /*g.board->setLetter(5,'R',true);
 
   std::cout << *g.board << std::endl << std::endl;
   Move m ("ENSOUFREE",51,'D',255,255);
   unsigned short int s = g.score(m);
-  std::cout << std::endl << "Score final : " << s << std::endl;
+  std::cout << std::endl << "Score final : " << s << std::endl;*/
 
 
-/*  g.attribueLettre("FEDES");
+  g.attribueLettre("OSPDNYD");
   g.print();
   g.moveTurn();
-  g.print();*/
+  g.print();
 
 
   /*char table[7];
