@@ -518,13 +518,13 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
   unsigned char y = (getIndice(square)).second;
 
   // dans le cas ou la case est vide
-  if( b->getLetter(getIndice(x,y)) == 0 ) {
+  if(b->getLetter(x,y) == 0) {
     // dans le cas où la case est adjacente à une case vide
     // directement à gauche (case non vide à droite)
-    if( (((y < 14) && ((b->getSpot(getIndice(x,y+1)))->getLetter() == 0))
+    if( (((y < 14) && (b->getLetter(x,y+1) == 0))
         || (y >= 14))
         && (y > 0)
-        && ((b->getSpot(getIndice(x,y-1)))->getLetter() != 0)) {
+        && (b->getLetter(x,y-1) != 0)) {
 
           Spot* parcours = b->getSpot(getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
@@ -561,9 +561,9 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
     // dans le cas où la case est adjacente à une case vide
     // directement à droite (case non vide à gauche)
     else if( (y < 14)
-          && ((b->getSpot(getIndice(x,y+1)))->getLetter() != 0)
+          && (b->getLetter(x,y+1) != 0)
           && (((y > 0)
-          && ((b->getSpot(getIndice(x,y-1)))->getLetter() == 0))
+          && (b->getLetter(x,y-1) == 0))
           || (y <= 0))) {
 
           std::stack<char> pile;
@@ -603,9 +603,9 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
     }
     // dans le cas où la case se trouve entre deux cases non vides
     else if ((y < 14)
-            && ((b->getSpot(getIndice(x,y+1)))->getLetter() != 0)
+            && (b->getLetter(x,y+1) != 0)
             && (y > 0)
-            && ((b->getSpot(getIndice(x,y-1)))->getLetter() != 0)){
+            && (b->getLetter(x,y-1) != 0)){
 
           Spot* parcours = b->getSpot(getIndice(x, y-1));
           Node* gad_parcours = gad->getFirst();
@@ -682,13 +682,13 @@ void Game::getCrossSetsVertical(const unsigned char & square,
   unsigned char y = (getIndice(square)).second;
 
   // dans le cas ou la case est vide
-  if (((b->getSpot(getIndice(x,y)))->getLetter() == 0)){
+  if (b->getLetter(x,y) == 0){
     // dans le cas où la case est adjacente à une case vide
     // directement à gauche (case non vide à droite)
-    if( (((x < 14) && ((b->getSpot(getIndice(x+1,y)))->getLetter() == 0))
+    if( (((x < 14) && (b->getLetter(x+1,y) == 0))
         || (x >= 14))
         && (x > 0)
-        && ((b->getSpot(getIndice(x-1,y)))->getLetter() != 0)) {
+        && (b->getLetter(x-1,y) != 0)) {
 
           Spot* parcours = b->getSpot(getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
@@ -726,9 +726,9 @@ void Game::getCrossSetsVertical(const unsigned char & square,
     // dans le cas où la case est adjacente à une case vide
     // directement à droite (case non vide à gauche)
     else if( (x < 14)
-          && ((b->getSpot(getIndice(x+1,y)))->getLetter() != 0)
+          && (b->getLetter(x+1,y) != 0)
           && (((x > 0)
-          && ((b->getSpot(getIndice(x-1,y)))->getLetter() == 0))
+          && (b->getLetter(x-1,y) == 0))
           || (x <= 0))) {
 
           std::stack<char> pile;
@@ -769,9 +769,9 @@ void Game::getCrossSetsVertical(const unsigned char & square,
     }
     // dans le cas où la case se trouve entre deux cases non vides
     else if ((x < 14)
-            && ((b->getSpot(getIndice(x+1,y)))->getLetter() != 0)
+            && (b->getLetter(x+1,y) != 0)
             && (x > 0)
-            && ((b->getSpot(getIndice(x-1,y)))->getLetter() != 0)){
+            && (b->getLetter(x-1,y) != 0)){
 
           Spot* parcours = b->getSpot(getIndice(x-1, y));
           Node* gad_parcours = gad->getFirst();
@@ -849,7 +849,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 
   unsigned char x = (getIndice(square)).first;
   unsigned char y = (getIndice(square)).second;
-  char letter = (b->getSpot(square))->getLetter();
+  char letter = b->getLetter(square);
 
   //std::cout<<"je rentre dans la fontion Gen"<<std::endl;
   // si la case sur laquelle je me positionne n'est pas vide, j'avance dans
@@ -1028,14 +1028,14 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           // à gauche est vide
           if ((new_arc != nullptr)
               && (((y-1>= 0)
-              && ((b->getSpot(getIndice(x,y-1)))->getLetter() == 0))
+              && (b->getLetter(x,y-1) == 0))
               || (y-1 < 0))){
 
                 // Si la branche est finale, et qu'il n'y a pas de case non vide
                 // à droite j'enregistre un coup possible
                 if((new_arc->isFinal())
                   && ((y-pos+1 >14) || ((y-pos+1 <=14)
-                  && ((b->getSpot(getIndice(x,y-pos+1)))->getLetter() == 0)))){
+                  && (b->getLetter(x,y-pos+1) == 0)))){
 
                     Move new_move (word,getIndice(x, y),'D', j1, j2);
                     //std::cout << "Dun coup possible " << word << " à partir de " << getIndice(x, y)
@@ -1075,12 +1075,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
           if ((new_arc != nullptr)
               && (((x-1 >= 0)
-              && ((b->getSpot(getIndice(x-1,y)))->getLetter() == 0))
+              && (b->getLetter(x-1,y) == 0))
               || (x-1 < 0))){
 
                 if((new_arc->isFinal())
                   && ((x-pos+1 >14) || ((x-pos+1 <=14)
-                  && ((b->getSpot(getIndice(x-pos+1,y)))->getLetter() == 0)))){
+                  && (b->getLetter(x-pos+1,y) == 0)))){
 
                     Move new_move(word,getIndice(x, y),'B', j1, j2);
                     //std::cout << "Bun coup possible " << word
@@ -1118,7 +1118,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       if(direction == 'H'){ // Horizontalement
 
         if (((y + 1 <= 14)
-            && ((b->getSpot(getIndice(x,y+1)))->getLetter() == 0))
+            && (b->getLetter(x,y+1) == 0))
             ||(y + 1 > 14)){
 
               Move new_move (word,square,'G', j1, j2);
@@ -1140,7 +1140,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
       else { // verticalement
         if (((x + 1 <= 14)
-            && ((b->getSpot(getIndice(x + 1,y)))->getLetter() == 0))
+            && (b->getLetter(x+1,y) == 0))
             ||(x + 1 > 14)){
 
               Move new_move = Move (word,getIndice(x, y),'H', j1, j2);

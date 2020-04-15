@@ -119,7 +119,7 @@ public:
    * @param[in] c ( \e unsigned \e char) : indice de la colonne
    * @return \e char
   */
-  char Board::getLetter(const unsigned char & l, const unsigned char & c) const;
+  char getLetter(const unsigned char & l, const unsigned char & c) const;
 
   /**
    * @fn unsigned short int getWordFactor(const unsigned char & id) const
