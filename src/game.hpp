@@ -145,6 +145,8 @@ public:
   */
   unsigned short int score (const Move & move) const;
 
+  float grade(const char rack[]) const; 
+
   /**
    * @fn void getCrossSetsHorizontal(const unsigned char & square,
                               char tab_horizontal[], bool final,
@@ -287,9 +289,6 @@ public :
 
 
 
-
-
-  float grade(const char rack[]) const; 
 
 
 
