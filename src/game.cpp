@@ -437,10 +437,10 @@ void Game::makeMove(const Move & m) {
   unsigned short int board_pos = static_cast<unsigned short int>(m.first_square);
   bool joker;
 
-  std::cout << std::endl << "Les deux jokers sont à : " 
-            << static_cast<int>(m.j1) << " et " 
+  std::cout << std::endl << "Les deux jokers sont à : "
+            << static_cast<int>(m.j1) << " et "
             << static_cast<int>(m.j2) << std::endl;
-  std::cout << "Les deux jokers devrait être à : (205 ou 209) ET à 208" << std::endl; 
+  std::cout << "Les deux jokers devrait être à : (205 ou 209) ET à 208" << std::endl;
 
   if (m.direction == 'H') {  // On joue vers le HAUT
     int word_pos = static_cast<int>(m.word.size() - 1);
@@ -996,21 +996,22 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
         unsigned char j1_copy2 = j1;
         unsigned char j2_copy2 = j2;
 
+
         for(j = 0; j < 26; j++){
           // Je remets les paramètres à leur état initial avant chaque itération
-          square = square_copy;
-          pos = pos_copy;
-          word = word_copy;
-          *b = b_copy;
-          arc = arc_copy;
-          j1 = j1_copy2;
-          j2 = j2_copy2;
-
-          for (k = 0; k < 7; k++) {
-            rack[k] = rack_copy[k];
-          }
-
           if(tab_horizontal[j] != '/' && tab_vertical[j] != '/'){
+            square = square_copy;
+            pos = pos_copy;
+            word = word_copy;
+            *b = b_copy;
+            arc = arc_copy;
+            j1 = j1_copy2;
+            j2 = j2_copy2;
+
+            for (k = 0; k < 7; k++) {
+              rack[k] = rack_copy[k];
+            }
+
             rack[i] = '/'; // Je supprime le joker dans le rack
             Node* next_arc = arc->getNode(j); // J'avance dans le gaddag avec la lettre qu'il représente
             b->setLetter(square,'A' + j); // Je place la lettre sur le plateau
@@ -1067,6 +1068,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
            // Je change de direction
           new_arc = new_arc->getNode('+');
+          //std::cout<<"Je change de direction "<<std::endl;
           //std::cout<<"y - 1 = "<< y-1<<std::endl;
           //std::cout<<"y - pos + 1 = "<< y- pos + 1<<std::endl;
           //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
@@ -1085,7 +1087,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                   && (b->getLetter(x,y-pos+1) == 0)))){
 
                     Move new_move (word,getIndice(x, y),'D', j1, j2);
-                    //std::cout << "Dun coup possible " << word << " à partir de " << getIndice(x, y)
+                    //std::cout << "Dun coup possible " << word << " à partir de " << getIndice(x, y)<<std::endl;
                     //        << " ; qui donne : " << std::flush;
                     //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
                     //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
@@ -1169,7 +1171,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(y + 1 > 14)){
 
               Move new_move (word,square,'G', j1, j2);
-              //std::cout << "Gun coup possible " << word << " à partir de " << getIndice(x, y)
+              //std::cout << "Gun coup possible " << word << " à partir de " << getIndice(x, y)<<std::endl;
               //          << " ; qui donne : " << std::flush;
               //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
               //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
