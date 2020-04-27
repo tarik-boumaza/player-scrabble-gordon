@@ -1349,8 +1349,58 @@ void Game::finalPrint() const {
 }
 
 
+float Game::grade(const char rack[]) const {
 
+  float grade = 0;
+  int letters_used[27] = {0};
+  int nb_vowels = 0;
+  int nb_letters_used = 0;
+  
+ 
+  
+  for (unsigned int i = 0; i < 7 ; i++) {  
 
+    if (rack[i] == '/')
+      continue;
+
+    else if (rack[i] == '*') {
+      grade += bag->getWeight1(26);
+      grade += letters_used[26] * bag->getWeight2(26);
+      letters_used[26]++;
+    }
+     
+    else {
+      /*if (i == 4)
+        std::cout << grade << "+ (" << bag->getWeight1(rack[i])
+                  << ") = " << std::flush;*/
+      grade += bag->getWeight1(rack[i]);
+      /*if (i == 4) {
+        std::cout << grade << std::endl;
+        std::cout << grade << "+ (" << letters_used[rack[i] - 'A']
+                  << ")*(" << bag->getWeight2(rack[i]) << ")"
+                  << std::flush;
+      }*/
+      grade += letters_used[rack[i] - 'A'] * bag->getWeight2(rack[i]);
+      /*if (i == 4)
+        std::cout << grade << std::endl;*/
+      nb_letters_used++;
+      letters_used[rack[i] - 'A']++;
+    }
+     
+  }
+  
+  nb_vowels += letters_used['A' - 'A'];
+  nb_vowels += letters_used['E' - 'A'];
+  nb_vowels += letters_used['I' - 'A'];
+  nb_vowels += letters_used['O' - 'A'];
+  nb_vowels += letters_used['U' - 'A'];
+  nb_vowels += letters_used['Y' - 'A'];
+  
+  grade += bag->getRatio(nb_vowels,(nb_letters_used - nb_vowels));
+  
+  return grade;
+
+}
 
 
 

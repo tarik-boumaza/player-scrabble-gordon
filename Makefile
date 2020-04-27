@@ -19,15 +19,22 @@ main: bin/main
 
 test_board : bin/test_board
 
+bordel : bin/bordel
 
 bin/main : obj/bag.o obj/player.o obj/bonus.o obj/spot.o obj/board.o obj/node.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o obj/main.o
 	$(LD) $(LD_FLAGS) $^ -o $@
 
 
 
+bin/bordel : obj/bordel.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
+	$(LD) $(LD_FLAGS) $^ -o $@
+
 bin/test_board : obj/test_board.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
 	$(LD) $(LD_FLAGS) $^ -o $@
 
+
+obj/bordel.o : src/bordel.cpp src/game.hpp
+	$(CC) $(CC_FLAGS) $< -o $@
 
 obj/test_board.o : src/test_board.cpp src/game.hpp
 	$(CC) $(CC_FLAGS) $< -o $@

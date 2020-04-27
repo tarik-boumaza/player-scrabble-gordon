@@ -289,6 +289,9 @@ public :
 
 
 
+  float grade(const char rack[]) const; 
+
+
 
 
 
