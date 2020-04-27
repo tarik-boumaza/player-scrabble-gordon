@@ -131,7 +131,8 @@ float Bag::getWeight1(const char & letter) const {
   
   if (letter < 'A' || letter > 'Z') {
     if (letter != '*') {
-        std::cerr << letter << " : lettre non reconnu" << std::endl;
+        std::cerr << static_cast<int>(letter) 
+                  << " : lettre non reconnue!" << std::endl;
         exit(EXIT_FAILURE);
     }
     else {
@@ -147,7 +148,8 @@ float Bag::getWeight2(const char & letter) const {
   
   if (letter < 'A' || letter > 'Z') {
     if (letter != '*') {
-        std::cerr << letter << " : lettre non reconnu" << std::endl;
+        std::cerr << static_cast<int>(letter) 
+                  << " : lettre non reconnue!!" << std::endl;
         exit(EXIT_FAILURE);
     }
     else {
