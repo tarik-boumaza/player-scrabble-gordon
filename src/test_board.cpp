@@ -12,7 +12,7 @@
 
 int main() {
 
-  Bag * bag = new Bag ("./data/letters.txt","./data/points.txt");
+  Bag * bag = new Bag ();
   bag->printPoints();
 
   Game g;
@@ -97,26 +97,27 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..H..HELA......" << std::endl ;
-  ss << ".BOULETE.T....." << std::endl ;
-  ss << "..A....SCIAGE.." << std::endl ;
-  ss << "TEXANE...R....." << std::endl ;
-  ss << "R......QUELS..." << std::endl ;
-  ss << "A........F....." << std::endl ;
-  ss << "Q........O....." << std::endl ;
-  ss << "U......QING...." << std::endl ;
-  ss << "E........DU...." << std::endl ;
-  ss << "..........N...." << std::endl ;
-  ss << "..........Z...." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".......E......." << std::endl ;
+  ss << ".....Q.N.WOH..." << std::endl ;
+  ss << ".....U.FLOUAT.." << std::endl ;
+  ss << "...SCELLENT...A" << std::endl ;
+  ss << "....O..A......L" << std::endl ;
+  ss << "....U..S.P....P" << std::endl ;
+  ss << "....V...QUE.A.A" << std::endl ;
+  ss << "...REERAIT..N.G" << std::endl ;
+  ss << "....R....T..N.U" << std::endl ;
+  ss << "...RAZ..MODEUSE" << std::endl ;
+  ss << "............L.." << std::endl ;
+  ss << "............E.." << std::endl ;
+  ss << "............E.." << std::endl ;
+  ss << "............S.." << std::endl ;
   ss << "..............." << std::endl ;
 
 
   g.board->load(ss) ;
   Board b(*(g.board));
-  /*g.board->setLetter(5,'R',true);
+  
+  /*
 
   std::cout << *g.board << std::endl << std::endl;
   Move m ("ENSOUFREE",51,'D',255,255);
@@ -124,7 +125,7 @@ int main() {
   std::cout << std::endl << "Score final : " << s << std::endl;*/
 
 
-  g.attribueLettre("OSPDNYD");
+  g.attribueLettre("*ESITR*");
   g.print();
   g.moveTurn();
   g.print();

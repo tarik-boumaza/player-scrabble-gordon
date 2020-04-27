@@ -27,10 +27,12 @@ private:
   */
   char letters[104]; //seules les premières nb_letters sont remplies
   
-  /**
-   * @brief nombre de lettres présentes dans le sac
-  */
-  unsigned int nb_letters;
+  float weights1[27]; 
+
+  float weights2[27]; 
+
+  unsigned int nb_letters; /*!<nombre de lettres présentes dans le sac*/
+
 
 
 
@@ -43,7 +45,10 @@ public:
    * @param[in] file_p ( \e std::string) : chemin vers le fichier qui contient les points
    * l'attribut file_p doit être exact et fourni avec l'extension 'fichier.txt'
   */
-  Bag(const std::string & file_l, const std::string & file_p);
+  Bag(const std::string & file_l = "./data/letters.txt",
+      const std::string & file_p = "./data/points.txt",
+      const std::string & filename_w1 = "./data/weights1.txt",
+      const std::string & filename_w2 = "./data/weights2.txt");
 
 
 
@@ -84,6 +89,9 @@ public:
    * @brief Affiche les lettres présentes dans le sac
   */
   void printPoints() const;
+
+
+  void printWeights() const;
 
 
 

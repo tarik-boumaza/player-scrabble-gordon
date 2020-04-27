@@ -44,7 +44,7 @@ static void printList(const std::list<bool> & l) {
 
 
 Game::Game() {
-  bag = new Bag("./data/letters.txt","./data/points.txt");
+  bag = new Bag();
   player = new Player;
   gad = new Gaddag;
   board = new Board;
@@ -436,6 +436,11 @@ void Game::makeMove(const Move & m) {
 
   unsigned short int board_pos = static_cast<unsigned short int>(m.first_square);
   bool joker;
+
+  std::cout << std::endl << "Les deux jokers sont à : " 
+            << static_cast<int>(m.j1) << " et " 
+            << static_cast<int>(m.j2) << std::endl;
+  std::cout << "Les deux jokers devrait être à : (205 ou 209) ET à 208" << std::endl; 
 
   if (m.direction == 'H') {  // On joue vers le HAUT
     int word_pos = static_cast<int>(m.word.size() - 1);

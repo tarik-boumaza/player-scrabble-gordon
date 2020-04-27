@@ -31,7 +31,7 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-private:
+public:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -59,7 +59,7 @@ public:
   /****************** METHODES PRIVEES ******************/
 
 
-private:
+public:
 
   /**
    * @fn void printDico() const

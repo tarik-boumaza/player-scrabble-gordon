@@ -7,12 +7,12 @@ SRC_DIR = src
 CC = g++
 LD = g++
 
-CC_FLAGS = -O2 -Wextra -Werror -std=c++11 -pedantic -c
-LD_FLAGS = -O2 -Wextra -Werror -std=c++11 -pedantic
+CC_FLAGS = -g -Wextra -Werror -std=c++11 -pedantic -c
+LD_FLAGS = -g -Wextra -Werror -std=c++11 -pedantic
 
 CLEAN_FLAGS = -v -r
 
-all : main doc
+all : main test_board
 
 
 main: bin/main
