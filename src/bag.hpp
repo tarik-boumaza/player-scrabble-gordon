@@ -31,6 +31,8 @@ private:
 
   float weights2[27]; 
 
+  float vc_ratio[28]; 
+
   unsigned int nb_letters; /*!<nombre de lettres présentes dans le sac*/
 
 
@@ -48,7 +50,8 @@ public:
   Bag(const std::string & file_l = "./data/letters.txt",
       const std::string & file_p = "./data/points.txt",
       const std::string & filename_w1 = "./data/weights1.txt",
-      const std::string & filename_w2 = "./data/weights2.txt");
+      const std::string & filename_w2 = "./data/weights2.txt",
+      const std::string & filename_vc = "./data/vowels_consonants.txt");
 
 
 
@@ -93,6 +96,12 @@ public:
 
   void printWeights() const;
 
+  float getRatio(const int & nb_vowels,
+               const int & nb_consonants) const;
+
+  float getWeight1(const char & letter) const;
+
+  float getWeight2(const char & letter) const;
 
 
 };

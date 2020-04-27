@@ -9,12 +9,14 @@
 #include "bag.hpp"
 
 
-
 Bag::Bag(const std::string & filename_l, 
           const std::string & filename_p,
           const std::string & filename_w1,
-          const std::string & filename_w2) {
+          const std::string & filename_w2,
+          const std::string & filename_vc) {
   
+  std::string word, temp;
+  char l = 'A';
   std::ifstream file_l (filename_l.c_str());
   if (!file_l.is_open()) {
     std::cerr << "Erreur lors de la lecture du fichier " << filename_l <<
@@ -22,10 +24,8 @@ Bag::Bag(const std::string & filename_l,
     exit(EXIT_FAILURE);
   }
   else {
-    std::string word, temp;
     unsigned int i = 0, nb = 0;
     int j;
-    char l = 'A';
     while(!file_l.eof() && i < 26) {
       file_l >> word;
       temp = word;
@@ -79,27 +79,33 @@ Bag::Bag(const std::string & filename_l,
     exit(EXIT_FAILURE);
   }
 
-
-  std::string word, temp;
-  char l = 'A';
-
+  l = 'A';
   while (!file_w1.eof() && l <= ('Z' + 1)) {
     file_w1 >> word;
     temp = word;
     weights1[l - 'A'] = std::stof(temp);
     l++;
   }
-
   file_w1.close();
 
+  l = 'A';
   while (!file_w2.eof() && l <= ('Z' + 1)) {
     file_w2 >> word;
     temp = word;
     weights2[l - 'A'] = std::stof(temp);
     l++;
   }
-
   file_w2.close();
+
+  std::ifstream file_vc (filename_vc.c_str());
+  int i = 0;
+  while (!file_vc.eof() && (i < 28)) {
+    file_vc >> word;
+    temp = word;
+    vc_ratio[i] = std::stof(temp);
+    i++;
+  }
+  file_vc.close();
 
 }
 
@@ -118,6 +124,58 @@ unsigned short int Bag::getPoints(const unsigned char & c) const {
 
 bool Bag::isEmpty() const {
   return (nb_letters == 0);
+}
+
+
+float Bag::getWeight1(const char & letter) const {
+  
+  if (letter < 'A' || letter > 'Z') {
+    if (letter != '*') {
+        std::cerr << letter << " : lettre non reconnu" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    else {
+      return weights1[26];
+    }
+  }
+  else
+    return weights1[letter - 'A'];
+}
+
+
+float Bag::getWeight2(const char & letter) const {
+  
+  if (letter < 'A' || letter > 'Z') {
+    if (letter != '*') {
+        std::cerr << letter << " : lettre non reconnu" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    else {
+      return weights2[26];
+    }
+  }
+  else
+    return weights2[letter - 'A'];
+}
+
+
+static int getIndice(const int & nb_vowels,
+                     const int & nb_consonants) {
+  
+  int id = nb_vowels * 7 + nb_consonants;
+    
+  for (int i = 1; i < nb_vowels; i++) {
+      id -= i;
+  }
+  
+  return id;
+}
+
+
+float Bag::getRatio(const int & nb_vowels,
+                  const int & nb_consonants) const {
+  
+  return vc_ratio[getIndice(nb_vowels,nb_consonants)];
 }
 
 
@@ -162,3 +220,4 @@ void Bag::printWeights() const {
   std::cout << "Joker : " << weights1[26] 
             << std::endl << std::endl;
 }
+
