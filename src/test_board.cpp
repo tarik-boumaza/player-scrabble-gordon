@@ -98,21 +98,22 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << ".......E......." << std::endl ;
-  ss << ".....Q.N.WOH..." << std::endl ;
-  ss << ".....U.FLOUAT.." << std::endl ;
-  ss << "...SCELLENT...A" << std::endl ;
-  ss << "....O..A......L" << std::endl ;
-  ss << "....U..S.P....P" << std::endl ;
-  ss << "....V...QUE.A.A" << std::endl ;
-  ss << "...REERAIT..N.G" << std::endl ;
-  ss << "....R....T..N.U" << std::endl ;
-  ss << "...RAZ..MODEUSE" << std::endl ;
-  ss << "............L.." << std::endl ;
-  ss << "............E.." << std::endl ;
-  ss << "............E.." << std::endl ;
-  ss << "............S.." << std::endl ;
   ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << ".....T........." << std::endl ;
+  ss << ".....O........." << std::endl ;
+  ss << ".....S........." << std::endl ;
+  ss << ".....Q........." << std::endl ;
+  ss << "....MUER......." << std::endl ;
+  ss << ".....E.AA......" << std::endl ;
+  ss << "......ADNE....." << std::endl ;
+  ss << "......I..N.VET." << std::endl ;
+  ss << "...BUG..CET.DUR" << std::endl ;
+  ss << "...EDIT.IRE.I.O" << std::endl ;
+  ss << "..BU.FUN.VENTAT" << std::endl ;
+  ss << "...HO.SISES.SUS" << std::endl ;
+
 
 
   g.board->load(ss) ;
@@ -126,7 +127,7 @@ int main() {
   std::cout << std::endl << "Score final : " << s << std::endl;*/
 
 
-  g.attribueLettre("*ESITR*");
+  g.attribueLettre("ZRQN*EE");
   g.print();
   g.moveTurn();
   g.print();

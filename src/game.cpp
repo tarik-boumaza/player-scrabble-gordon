@@ -447,8 +447,8 @@ float Game::grade(const char rack[]) const {
       continue;
 
     else if (rack[i] == '*') {
-      grade += bag->getWeight1(26);
-      grade += letters_used[26] * bag->getWeight2(26);
+      grade += bag->getWeight1('*');
+      grade += letters_used[26] * bag->getWeight2('*');
       letters_used[26]++;
     }
 
@@ -491,10 +491,13 @@ void Game::makeMove(const Move & m) {
   unsigned short int board_pos = static_cast<unsigned short int>(m.first_square);
   bool joker;
 
+  /*
   std::cout << std::endl << "Les deux jokers sont à : "
             << static_cast<int>(m.j1) << " et "
             << static_cast<int>(m.j2) << std::endl;
   std::cout << "Les deux jokers devrait être à : (205 ou 209) ET à 208" << std::endl;
+  */
+
 
   if (m.direction == 'H') {  // On joue vers le HAUT
     int word_pos = static_cast<int>(m.word.size() - 1);
@@ -1416,7 +1419,7 @@ void Game::moveTurn() {
 
 void Game::finalPrint() const {
   if (ended && bag->isEmpty()) {
-    std::cout << "Le joueur ne peut plus jouer et le sac et vide."
+    std::cout << "Le joueur ne peut plus jouer et le sac est vide."
               << std::endl;
   }
   else {
