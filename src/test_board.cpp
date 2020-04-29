@@ -25,20 +25,21 @@ int main() {
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
+  ss << ".........A....." << std::endl ;
+  ss << ".........C....." << std::endl ;
+  ss << "...ROB...C....." << std::endl ;
+  ss << "....HUM..O..D.." << std::endl ;
+  ss << "...DENUENT..U.." << std::endl ;
+  ss << "...I.....E..A.." << std::endl ;
+  ss << "...V...I.E..L.." << std::endl ;
+  ss << "..MOULIN....I.." << std::endl ;
+  ss << "...T...FILMOS.." << std::endl ;
+  ss << "...S..VA....E.." << std::endl ;
+  ss << "......AN....R.." << std::endl ;
+  ss << ".......T...JALE" << std::endl ;
 
-
+  g.attribueLettre("EEKEE**");
+  
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -117,7 +118,7 @@ int main() {
 
   g.board->load(ss) ;
   Board b(*(g.board));
-  
+
   /*
 
   std::cout << *g.board << std::endl << std::endl;
