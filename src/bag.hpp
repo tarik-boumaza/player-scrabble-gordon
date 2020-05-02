@@ -17,21 +17,21 @@ class Bag {
 
 private:
 
-  /** 
+  /**
    * @brief nombre de points rapportés par une lettre
   */
   unsigned int points[27]; // points[26] pour le Joker
-  
-  /** 
+
+  /**
    * @brief tableau de caractères qui contient toutes les lettres du sac
   */
   char letters[104]; //seules les premières nb_letters sont remplies
-  
-  float weights1[27]; 
 
-  float weights2[27]; 
+  float weights1[27];
 
-  float vc_ratio[28]; 
+  float weights2[27];
+
+  float vc_ratio[28];
 
   unsigned int nb_letters; /*!<nombre de lettres présentes dans le sac*/
 
@@ -42,7 +42,7 @@ public:
 
   /**
    * @brief Constructeur
-   * @param[in] file_l ( \e std::string) : chemin vers le fichier qui contient les lettres 
+   * @param[in] file_l ( \e std::string) : chemin vers le fichier qui contient les lettres
    * l'attribut file_l doit être exact et fourni avec l'extension 'fichier.txt'
    * @param[in] file_p ( \e std::string) : chemin vers le fichier qui contient les points
    * l'attribut file_p doit être exact et fourni avec l'extension 'fichier.txt'
@@ -69,7 +69,7 @@ public:
   /**
    * @fn bool isEmpty()
    * @brief Teste si le sac est vide
-   * @return \e bool : \e true si le sac est vide, \e false sinon 
+   * @return \e bool : \e true si le sac est vide, \e false sinon
   */
   bool isEmpty() const;
 
@@ -81,7 +81,7 @@ public:
   */
   char randomDraw();
 
-  /** 
+  /**
    * @fn void printLetters() const
    * @brief Affiche les lettres présentes dans le sac
   */
@@ -102,6 +102,10 @@ public:
   float getWeight1(const char & letter) const;
 
   float getWeight2(const char & letter) const;
+
+
+
+  void removeLetter(const char & letter);
 
 
 };

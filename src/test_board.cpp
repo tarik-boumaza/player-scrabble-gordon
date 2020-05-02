@@ -39,7 +39,7 @@ int main() {
   ss << ".......T...JALE" << std::endl ;
 
   g.attribueLettre("EEKEE**");
-  
+
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
@@ -100,36 +100,43 @@ int main() {
 
   ss << "..............." << std::endl ;
   ss << "..............." << std::endl ;
+  ss << "............B.." << std::endl ;
+  ss << "............I.." << std::endl ;
+  ss << "............U.." << std::endl ;
+  ss << "............Q.." << std::endl ;
+  ss << "........CUITE.." << std::endl ;
+  ss << "...VITREES....." << std::endl ;
   ss << "..............." << std::endl ;
-  ss << ".....T........." << std::endl ;
-  ss << ".....O........." << std::endl ;
-  ss << ".....S........." << std::endl ;
-  ss << ".....Q........." << std::endl ;
-  ss << "....MUER......." << std::endl ;
-  ss << ".....E.AA......" << std::endl ;
-  ss << "......ADNE....." << std::endl ;
-  ss << "......I..N.VET." << std::endl ;
-  ss << "...BUG..CET.DUR" << std::endl ;
-  ss << "...EDIT.IRE.I.O" << std::endl ;
-  ss << "..BU.FUN.VENTAT" << std::endl ;
-  ss << "...HO.SISES.SUS" << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+  ss << "..............." << std::endl ;
+
 
 
 
   g.board->load(ss) ;
   Board b(*(g.board));
 
-  /*
+  g.attribueLettre("ITOPMEO","");
 
+
+/*
   std::cout << *g.board << std::endl << std::endl;
-  Move m ("ENSOUFREE",51,'D',255,255);
+  Move m ("EX",70,'D',255,255);
   unsigned short int s = g.score(m);
-  std::cout << std::endl << "Score final : " << s << std::endl;*/
+  g.makeMove(m);
+  std::cout << *g.board << std::endl << std::endl;
+  std::cout << std::endl << "Score final : " << s << std::endl;
+  */
 
 
-  g.attribueLettre("ZRQN*EE");
+
   g.print();
   g.moveTurn();
+  std::cout << std::endl << std::endl << std::endl;
   g.print();
 
 

@@ -9,12 +9,12 @@
 #include "bag.hpp"
 
 
-Bag::Bag(const std::string & filename_l, 
+Bag::Bag(const std::string & filename_l,
           const std::string & filename_p,
           const std::string & filename_w1,
           const std::string & filename_w2,
           const std::string & filename_vc) {
-  
+
   std::string word, temp;
   char l = 'A';
   std::ifstream file_l (filename_l.c_str());
@@ -128,10 +128,10 @@ bool Bag::isEmpty() const {
 
 
 float Bag::getWeight1(const char & letter) const {
-  
+
   if (letter < 'A' || letter > 'Z') {
     if (letter != '*') {
-        std::cerr << static_cast<int>(letter) 
+        std::cerr << static_cast<int>(letter)
                   << " : lettre non reconnue!" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -145,10 +145,10 @@ float Bag::getWeight1(const char & letter) const {
 
 
 float Bag::getWeight2(const char & letter) const {
-  
+
   if (letter < 'A' || letter > 'Z') {
     if (letter != '*') {
-        std::cerr << static_cast<int>(letter) 
+        std::cerr << static_cast<int>(letter)
                   << " : lettre non reconnue!!" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -163,20 +163,20 @@ float Bag::getWeight2(const char & letter) const {
 
 static int getIndice(const int & nb_vowels,
                      const int & nb_consonants) {
-  
+
   int id = nb_vowels * 7 + nb_consonants;
-    
+
   for (int i = 1; i < nb_vowels; i++) {
       id -= i;
   }
-  
+
   return id;
 }
 
 
 float Bag::getRatio(const int & nb_vowels,
                   const int & nb_consonants) const {
-  
+
   return vc_ratio[getIndice(nb_vowels,nb_consonants)];
 }
 
@@ -193,6 +193,16 @@ char Bag::randomDraw() {
   nb_letters--;
   return l;
 
+}
+
+
+void Bag::removeLetter(const char & letter) {
+  for (unsigned int i = 0; i < nb_letters; i++) {
+    if (letters[i] == letter) {
+      letters[i] = letters[nb_letters - 1];
+    }
+  }
+  nb_letters--;
 }
 
 
@@ -219,7 +229,6 @@ void Bag::printWeights() const {
     std::cout << static_cast<char>('A' + i) << " : "
               << weights1[i] << std::endl;
   }
-  std::cout << "Joker : " << weights1[26] 
+  std::cout << "Joker : " << weights1[26]
             << std::endl << std::endl;
 }
-

@@ -947,7 +947,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
 void Game::Gen(unsigned char square, int pos, std::string& word,
          char rack[], Node* arc, unsigned char direction,
-         Board* b,unsigned short int& points, Move& move,
+         Board* b, float & points, Move& move,
          unsigned char & j1,
          unsigned char & j2){
 
@@ -1119,7 +1119,7 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           char rack[],Node* new_arc,
           Node* old_arc,unsigned char direction,
-          Board* b,unsigned short int& points, Move& move,
+          Board* b, float & points, Move& move,
           unsigned char & j1,
           unsigned char & j2) {
 
@@ -1172,7 +1172,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
                     // Appel de la fonction qui calcule le score
-                    unsigned short int new_points = score(new_move);
+                    float new_points = grade(rack) + score(new_move);
                     //std::cout << points <<  " points" << std::endl;
 
                     // Si le score calculé est meilleur, on garde le dernier coup
@@ -1218,7 +1218,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //        << " ; qui donne : " << std::flush;
                     //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
                     //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
-                    unsigned short int new_points = score(new_move); // = l'appel récursif
+                    float new_points = grade(rack) + score(new_move); // = l'appel récursif
                     //std::cout << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
@@ -1253,13 +1253,13 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(y + 1 > 14)){
 
               Move new_move (word,square,'G', j1, j2);
-              //std::cout << "Gun coup possible " << word << " à partir de " << getIndice(x, y)<<std::endl;
+              //std::cout << "Gun coup possible " << word << " à partir de " << getIndice(x, y)
               //         << " ; qui donne : " << std::flush;
               //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
               //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              unsigned short int new_points = score(new_move); // = l'appel récursif
+              float new_points = grade(rack) + score(new_move); // = l'appel récursif
             //  std::cout << new_points <<  " points" << std::endl;
 
               // Si le score calculé est meilleur, on garde le dernier coup
@@ -1281,7 +1281,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              unsigned short int new_points = score(new_move); // = l'appel récursif
+              float new_points = grade(rack) + score(new_move); // = l'appel récursif
               //std::cout << new_points <<  " points" << std::endl;
 
               // Si le score calculé est meilleur, on garde le dernier coup
@@ -1358,7 +1358,7 @@ void Game::moveTurn() {
 
   Node * parcours = gad->getFirst();
   Board b(*(board)); // Je travaille sur une copie du plateau
-  unsigned short int s = 0;
+  float s = -10000.0;
   Move m;
   unsigned char j1 = 255, j2 = 255;
 
@@ -1402,7 +1402,7 @@ void Game::moveTurn() {
   }
 
   // Si le meilleur coup rapporte un score nul, cela veut dire que la partie est terminée
-  if(s == 0){
+  if(s == -10000){
     ended = true;
   }
 
@@ -1410,7 +1410,7 @@ void Game::moveTurn() {
             << " et ça raporte "<<s <<" points, jouable à partir de la case "
             <<static_cast<int>(m.first_square)<<" vers "<<m.direction<<std::endl;
 
-  player->addPoints(s); // Ajouter les points rapportées par le coup au score
+  player->addPoints(score(m)); // Ajouter les points rapportées par le coup au score
   makeMove(m); // Jouer le mot sur le plateau
   //draw(); // Attribuer des lettres au joueur
 
@@ -1449,17 +1449,31 @@ void Game::finalPrint() const {
 
 
 
-void Game::attribueLettre(const std::string & s) {
+
+
+
+ void Game::attribueLettre(const std::string & s,const std::string & s2) {
   unsigned int i = 0;
   unsigned int size = s.size();
 
+  for (i = 0; i < s2.size(); i++) {
+    bag->removeLetter(s2[i]);
+  }
+
   for (i = 0; i < size; i++) {
     player->setLetter(i,s[i]);
+    bag->removeLetter(s[i]);
   }
 
   while (i < 7) {
     player->removeLetterIndice(i);
     i++;
+  }
+
+
+  for (unsigned int i = 0; i < 225; i++) {
+    if (board->getLetter(i) != 0)
+      bag->removeLetter(board->getLetter(i));
   }
 
 }
