@@ -102,8 +102,8 @@ int main() {
   ss << "..............." << std::endl ;
   ss << "............B.." << std::endl ;
   ss << "............I.." << std::endl ;
-  ss << "............U.." << std::endl ;
   ss << "............Q.." << std::endl ;
+  ss << "............U.." << std::endl ;
   ss << "........CUITE.." << std::endl ;
   ss << "...VITREES....." << std::endl ;
   ss << "..............." << std::endl ;

@@ -583,7 +583,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
   // dans le cas ou la case est vide
   if(b->getLetter(x,y) == 0) {
     // dans le cas où la case est adjacente à une case vide
-    // directement à gauche (case non vide à droite)
+    // directement à droite (case non vide à gauche)
     if( (((y < 14) && (b->getLetter(x, y+1) == 0))
         || (y >= 14))
         && (y > 0)
@@ -627,7 +627,7 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
           }
     }
     // dans le cas où la case est adjacente à une case vide
-    // directement à droite (case non vide à gauche)
+    // directement à gauche (case non vide à droite)
     else if( (y < 14)
           && (b->getLetter(x,y+1) != 0)
           && (((y > 0)
@@ -768,13 +768,14 @@ void Game::getCrossSetsVertical(const unsigned char & square,
   // dans le cas ou la case est vide
   if (b->getLetter(x, y) == 0){
     // dans le cas où la case est adjacente à une case vide
-    // directement à gauche (case non vide à droite)
+    // directement à droite (case non vide à gauche)
     if( (((x < 14) && (b->getLetter(x+1, y) == 0))
         || (x >= 14))
         && (x > 0)
         && (b->getLetter(x-1, y) != 0)) {
 
           l = b->getLetter(x-1, y);
+
           Node* gad_parcours = gad->getFirst();
           int i = 1;
           // je récupère les lettres présentes sur le plateau
@@ -782,6 +783,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           while((l != 0)
                 && (x - i >= 0) ) {
             gad_parcours = gad_parcours->getNode(l);
+
 
             if (x-1-i >= 0)
               l = b->getLetter(x-1-i, y);
@@ -813,7 +815,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
           }
     }
     // dans le cas où la case est adjacente à une case vide
-    // directement à droite (case non vide à gauche)
+    // directement à gauche (case non vide à droite)
     else if( (x < 14)
           && (b->getLetter(x+1, y) != 0)
           && (((x > 0)
