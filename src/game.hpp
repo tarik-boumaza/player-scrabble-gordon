@@ -145,7 +145,7 @@ public:
   */
   unsigned short int score (const Move & move) const;
 
-  float grade(const char rack[]) const; 
+  float grade(const char rack[]) const;
 
   /**
    * @fn void getCrossSetsHorizontal(const unsigned char & square,
@@ -155,7 +155,7 @@ public:
    * @param[in] square ( \e unsigned \e char) : case courante
    * @param[out] tab_horizontal ( \e char[]) : les lettres jouables à partir ce cette case
    * @param[in] final ( \e bool) : indique si les lettres recherchées doivent être finales
-   * @param[in] b ( \e Bord*) : plateau utilisé pour la recherche des lettres
+   * @param[in] b ( \e Board*) : plateau utilisé pour la recherche des lettres
   */
   void getCrossSetsHorizontal(const unsigned char & square,
                               char tab_horizontal[], bool final,
@@ -205,7 +205,7 @@ public:
   */
   void Gen(unsigned char square,int pos, std::string& word,
           char rack[],Node* arc, unsigned char direction,
-          Board * b, unsigned short int& score, Move& move,
+          Board * b, float & score, Move& move,
           unsigned char & j1,
           unsigned char & j2 );
 
@@ -233,7 +233,7 @@ public:
   */
   void GoOn(unsigned char square, int pos, char L, std::string & word,
             char rack[],Node * new_arc,Node * old_arc,
-            unsigned char direction, Board * b,unsigned short int& score,
+            unsigned char direction, Board * b, float & score,
             Move& move, unsigned char & j1,
             unsigned char & j2);
 
@@ -294,7 +294,7 @@ public :
 
 
 
-  void attribueLettre(const std::string & s);
+  void attribueLettre(const std::string & s, const std::string & s2);
 
 };
 
