@@ -1174,7 +1174,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
                     // Appel de la fonction qui calcule le score
-                    float new_points = grade(rack) + score(new_move);
+                    float new_points = score(new_move);
                     //std::cout << points <<  " points" << std::endl;
 
                     // Si le score calculé est meilleur, on garde le dernier coup
@@ -1220,7 +1220,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     //        << " ; qui donne : " << std::flush;
                     //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
                     //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
-                    float new_points = grade(rack) + score(new_move); // = l'appel récursif
+                    float new_points = score(new_move); // = l'appel récursif
                     //std::cout << new_points <<  " points" << std::endl;
                     if (new_points > points){
                       move = new_move;
@@ -1261,7 +1261,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              float new_points = grade(rack) + score(new_move); // = l'appel récursif
+              float new_points = score(new_move); // = l'appel récursif
             //  std::cout << new_points <<  " points" << std::endl;
 
               // Si le score calculé est meilleur, on garde le dernier coup
@@ -1283,7 +1283,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              float new_points = grade(rack) + score(new_move); // = l'appel récursif
+              float new_points = score(new_move); // = l'appel récursif
               //std::cout << new_points <<  " points" << std::endl;
 
               // Si le score calculé est meilleur, on garde le dernier coup
