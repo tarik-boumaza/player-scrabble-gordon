@@ -13,7 +13,7 @@
 int main() {
 
   Bag * bag = new Bag ();
-  bag->printPoints();
+  //bag->printPoints();
 
   Game g;
   g.init();
@@ -98,29 +98,30 @@ int main() {
 
   std::stringstream ss ;
 
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "............B.." << std::endl ;
-  ss << "............I.." << std::endl ;
-  ss << "............Q.." << std::endl ;
-  ss << "............U.." << std::endl ;
-  ss << "........CUITE.." << std::endl ;
-  ss << "...VITREES....." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-  ss << "..............." << std::endl ;
-
+  ss << "ENVAHIES......." << std::endl ;
+  ss << "L....FUTON....." << std::endl ;
+  ss << "E.UD...I......." << std::endl ;
+  ss << "G.TORYSMES....." << std::endl ;
+  ss << "A......U......." << std::endl ;
+  ss << "N..C.K.L.....Q." << std::endl ;
+  ss << "T..A.I.EX...DU." << std::endl ;
+  ss << "S..JONCEE..HOIR" << std::endl ;
+  ss << "...O.A..N....L." << std::endl ;
+  ss << ".WALI..TOF...T." << std::endl ;
+  ss << "..BE.ARANEIDES." << std::endl ;
+  ss << "..BE...V.R....." << std::endl ;
+  ss << "..ES.ELEGIRIEZ." << std::endl;
+  ss << "....MU.L.R...U." << std::endl ;
+  ss << ".......A....APP" << std::endl ;
 
 
 
   g.board->load(ss) ;
   Board b(*(g.board));
 
-  g.attribueLettre("ITOPMEO","");
+  g.attribueLettre("UM","");
+  g.board->spots[75].setLetter('N',true);
+  g.board->spots[186].setLetter('L',true);
 
 
 /*

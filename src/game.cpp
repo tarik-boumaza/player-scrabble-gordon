@@ -261,13 +261,13 @@ unsigned short int Game::score (const Move & m) const {
         if ( getIndice(board_pos).first == getIndice(board_pos - 1).first
               && board->getLetter(board_pos - 1) != 0) { //lettre à gauche
           temp_pos = board_pos;
-          while ( getIndice(pos).first == getIndice(temp_pos + 1).first
+          while ( getIndice(board_pos).first == getIndice(temp_pos + 1).first
                   && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
           points += bonusScore(board_pos,temp_word,'G');
         }
-        else if ( getIndice(pos).first == getIndice(board_pos + 1).first
+        else if ( getIndice(board_pos).first == getIndice(board_pos + 1).first
                   && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
           points += bonusScore(board_pos,temp_word,'D');
         }
@@ -1473,9 +1473,9 @@ void Game::finalPrint() const {
   }
 
 
-  for (unsigned int i = 0; i < 225; i++) {
+  /*for (unsigned int i = 0; i < 225; i++) {
     if (board->getLetter(i) != 0)
       bag->removeLetter(board->getLetter(i));
-  }
+  }*/
 
 }
