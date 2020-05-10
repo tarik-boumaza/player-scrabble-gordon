@@ -102,15 +102,20 @@ ________________________________________________________________________________
 
 
 	Autres Cibles du Makefile :
-	-> Commande "make clean" supprimera TOUS fichiers générés par la commande "make"
-	-> Commande "make doc" générera la documentation du module.
+	-> Commande "make clean" : supprime les fichiers objets générés par la commande "make"
+  -> Commande "make veryclean" : supprime TOUS les fichiers générés par la commande "make"
+	-> Commande "make doc" : génère la documentation du module.
 
 
 ________________________________________________________________________________
 
 ******** EXECUTION ********
 
-	"./bin/scrabbleTXT" -> Execute MatriXMiX en version graphique
+	"./bin/scrabbleTXT" -> Execute scrabbleTXT en version graphique
+
+  OPTIONS:
+    - option "--sm" qui permet d'exécuter en slow motion
+    - option "--ia" qui permet d'exécuter le jeu avec un joueur intelligent
 
 
 ________________________________________________________________________________

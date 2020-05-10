@@ -6,7 +6,7 @@
 
 \version 1.0
 
-\date 20 Avril 2020
+\date 12 Mai 2020
 
 \n
 \section Introduction
@@ -19,22 +19,24 @@
 
 \n
 \section Compilation
-		<B>Note</B> : La compilation est réalisable sous <B>LINUX</B>, à condition d'avoir installé <B>g++</B>\n
+		<B>Note</B> : La compilation est réalisable sous <B>LINUX</B>, à condition d'avoir installé <B>g++</B>\n \n
 
-	Pour compiler le projet, éxecuter la commande :
+	Pour compiler le projet, éxecuter la commande pour génerer la cible <B>bin/scrabbleTXT</B> :
 
 		$ make
 
-	depuis le répertoire courant pour génerer la cible :
-        <B>bin/scrabbleTXT</B> \n \n
 
-	Pour supprimer l'éxecutable dans <B>bin/</B> ainsi que les fichiers objets dans <B>obj/</B>, exécuter :
+  Pour supprimer les fichiers objets dans <B>obj/</B>, exécuter :
 
-		$ make clean
+      $ make clean
 
-	Egalement, vous pouvez générer la documentation avec <B>Doxygen</B> :
+  Pour supprimer l'éxecutable dans <B>bin/</B> ainsi que les fichiers objets dans <B>obj/</B>, exécuter :
 
-		$ make doc
+  	   $ make veryclean
+
+    Egalement, vous pouvez générer la documentation avec <B>Doxygen</B> :
+
+     	 $ make doc
 
 
 \n
@@ -44,9 +46,14 @@
 
 		$ bin/scrabbleTXT
 
-    Pour exécuter le projet en slow motion, exécuter :
+  Pour exécuter le projet en slow motion, exécuter :
 
-  		$ bin/scrabbleTXT --sm
+    	$ bin/scrabbleTXT --sm
+
+    Pour exécuter le projet avec un joueur intelligent, exécuter :
+
+        $ bin/scrabbleTXT --ia
+
 
 \n
 \section Documentation
@@ -60,7 +67,7 @@
 
 		$ make doc
 
-  Cette commande requiet l'installation de l'outil <B>doxygen</B> via la commande :
+  Cette commande requiert l'installation de l'outil <B>doxygen</B> via la commande :
 
 		$ sudo apt-get install doxygen
 
@@ -68,5 +75,5 @@
     \section Remerciements
     Vincent Nivoliers
     \n Christophe Crespelle
-    \n Suzette
+    \n pas Suzette
 */
