@@ -119,7 +119,8 @@ public:
    * @return \e unsigned \e short \e int : points rapporté par le coup
   */
   unsigned short int score (const Board * b, const int & pos,
-                            const char & direction) const;
+                            const char & direction,
+                            const int fq = 255) const;
 
   /**
    * @fn unsigned short int bonusScore(const unsigned char & pos,
@@ -135,7 +136,8 @@ public:
   */
   unsigned short int bonusScore(const unsigned char & board_pos,
                                 const char & temp_word,
-                                const char & direction) const;
+                                const char & direction,
+                                const int fq = 255) const;
 
   /**
    * @fn unsigned short int score (const Move & move) const

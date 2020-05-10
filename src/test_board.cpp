@@ -74,14 +74,6 @@ int main() {
 
 
 
-
-  bo->load(ss2);
-  std::cout << *bo << std::endl;*/
-
-  //std::cout << *g.board << std::endl << std::endl;
-
-  std::stringstream ss ;
-
   ss << "B...DOUFE.....W" << std::endl ;
   ss << "O.C.I........AU" << std::endl ;
   ss << "B.I.E..ERRATUM." << std::endl ;
@@ -98,31 +90,89 @@ int main() {
   ss << ".S.....O.....U." << std::endl ;
   ss << ".......I.....E." << std::endl ;
 
+  ss << ".D.B.......N.F." << std::endl ;
+  ss << ".E.R.KOP...OHE." << std::endl ;
+  ss << ".FRAYAS....BUT." << std::endl ;
+  ss << ".O.V.......LIE." << std::endl ;
+  ss << ".N.E.A.....ET.L" << std::endl ;
+  ss << ".C.R.W......I.I" << std::endl ;
+  ss << "TA.E.A.....JE.M" << std::endl ;
+  ss << "RI.ZOLIEN..OM.U" << std::endl ; ///
+  ss << "A....E..UNGUE.L" << std::endl ;
+  ss << "V..QIS.....T..E" << std::endl ;
+  ss << "E..........A..." << std::endl ;
+  ss << "L..........I..." << std::endl ;
+  ss << "O..........S..." << std::endl ;
+  ss << "SCIANTE.EX....." << std::endl ;
+  ss << "......HUTINS..." << std::endl ;
+
+
+
+  ss << ".......V......." << std::endl ;
+  ss << ".......U.H....." << std::endl ;
+  ss << "...O...L.A....." << std::endl ;
+  ss << "...S...GOBEZ..." << std::endl ;
+  ss << "..PETE.O.LU...." << std::endl ;
+  ss << "..R......I....." << std::endl ;
+  ss << "..I....R.O...E." << std::endl ;
+  ss << "..THEINE.N.BYTE" << std::endl ; ///
+  ss << ".......SOSIE..." << std::endl ;
+  ss << ".......A.....T." << std::endl ;
+  ss << ".......L......." << std::endl ;
+  ss << ".......A......." << std::endl ;
+  ss << "....REIS......." << std::endl ;
+  ss << ".......S......." << std::endl ;
+  ss << ".......E......." << std::endl ;
+
+
+  bo->load(ss2);
+  std::cout << *bo << std::endl;*/
+
+  //std::cout << *g.board << std::endl << std::endl;
+
+  std::stringstream ss ;
+
+
+  ss << "VETIT......BIPA" << std::endl ;
+  ss << "....EPAUFREE..." << std::endl ;
+  ss << ".LYNX...U...C.." << std::endl ;
+  ss << "........S..MONT" << std::endl ;
+  ss << "....BEUVERIES.O" << std::endl ;
+  ss << "........L...T.L" << std::endl ;
+  ss << "........A...A.E" << std::endl ;
+  ss << "....KORES...R.Z" << std::endl ; ///
+  ss << ".....U......D.." << std::endl ;
+  ss << ".F...L........." << std::endl ;
+  ss << ".J..NO........C" << std::endl ;
+  ss << "HOQUETA.......H" << std::endl ;
+  ss << ".R..NE........I" << std::endl ;
+  ss << ".D..NE..AGAMIDE" << std::endl ;
+  ss << "..ELISAIS.....R" << std::endl ;
 
 
 
   g.board->load(ss) ;
   Board b(*(g.board));
 
-  g.attribueLettre("EN","");
+  g.attribueLettre("MAEUSGT","");
 
-  //g.board->spots[133].setLetter('A',true);
+  g.board->spots[95].setLetter('B',true);
   //g.board->spots[87].setLetter('I',true);
 
-/*
+
   g.print();
   g.moveTurn();
   std::cout << std::endl << std::endl << std::endl;
-  g.print();*/
+  g.print();
 
 
-
+/*
   std::cout << *g.board << std::endl << std::endl;
   Move m ("EN",1,'B',255,255);
   unsigned short int s = g.score(m);
   g.makeMove(m);
   std::cout << *g.board << std::endl << std::endl;
-  std::cout << std::endl << "Points marqués : " << s << std::endl;
+  std::cout << std::endl << "Points marqués : " << s << std::endl;*/
 
 
 
