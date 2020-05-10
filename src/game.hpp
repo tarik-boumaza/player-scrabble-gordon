@@ -38,6 +38,7 @@ public:
   Bag * bag; /*!< sac de lettre */
   Gaddag * gad; /*!< structure de gaddag */
   bool ended;  /*!< signale la fin de partie (joueur bloqué) */
+  bool ia; /*!< indique si le joueur recherche les coups intelligents */
 
 
 public:
@@ -46,8 +47,9 @@ public:
 
   /**
    * @brief Constructeur par défaut, sans paramètre
+   * @param[in] _ia ( \e bool) : indique si le joueur recherche les meilleurs coups
   */
-  Game();
+  Game(const bool _ia = false);
 
   /**
    * @brief Destructeur
@@ -118,7 +120,7 @@ public:
    * @param[in] direction ( \e char) : direction vers laquelle le mot est joué
    * @return \e unsigned \e short \e int : points rapporté par le coup
   */
-  unsigned short int score (const Board * b, 
+  unsigned short int score (const Board * b,
                             const int & pos,
                             const char & direction) const;
 
@@ -151,7 +153,7 @@ public:
   /**
    * @fn float grade(const char rack[]) const;
    * @brief Calcul du poids du rack
-   * @details Le poids du rack est un indice qui détermine la valeur du rack. 
+   * @details Le poids du rack est un indice qui détermine la valeur du rack.
    * Basé sur le poids des lettres, le ratio/consonne voyelle, il indique si le rack est favorable ou pas au joueur.
    * Plus le poids est élevé, meilleur est le rack
    * @return \e float : valeur du rack
