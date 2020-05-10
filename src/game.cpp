@@ -20,12 +20,13 @@
 
 
 
-Game::Game() {
+Game::Game(const bool _ia) {
   bag = new Bag();
   player = new Player;
   gad = new Gaddag;
   board = new Board;
   ended = false;
+  ia = _ia;
 }
 
 
@@ -79,7 +80,7 @@ static unsigned short int getIndice(const unsigned char & x,
 
 couple Game::score (const couple & c, const bool & played) const {
   unsigned short int res = bag->getPoints(c.second);
- 
+
   unsigned short int wf;
   if (played) {   // si la lettre est jouée par le joueur, on compte les facteurs lettre/mot
     res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
@@ -112,7 +113,7 @@ unsigned short int Game::score(const std::list<couple> & l,
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
     else if (temp.second == wf)    // 2 facteurs *2 donnent facteur 4 ...
-      wf = wf*wf;              
+      wf = wf*wf;
     l_copy.pop_back();
     played_copy.pop_back();
   }
@@ -121,14 +122,14 @@ unsigned short int Game::score(const std::list<couple> & l,
 }
 
 
-unsigned short int Game::score(const Board * b, 
+unsigned short int Game::score(const Board * b,
                               const int & pos,
                               const char & direction) const {
 
   std::list<couple> l;
   std::list<bool> played;
   couple temp;
-  int i = pos; 
+  int i = pos;
 
   if (direction == 'H') {
     while (i >= 0
@@ -160,7 +161,7 @@ unsigned short int Game::score(const Board * b,
 
     while ( getIndice(pos).first == getIndice(i).first
             && b->getLetter(i) != 0) {
-      
+
       if (board->isJoker(i))
         temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
@@ -227,7 +228,7 @@ unsigned short int Game::score (const Move & m) const {
 
     while ( word_pos >= 0
             && board_pos < 225) {
-      
+
       if (board->getLetter(board_pos) == 0) {
         played.push_back(true);
         nb_letters_used++;
@@ -255,7 +256,7 @@ unsigned short int Game::score (const Move & m) const {
         }
 
       }
-      else {    
+      else {
         played.push_back(false);
         temp_word = m.word[word_pos];
       }
@@ -274,7 +275,7 @@ unsigned short int Game::score (const Move & m) const {
 
     while ( word_pos < m.word.size()
             && board_pos < 225) {
-  
+
       if (board->getLetter(board_pos) == 0) {
         played.push_back(true);
         nb_letters_used++;
@@ -1078,7 +1079,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                     Move new_move (word,getIndice(x, y),'D', j1, j2);
 
                     // Appel de la fonction qui calcule le score
-                    float new_points =  grade(rack) + 2*score(new_move);
+                    float new_points;
+                    if (ia)
+                      new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+                    else
+                      new_points = score(new_move);
 
                     // Si le score calculé est meilleur, on garde le dernier coup
                     if (new_points > points){
@@ -1117,7 +1122,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                   && (b->getLetter(x-pos+1,y) == 0)))){
 
                     Move new_move(word,getIndice(x, y),'B', j1, j2);
-                    float new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+                    float new_points;
+                    if (ia)
+                      new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+                    else
+                      new_points = score(new_move);
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -1150,7 +1159,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               Move new_move (word,square,'G', j1, j2);
 
               // Appel de la fonction qui calcule le score
-              float new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+              float new_points;
+              if (ia)
+                new_points =  grade(rack) + 2*score(new_move);
+              else
+                new_points = score(new_move);
 
               // Si le score calculé est meilleur, on garde le dernier coup
               if (new_points > points){
@@ -1167,7 +1180,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
               Move new_move = Move (word,getIndice(x, y),'H', j1, j2);
 
               // Appel de la fonction qui calcule le score
-              float new_points =  static_cast<float>(grade(rack) + 2*score(new_move)); // = l'appel récursif
+              float new_points;
+              if (ia)
+                new_points =  grade(rack) + 2*score(new_move);
+              else
+                new_points = score(new_move);
 
               // Si le score calculé est meilleur, on garde le dernier coup
               if (new_points > points){
@@ -1217,7 +1234,7 @@ void Game::print() const {
   std:: cout << std::endl << "Rack : " << std::flush;
   player->printHand();
   std::cout << std::endl << *board << std::endl;
-  std::cout << "Score : " << player->getPoints() << std::endl 
+  std::cout << "Score : " << player->getPoints() << std::endl
             << std::endl << std::endl;
 
 }
@@ -1291,16 +1308,17 @@ void Game::moveTurn() {
   if(s == -10000){
     ended = true;
   }
+  else {
+    s = score(m);
 
-  s = score(m);
+    std::cout << "Le coup joué est " << m.word
+              << " à partir de " << static_cast<int>(m.first_square)
+              <<" vers "<< m.direction << " et il rapporte " << s
+              <<" points" << std::endl;
 
-  std::cout << "Le coup joué est " << m.word
-            << " à partir de " << static_cast<int>(m.first_square)
-            <<" vers "<< m.direction << " et il rapporte " << s
-            <<" points" << std::endl;
-
-  player->addPoints(s); // Ajouter les points rapportées par le coup au score
-  makeMove(m); // Jouer le mot sur le plateau
+    player->addPoints(s); // Ajouter les points rapportées par le coup au score
+    makeMove(m); // Jouer le mot sur le plateau
+  }
 
 }
 
@@ -1319,4 +1337,3 @@ void Game::finalPrint() const {
             << "Le joueur termine avec un score de "
             << player->getPoints() << std::endl;
 }
-
