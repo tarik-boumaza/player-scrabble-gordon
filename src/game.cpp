@@ -134,6 +134,8 @@ unsigned short int Game::score(const std::list<couple> & l,
     res += temp.first;
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
+      else if(temp.second == wf)
+      wf = wf * wf;
     l_copy.pop_back();
     played_copy.pop_back();
   }
