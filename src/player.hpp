@@ -83,10 +83,6 @@ public:
   unsigned short int removeLetter(const char & c);
 
 
-//////// !!!!!!!!!!!!!!!!!!!!!!A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! /////////////
-  void removeLetterIndice(const char & c);
-
-
   /**
    * @brief Affiche les lettres que possède le joueur 
   */ 

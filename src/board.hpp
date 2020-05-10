@@ -72,7 +72,7 @@ struct Move{
 
 class Board {
 
-public:
+private:
   Spot spots[225] ; /*!<  Tableau des 225 cellules (cf classe Spot) qui composent le plateau */
 
 

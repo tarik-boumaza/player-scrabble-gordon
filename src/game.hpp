@@ -31,7 +31,7 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-public:
+private:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
@@ -297,15 +297,6 @@ public :
    * @brief Affiche les informations en fin de partie
   */
   void finalPrint() const;
-
-
-
-
-
-
-
-
-  void attribueLettre(const std::string & s, const std::string & s2);
 
 };
 

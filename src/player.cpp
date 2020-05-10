@@ -84,17 +84,6 @@ unsigned short int Player::removeLetter(const char & c) {
   return id;
 }
 
-/////////// A SUPPRIMER \\\\\\\\\\\\//
-void Player::removeLetterIndice(const char & n) {
-  if (n < 7) {
-    hand[n] = '/';
-  }
-  else {
-    std::cerr << "Problème indice" << std::endl;
-    exit(EXIT_FAILURE);
-  }
-}
-
 
 void Player::printHand() const {
   for(unsigned short int i = 0; i < 7; i++) {
