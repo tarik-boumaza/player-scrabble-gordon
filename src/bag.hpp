@@ -123,4 +123,12 @@ public:
   void printPoints() const;
 
 
+
+
+
+
+
+   void removeLetter(const char & letter);
+
+
 };

@@ -13,13 +13,20 @@ LD_FLAGS = -O2 -Wextra -Werror -std=c++11 -pedantic
 CLEAN_FLAGS = -v -r
 
 
-all : scrabbleTXT
+all : scrabbleTXT hack
+
 
 scrabbleTXT: bin/scrabbleTXT
+
+hack : bin/hack
 
 
 bin/scrabbleTXT : obj/bag.o obj/player.o obj/bonus.o obj/spot.o obj/board.o obj/node.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o obj/main.o
 	$(LD) $(LD_FLAGS) $^ -o $@
+
+bin/hack : obj/hack.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
+	$(LD) $(LD_FLAGS) $^ -o $@
+
 
 
 obj/bag.o : src/bag.cpp src/bag.hpp
@@ -51,6 +58,10 @@ obj/scrabbleTXT.o : src/scrabbleTXT.cpp src/scrabbleTXT.hpp src/game.hpp src/gad
 
 obj/main.o : src/main.cpp src/scrabbleTXT.hpp
 	$(CC) $(CC_FLAGS) $< -o $@
+
+obj/hack.o : src/hack.cpp src/game.hpp
+	$(CC) $(CC_FLAGS) $< -o $@
+
 
 
 

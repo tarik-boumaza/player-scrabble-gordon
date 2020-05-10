@@ -91,3 +91,31 @@ void Player::printHand() const {
   }
   std::cout << std::endl;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Player::removeLetterIndice(const char & n) {
+  if (n < 7) {
+    hand[n] = '/';
+  }
+  else {
+    std::cerr << "Problème indice" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+}

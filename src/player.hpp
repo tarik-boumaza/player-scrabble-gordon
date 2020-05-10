@@ -17,7 +17,7 @@
 
 class Player {
 
-private:
+public:
   
   /**
    * @brief tableau de 7 lettres que possède le joueur
@@ -87,5 +87,19 @@ public:
    * @brief Affiche les lettres que possède le joueur 
   */ 
   void printHand() const;
+
+
+
+
+
+
+
+
+
+
+
+
+
+  void removeLetterIndice(const char & c);
 
 };

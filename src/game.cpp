@@ -1320,3 +1320,36 @@ void Game::finalPrint() const {
             << player->getPoints() << std::endl;
 }
 
+
+
+
+
+
+
+
+
+void Game::attribueLettre(const std::string s, const std::string s2) {
+  unsigned int i = 0;
+  unsigned int size = s.size();
+
+  for (i = 0; i < s2.size(); i++) {
+    bag->removeLetter(s2[i]);
+  }
+
+  for (i = 0; i < size; i++) {
+    player->setLetter(i,s[i]);
+    bag->removeLetter(s[i]);
+  }
+
+  while (i < 7) {
+    player->removeLetterIndice(i);
+    i++;
+  }
+
+
+  for (unsigned int i = 0; i < 225; i++) {
+    if (board->getLetter(i) != 0)
+      bag->removeLetter(board->getLetter(i));
+  }
+
+}
