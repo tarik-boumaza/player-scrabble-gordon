@@ -196,16 +196,6 @@ char Bag::randomDraw() {
 }
 
 
-void Bag::removeLetter(const char & letter) {
-  for (unsigned int i = 0; i < nb_letters; i++) {
-    if (letters[i] == letter) {
-      letters[i] = letters[nb_letters - 1];
-    }
-  }
-  nb_letters--;
-}
-
-
 void Bag::printLetters() const {
   for(unsigned short int i = 0; i < nb_letters; i++) {
     std::cout << letters[i] << " , " << std::flush;
@@ -223,12 +213,3 @@ void Bag::printPoints() const {
   std::cout << "Joker : " << points[26] << std::endl << std::endl;
 }
 
-
-void Bag::printWeights() const {
-  for(unsigned int i = 0; i < 26; i++) {
-    std::cout << static_cast<char>('A' + i) << " : "
-              << weights1[i] << std::endl;
-  }
-  std::cout << "Joker : " << weights1[26]
-            << std::endl << std::endl;
-}

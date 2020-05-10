@@ -137,8 +137,8 @@ unsigned short int Game::score(const std::list<couple> & l,
     res += temp.first;
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
-    else if (temp.second == wf)
-      wf = wf*wf;
+    else if (temp.second == wf)    // 2 facteurs *2 donnent facteur 4 ...
+      wf = wf*wf;              
     l_copy.pop_back();
     played_copy.pop_back();
   }
@@ -148,32 +148,24 @@ unsigned short int Game::score(const std::list<couple> & l,
 }
 
 
-unsigned short int Game::score(const Board * b, const int & pos,
-                                const char & direction, 
-                                const int fq) const {
-
-  int i;
-  if (fq > 224)
-    i = pos;
-  else 
-    i = fq;
-
-  //////////////std::cout << "Je démarre de " << i << std::endl; 
+unsigned short int Game::score(const Board * b, 
+                              const int & pos,
+                              const char & direction) const {
 
   std::list<couple> l;
   std::list<bool> played;
   couple temp;
-
+  int i = pos; 
 
   if (direction == 'H') {
     while (i >= 0
            && b->getLetter(i) != 0) {
-      if (board->isJoker(i))
+      if (board->isJoker(i))          //la lettre sur le plateau était un joker
         temp = couple(i,'*');
       else
         temp = couple(i,b->getLetter(i));
       l.push_back(temp);
-      played.push_back(i == pos);
+      played.push_back(i == pos);    // i == pos indique si on est sur la case où on joue la lettre
       i -=15 ;
     }
   }
@@ -182,7 +174,7 @@ unsigned short int Game::score(const Board * b, const int & pos,
     while ( i < 225
             && b->getLetter(i) != 0) {
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');      //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
       l.push_back(temp);
@@ -196,11 +188,8 @@ unsigned short int Game::score(const Board * b, const int & pos,
     while ( getIndice(pos).first == getIndice(i).first
             && b->getLetter(i) != 0) {
       
-      //std::cout << i << std::endl;
-
-
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
 
@@ -215,7 +204,7 @@ unsigned short int Game::score(const Board * b, const int & pos,
     while ( getIndice(pos).first == getIndice(i).first
             && b->getLetter(i) != 0) {
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
       l.push_back(temp);
@@ -233,9 +222,15 @@ unsigned short int Game::bonusScore(const unsigned char & board_pos,
                                     const char & direction,
                                     const int fq) const {
   unsigned short int pts = 0;
+  int i = fq;
+  if (i > 224)
+    i = static_cast<int>(board_pos);
+
+  //copie du plateau, insertion de la lettre et calcul du score bonus
   Board * b_copy = new Board(*this->board);
   b_copy->setLetter(board_pos,temp_word);
-  pts =  score(b_copy, board_pos, direction,fq);
+
+  pts =  score(b_copy,i,direction);
   delete b_copy;
   return pts;
 }
@@ -456,8 +451,6 @@ float Game::grade(const char rack[]) const {
   int nb_vowels = 0;
   int nb_letters_used = 0;
 
-
-
   for (unsigned int i = 0; i < 7 ; i++) {
 
     if (rack[i] == '/')
@@ -470,19 +463,8 @@ float Game::grade(const char rack[]) const {
     }
 
     else {
-      /*if (i == 4)
-        std::cout << grade << "+ (" << bag->getWeight1(rack[i])
-                  << ") = " << std::flush;*/
       grade += bag->getWeight1(rack[i]);
-      /*if (i == 4) {
-        std::cout << grade << std::endl;
-        std::cout << grade << "+ (" << letters_used[rack[i] - 'A']
-                  << ")*(" << bag->getWeight2(rack[i]) << ")"
-                  << std::flush;
-      }*/
       grade += letters_used[rack[i] - 'A'] * bag->getWeight2(rack[i]);
-      /*if (i == 4)
-        std::cout << grade << std::endl;*/
       nb_letters_used++;
       letters_used[rack[i] - 'A']++;
     }
@@ -1480,14 +1462,14 @@ void Game::finalPrint() const {
   unsigned int i = 0;
   unsigned int size = s.size();
 
-  for (i = 0; i < s2.size(); i++) {
+  /*for (i = 0; i < s2.size(); i++) {
     bag->removeLetter(s2[i]);
   }
 
   for (i = 0; i < size; i++) {
     player->setLetter(i,s[i]);
     bag->removeLetter(s[i]);
-  }
+  }*/
 
   while (i < 7) {
     player->removeLetterIndice(i);

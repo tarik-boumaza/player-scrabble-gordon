@@ -118,9 +118,9 @@ public:
    * @param[in] direction ( \e char) : direction vers laquelle le mot est joué
    * @return \e unsigned \e short \e int : points rapporté par le coup
   */
-  unsigned short int score (const Board * b, const int & pos,
-                            const char & direction,
-                            const int fq = 255) const;
+  unsigned short int score (const Board * b, 
+                            const int & pos,
+                            const char & direction) const;
 
   /**
    * @fn unsigned short int bonusScore(const unsigned char & pos,
@@ -132,6 +132,7 @@ public:
    * @param[in] board_pos ( \e unsigned \e char) : position à partir de laquelle se joue le mot
    * @param[in] temp_word ( \e char) : lettre qui complète le mot
    * @param[in] direction ( \e char) : direction vers laquelle se trouve le mot complété
+   * @param[in] fq ( \e int) : case début du mot bonus
    * @return \e unsigned \e short \e int : points rapportés
   */
   unsigned short int bonusScore(const unsigned char & board_pos,
@@ -147,6 +148,14 @@ public:
   */
   unsigned short int score (const Move & move) const;
 
+  /**
+   * @fn float grade(const char rack[]) const;
+   * @brief Calcul du poids du rack
+   * @details Le poids du rack est un indice qui détermine la valeur du rack. 
+   * Basé sur le poids des lettres, le ratio/consonne voyelle, il indique si le rack est favorable ou pas au joueur.
+   * Plus le poids est élevé, meilleur est le rack
+   * @return \e float : valeur du rack
+  */
   float grade(const char rack[]) const;
 
   /**

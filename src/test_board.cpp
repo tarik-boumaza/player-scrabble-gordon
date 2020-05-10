@@ -159,20 +159,20 @@ int main() {
   g.board->spots[95].setLetter('B',true);
   //g.board->spots[87].setLetter('I',true);
 
-
+/*
   g.print();
   g.moveTurn();
   std::cout << std::endl << std::endl << std::endl;
   g.print();
+*/
 
 
-/*
   std::cout << *g.board << std::endl << std::endl;
-  Move m ("EN",1,'B',255,255);
+  Move m ("DE",132,'D',255,255);
   unsigned short int s = g.score(m);
   g.makeMove(m);
   std::cout << *g.board << std::endl << std::endl;
-  std::cout << std::endl << "Points marqués : " << s << std::endl;*/
+  std::cout << std::endl << "Points marqués : " << s << std::endl;
 
 
 

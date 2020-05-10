@@ -51,10 +51,10 @@ public:
   /**
    * @brief Accesseur
    * @details Renvoie la lettre stockée à un indice donné
-   * @param[in] n (\e unsigned \e short \e int) : indice de la case
+   * @param[in] id (\e unsigned \e short \e int) : indice de la case
    * @return char
   */
-  char getLetter(const unsigned short int & n) const;
+  char getLetter(const unsigned short int & id) const;
 
   /**
    * @brief Accesseur, renvoie l'attribut points du joueur
