@@ -60,6 +60,7 @@ void Game::printBag() const {
 
 
 void Game::draw(const char & letter) {
+  //suppression de la lettre, récupération de l'indice où attribuer la lettre tirée dans le sac
   unsigned short int n = player->removeLetter(letter);
   if (!bag->isEmpty())
     player->setLetter(n,bag->randomDraw());
@@ -80,8 +81,8 @@ static unsigned short int getIndice(const unsigned char & x,
 
 couple Game::score (const couple & c, const bool & played) const {
   unsigned short int res = bag->getPoints(c.second);
-
   unsigned short int wf;
+
   if (played) {   // si la lettre est jouée par le joueur, on compte les facteurs lettre/mot
     res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
     wf = static_cast<unsigned short int>(board->getWordFactor(c.first));
@@ -138,6 +139,7 @@ unsigned short int Game::score(const Board * b,
         temp = couple(i,'*');
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
       played.push_back(i == pos);    // i == pos indique si on est sur la case où on joue la lettre
       i -=15 ;
@@ -151,6 +153,7 @@ unsigned short int Game::score(const Board * b,
         temp = couple(i,'*');      //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
       played.push_back(i == pos);
       i +=15 ;
@@ -181,6 +184,7 @@ unsigned short int Game::score(const Board * b,
         temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
       played.push_back(i == pos);
       i += 1;
@@ -414,6 +418,7 @@ unsigned short int Game::score (const Move & m) const {
 
 }
 
+//calcul de la valeur du rack, méthode de Gordon
 
 float Game::grade(const char rack[]) const {
 
@@ -465,13 +470,13 @@ void Game::makeMove(const Move & m) {
     int word_pos = static_cast<int>(m.word.size() - 1);
     while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
-        joker = (board_pos != m.j1 && board_pos != m.j2);
-        board->setLetter(board_pos,m.word[word_pos],joker);
-        if (joker) {
-          draw(m.word[word_pos]);
+        joker = (board_pos != m.j1 && board_pos != m.j2);  // teste si un joker est utilisé pour formé le mot
+        board->setLetter(board_pos,m.word[word_pos],joker); 
+        if (joker) {          
+          draw(m.word[word_pos]);   //on tire une lettre pour remplacer celle jouée
         }
         else {
-          draw('*');
+          draw('*');   //on tire une lettre pour remplacer le joker
         }
       }
       word_pos--;
@@ -1329,9 +1334,11 @@ void Game::finalPrint() const {
               << std::endl;
   }
   else {
-    std::cout << "Le joueur est bloqué ! (nul...)"
-              << std::endl;
+    std::cout << "Le joueur est bloqué !"
+              << std::endl << std::endl 
+              << "Lettres restantes" << std::endl;
     printBag();
+    std::cout << std::endl;
   }
   std::cout << "Partie terminée..." << std::endl
             << "Le joueur termine avec un score de "

@@ -15,6 +15,7 @@
 */
 class Node {
 
+
 private:
   /** 
    * @brief tableau contenant tous les enfants
@@ -27,9 +28,9 @@ private:
   bool is_final;
 
 
-private:
-
   /************************ METHODE PRIVEE ************************/
+
+private:
 
   /**
    * @fn Node* addNode(const bool & b)
@@ -41,9 +42,10 @@ private:
 
 
 
-public:
 
   /************************ CONSTRUCTEUR / DESTRUCTEUR ************************/
+
+public:
 
   /**
    * @brief Constructeur par défaut, sans paramètre
@@ -56,7 +58,10 @@ public:
   ~Node();
 
 
+
   /************************ METHODES PUBLIQUES ************************/
+
+public:
 
   /**
    * @fn Node* getNode(const unsigned short int & id) const

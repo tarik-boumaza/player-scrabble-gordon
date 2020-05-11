@@ -1,8 +1,9 @@
-#pragma once
-
 /**
  * @file scrabbleTXT.hpp
 */
+
+
+#pragma once
 
 
 class Game;

@@ -47,7 +47,7 @@ public:
    * @param[in] filename_w1 ( \e std::string) : chemin vers le fichier qui contient les poids 1 des lettres
    * @param[in] filename_w2 ( \e std::string) : chemin vers le fichier qui contient les poids 2 des lettres
    * @param[in] filename_vc ( \e std::string) : chemin vers le fichier qui contient le ration voyelles/consonnes
-   * les attributs filename_XX doivent être exacts et fournis avec l'extension 'fichier.txt'
+   * les attributs filename_X doivent être exacts et fournis avec l'extension 'fichier.txt'
   */
   Bag(const std::string & filename_l = "./data/letters.txt",
       const std::string & filename_p = "./data/points.txt",
