@@ -33,12 +33,11 @@ void ScrabbleTXT::play() {
   g->print();
   unsigned short int i = 1;
   while (!g->isFinished()) {
-    //clean();
     std::cout << "Coup n° " << i << std::endl << std::endl;
     g->moveTurn();
     g->print();
     i++;
-    if (sm)
+    if (sm)    /// jeu en slow motion
       usleep(1500000);
   }
   g->print();

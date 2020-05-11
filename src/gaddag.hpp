@@ -32,34 +32,6 @@ private:
 
 
 
-  /************************ METHODES PRIVEES ************************/
-
-private:
-
-  /**
-   * @fn void print_letters(Node* node, std::list<std::pair<char,Node*>> & l, const char & c)
-   * @brief Fonction récursive d'affichage du gaddag
-   * @param[in-out] node ( \e *Node) 
-   * @param[in-out] l ( \e std::list<std::pair<char,Node*>>)
-   * @param[in] c ( \e char)
-  */  
-  void print_letters(Node* node,
-                    std::list<std::pair<char,Node*>> & l,
-                    const char & c);
-
-
-
-private:
-
-  /**
-   * @fn void addNodePlus(const std::string & word)
-   * @brief Ajoute un mot avec l'insertion de '+' dans la Gaddag
-   * @param[in] word ( \e std::string) mot à ajouter
-  */ 
-  void addNodePlus(const std::string & word);
-
-
-
 public:
 
   /************************ CONSTRUCTEUR/DESTRUCTEUR ************************/
@@ -76,7 +48,38 @@ public:
 
 
 
-  /************************ METHODES ************************/
+
+  /************************ METHODES PRIVEES ************************/
+
+private:
+
+  /**
+   * @fn void print_letters(Node* node, std::list<std::pair<char,Node*>> & l, const char & c)
+   * @brief Fonction récursive d'affichage du gaddag
+   * @param[in-out] node ( \e *Node) 
+   * @param[in-out] l ( \e std::list<std::pair<char,Node*>>)
+   * @param[in] c ( \e char)
+  */  
+  void print_letters(Node* node,
+                    std::list<std::pair<char,Node*>> & l,
+                    const char & c);
+
+
+  /**
+   * @fn void addNodePlus(const std::string & word)
+   * @brief Ajoute un mot avec l'insertion des '+' dans la Gaddag
+   * @param[in] word ( \e std::string) mot à ajouter
+  */ 
+  void addNodePlus(const std::string & word);
+
+
+
+
+
+
+  /************************ METHODES PUBLIQUES ************************/
+
+public:
 
   /**
    * @fn Node* getFirst()
@@ -84,7 +87,6 @@ public:
    * @return *Node
   */ 
   Node* getFirst();
-
 
   /**
    * @fn char getLetter(const unsigned short int & n) const

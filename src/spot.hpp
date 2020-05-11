@@ -19,12 +19,14 @@ class Spot {
 
 private:
 
-  char letter; /**<lettre sur la case*/
+  char letter; /*!<lettre sur la case*/
 
-  bool joker; /**<indique si la lettre jouée est un joker*/
+  bool joker; /*!<indique si la lettre jouée est un joker*/
   
-  Bonus bonus; /**< bonus attribués par la case*/
+  Bonus bonus; /*!< bonus attribués par la case*/
 
+
+/******************** CONSTRUCTEURS ******************/
 
 public:
 
@@ -45,6 +47,11 @@ public:
         const bool & _joker = false) :
     letter(0), bonus(lf, wf), joker(_joker)
   {}
+
+
+
+/******************** METHODES PUBLIQUES ******************/
+
 
   /**
    * @brief Accesseur, retourne le bonus lettre de la case

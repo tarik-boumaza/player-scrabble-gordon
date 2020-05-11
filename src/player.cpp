@@ -71,9 +71,9 @@ unsigned short int Player::removeLetter(const char & c) {
       exit(EXIT_FAILURE);
     }
   }
-  else if (hand_pointer[c - 'A'].empty()) {    //c est une lettre que ne possède pas le joueur
-    std::cerr << c << " : Erreur liste, lettre non disponible... Suppression avortée"
-              << std::endl;
+  else if (hand_pointer[c - 'A'].empty()) {    //c est une lettre que le joueur ne possède pas
+    std::cerr << c << " : Erreur liste, lettre non disponible..." 
+              << " Suppression avortée" << std::endl;
     exit(EXIT_FAILURE);
   }
   else {   // c est une lettre et le joueur en possède
