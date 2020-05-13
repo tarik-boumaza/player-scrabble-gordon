@@ -113,12 +113,11 @@ unsigned short int Game::score(const std::list<couple> & l,
     res += temp.first;
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
-    else if (temp.second == wf)    // 2 facteurs *2 donnent facteur 4 ...
-      wf = wf*wf;
+    else if (temp.second == wf || (temp.second*temp.second) == wf)    // 2 facteurs *2 donnent facteur 4 ...
+      wf = wf * temp.second;
     l_copy.pop_back();
     played_copy.pop_back();
   }
-
   return (wf * res);
 }
 
@@ -471,8 +470,8 @@ void Game::makeMove(const Move & m) {
     while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
         joker = (board_pos != m.j1 && board_pos != m.j2);  // teste si un joker est utilisé pour formé le mot
-        board->setLetter(board_pos,m.word[word_pos],joker); 
-        if (joker) {          
+        board->setLetter(board_pos,m.word[word_pos],joker);
+        if (joker) {
           draw(m.word[word_pos]);   //on tire une lettre pour remplacer celle jouée
         }
         else {
@@ -691,9 +690,13 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
               }
               // je teste si je forme un mot existant dans le dictionnaire
               if (gad_coup_possible != nullptr
-                  && l == 0
-                  && gad_coup_possible->isFinal() ) {
-                tab_horizontal[i] = gad->getLetter(i);
+                  && l == 0) {
+                if (final) {
+                    if (gad_coup_possible->isFinal())
+                        tab_horizontal[i] = gad->getLetter(i);
+                }
+                else
+                    tab_horizontal[i] = gad->getLetter(i);
               }
               else
               {
@@ -852,7 +855,7 @@ void Game::getCrossSetsVertical(const unsigned char & square,
 
             i++;
           }
-          // je chande de direction
+          // je change de direction
           gad_parcours = gad_parcours->getNode('+');
           Node * copy = gad_parcours;
 
@@ -879,16 +882,19 @@ void Game::getCrossSetsVertical(const unsigned char & square,
                 j++;
               }
               // je teste si je forme un mot existant dans le dictionnaire
-              if (gad_coup_possible != nullptr
-                  && l == 0
-                  && gad_coup_possible->isFinal() ) {
-
-                tab_vertical[i] = gad->getLetter(i);
-              }
-              else
-              {
-                tab_vertical[i] = '/';
-              }
+                if (gad_coup_possible != nullptr
+                    && l == 0) {
+                    if (final) {
+                        if (gad_coup_possible->isFinal())
+                            tab_vertical[i] = gad->getLetter(i);
+                    }
+                    else
+                        tab_vertical[i] = gad->getLetter(i);
+                }
+                else
+                {
+                    tab_vertical[i] = '/';
+                }
 
             }
             else
@@ -1082,7 +1088,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                   && (b->getLetter(x,y-pos+1) == 0)))){
 
                     Move new_move (word,getIndice(x, y),'D', j1, j2);
-
                     // Appel de la fonction qui calcule le score
                     float new_points;
                     if (ia)
@@ -1162,7 +1167,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(y + 1 > 14)){
 
               Move new_move (word,square,'G', j1, j2);
-
               // Appel de la fonction qui calcule le score
               float new_points;
               if (ia)
@@ -1183,7 +1187,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(x + 1 > 14)){
 
               Move new_move = Move (word,getIndice(x, y),'H', j1, j2);
-
               // Appel de la fonction qui calcule le score
               float new_points;
               if (ia)
@@ -1335,7 +1338,7 @@ void Game::finalPrint() const {
   }
   else {
     std::cout << "Le joueur est bloqué !"
-              << std::endl << std::endl 
+              << std::endl << std::endl
               << "Lettres restantes" << std::endl;
     printBag();
     std::cout << std::endl;
