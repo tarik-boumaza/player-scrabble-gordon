@@ -726,9 +726,15 @@ void Game::getCrossSetsHorizontal(const unsigned char & square,
               }
               // je teste si je forme un mot existant dans le dictionnaire
               if (gad_coup_possible != nullptr
-                  && l == 0
-                  && gad_coup_possible->isFinal() ) {
-                tab_horizontal[i] = gad->getLetter(i);
+                  && l == 0) {
+                if(final){
+                  if(gad_coup_possible->isFinal()){
+                    tab_horizontal[i] = gad->getLetter(i);
+                  }
+                }
+                else{
+                  tab_horizontal[i] = gad->getLetter(i);
+                }
               }
               else
               {
@@ -915,10 +921,16 @@ void Game::getCrossSetsVertical(const unsigned char & square,
               }
               // je teste si je forme un mot existant dans le dictionnaire
               if (gad_coup_possible != nullptr
-                  && l == 0
-                  && gad_coup_possible->isFinal() ) {
-
-                tab_vertical[i] = gad->getLetter(i);
+                  && l == 0) {
+                  if(final){
+                    if(gad_coup_possible->isFinal()){
+                      tab_vertical[i] = gad->getLetter(i);
+                    }
+                  }
+                  else
+                  {
+                    tab_vertical[i] = gad->getLetter(i);
+                  }
               }
               else
               {
@@ -1264,7 +1276,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
               // Appel de la fonction qui calcule le score
               float new_points = score(new_move); // = l'appel récursif
-            //  std::cout << new_points <<  " points" << std::endl;
+             //std::cout << new_points <<  " points" << std::endl;
 
               // Si le score calculé est meilleur, on garde le dernier coup
               if (new_points > points){
@@ -1372,7 +1384,7 @@ void Game::moveTurn() {
   // Si le plateau est vide (au début de la partie), je génère le meilleur coup
   // en partant du milieu
   //Gen(116,0,word,table,parcours,'H',&b,s,m,j1,j2);
-
+  //Gen(0,0,word,table,parcours,'H',&b,s,m, j1, j2);
   if (anchor_squares.empty()){
     Gen(112,0,word,table,parcours,'H',&b,s,m, j1, j2);
   }
