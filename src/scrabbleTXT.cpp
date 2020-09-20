@@ -9,8 +9,9 @@
 #include <unistd.h>
 
 
-ScrabbleTXT::ScrabbleTXT() {
-  g = new Game;
+ScrabbleTXT::ScrabbleTXT(const bool _sm, const bool _ia) {
+  sm = _sm;
+  g = new Game(_ia);
   g->init();
 }
 
@@ -27,17 +28,16 @@ static void clean() {
 }
 
 
-void ScrabbleTXT::play(const bool & b) {
+void ScrabbleTXT::play() {
   clean();
   g->print();
   unsigned short int i = 1;
   while (!g->isFinished()) {
-    //clean();
     std::cout << "Coup n° " << i << std::endl << std::endl;
     g->moveTurn();
     g->print();
     i++;
-    if (b)
+    if (sm)    /// jeu en slow motion
       usleep(1500000);
   }
   g->print();

@@ -31,13 +31,14 @@ typedef std::pair<unsigned short int, unsigned short int> couple;
 */
 class Game {
 
-public:
+private:
 
   Board * board; /*!< plateau du jeu */
   Player * player; /*!< joueur */
   Bag * bag; /*!< sac de lettre */
   Gaddag * gad; /*!< structure de gaddag */
   bool ended;  /*!< signale la fin de partie (joueur bloqué) */
+  bool ia; /*!< indique si le joueur recherche les coups intelligents */
 
 
 public:
@@ -46,8 +47,9 @@ public:
 
   /**
    * @brief Constructeur par défaut, sans paramètre
+   * @param[in] _ia ( \e bool) : indique si le joueur recherche les meilleurs coups
   */
-  Game();
+  Game(const bool _ia = false);
 
   /**
    * @brief Destructeur
@@ -118,7 +120,8 @@ public:
    * @param[in] direction ( \e char) : direction vers laquelle le mot est joué
    * @return \e unsigned \e short \e int : points rapporté par le coup
   */
-  unsigned short int score (const Board * b, const int & pos,
+  unsigned short int score (const Board * b,
+                            const int & pos,
                             const char & direction) const;
 
   /**
@@ -131,11 +134,13 @@ public:
    * @param[in] board_pos ( \e unsigned \e char) : position à partir de laquelle se joue le mot
    * @param[in] temp_word ( \e char) : lettre qui complète le mot
    * @param[in] direction ( \e char) : direction vers laquelle se trouve le mot complété
+   * @param[in] fq ( \e int) : case début du mot bonus
    * @return \e unsigned \e short \e int : points rapportés
   */
   unsigned short int bonusScore(const unsigned char & board_pos,
                                 const char & temp_word,
-                                const char & direction) const;
+                                const char & direction,
+                                const int fq = 255) const;
 
   /**
    * @fn unsigned short int score (const Move & move) const
@@ -145,6 +150,14 @@ public:
   */
   unsigned short int score (const Move & move) const;
 
+  /**
+   * @fn float grade(const char rack[]) const;
+   * @brief Calcul du poids du rack
+   * @details Le poids du rack est un indice qui détermine la valeur du rack.
+   * Basé sur le poids des lettres, le ratio/consonne voyelle, il indique si le rack est favorable ou pas au joueur.
+   * Plus le poids est élevé, meilleur est le rack
+   * @return \e float : valeur du rack
+  */
   float grade(const char rack[]) const;
 
   /**
@@ -286,15 +299,6 @@ public :
    * @brief Affiche les informations en fin de partie
   */
   void finalPrint() const;
-
-
-
-
-
-
-
-
-  void attribueLettre(const std::string & s, const std::string & s2);
 
 };
 

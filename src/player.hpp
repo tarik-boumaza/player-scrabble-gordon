@@ -51,10 +51,10 @@ public:
   /**
    * @brief Accesseur
    * @details Renvoie la lettre stockée à un indice donné
-   * @param[in] n (\e unsigned \e short \e int) : indice de la case
+   * @param[in] id (\e unsigned \e short \e int) : indice de la case
    * @return char
   */
-  char getLetter(const unsigned short int & n) const;
+  char getLetter(const unsigned short int & id) const;
 
   /**
    * @brief Accesseur, renvoie l'attribut points du joueur
@@ -78,13 +78,9 @@ public:
   /**
    * @brief Retire une lettre au joueur
    * @param[in] c ( \e char) : lettre à retirer
-   * @return unsigned short int
+   * @return \e unsigned \e short \e int
   */
   unsigned short int removeLetter(const char & c);
-
-
-//////// !!!!!!!!!!!!!!!!!!!!!!A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! /////////////
-  void removeLetterIndice(const char & c);
 
 
   /**

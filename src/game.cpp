@@ -14,41 +14,19 @@
 
 
 
-static void printList(const std::list<couple> & l) {
-  std::list<couple> copy(l);
-  std::cout << std::endl <<  "print list couple" << std::endl;
-  while(!copy.empty()) {
-    std::cout << copy.back().first << " ; " << copy.back().second << std::endl;
-    copy.pop_back();
-  }
-  std::cout << std::endl;
-}
-
-
-static void printList(const std::list<bool> & l) {
-  std::list<bool> copy(l);
-  std::cout << std::endl <<  "print list bool" << std::endl;
-  while(!copy.empty()) {
-    std::cout << copy.back() << std::endl;
-    copy.pop_back();
-  }
-  std::cout << std::endl;
-}
-
-
-
 
 
 /****************** CONSTRUCTEUR / DESTRUCTEUR ******************/
 
 
 
-Game::Game() {
+Game::Game(const bool _ia) {
   bag = new Bag();
   player = new Player;
   gad = new Gaddag;
   board = new Board;
   ended = false;
+  ia = _ia;
 }
 
 
@@ -82,6 +60,7 @@ void Game::printBag() const {
 
 
 void Game::draw(const char & letter) {
+  //suppression de la lettre, récupération de l'indice où attribuer la lettre tirée dans le sac
   unsigned short int n = player->removeLetter(letter);
   if (!bag->isEmpty())
     player->setLetter(n,bag->randomDraw());
@@ -103,11 +82,14 @@ static unsigned short int getIndice(const unsigned char & x,
 couple Game::score (const couple & c, const bool & played) const {
   unsigned short int res = bag->getPoints(c.second);
   unsigned short int wf;
+
   if (played) {   // si la lettre est jouée par le joueur, on compte les facteurs lettre/mot
     res *= static_cast<unsigned short int>(board->getLetterFactor(c.first));
     wf = static_cast<unsigned short int>(board->getWordFactor(c.first));
   }
   else {
+    if (board->isJoker(c.first))
+      res = 0;
     wf = 1;
   }
 
@@ -127,13 +109,12 @@ unsigned short int Game::score(const std::list<couple> & l,
   while(!l_copy.empty()) {
     // calcul des points rapportés par chaque lettre
     temp = score(l_copy.back(),played_copy.back()); //temp.first est le score, temp.second est le word_factor
-    //std::cout << "Lettre " << static_cast<char>((l_copy.back().second))
-    //                        << " : + " << static_cast<int>(temp.first)
-    //                        << " pts" << std::endl;
 
     res += temp.first;
     if (temp.second > wf)    // on multiplie le score par le meilleur facteur mot possible
       wf = temp.second;
+    else if (temp.second == wf)    // 2 facteurs *2 donnent facteur 4 ...
+      wf = wf*wf;
     l_copy.pop_back();
     played_copy.pop_back();
   }
@@ -142,71 +123,70 @@ unsigned short int Game::score(const std::list<couple> & l,
 }
 
 
-unsigned short int Game::score(const Board * b, const int & pos,
-                                const char & direction) const {
+unsigned short int Game::score(const Board * b,
+                              const int & pos,
+                              const char & direction) const {
 
-  int i = pos;
   std::list<couple> l;
   std::list<bool> played;
   couple temp;
-
-  temp = couple(i,b->getLetter(i));
-  l.push_back(temp);
-  played.push_back(true);
+  int i = pos;
 
   if (direction == 'H') {
-    i -= 15;
     while (i >= 0
            && b->getLetter(i) != 0) {
-      if (board->isJoker(i))
+      if (board->isJoker(i))          //la lettre sur le plateau était un joker
         temp = couple(i,'*');
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
-      played.push_back(false);
+      played.push_back(i == pos);    // i == pos indique si on est sur la case où on joue la lettre
       i -=15 ;
     }
   }
 
   else if (direction == 'B') {
-    i += 15;
     while ( i < 225
             && b->getLetter(i) != 0) {
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');      //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
-      played.push_back(false);
+      played.push_back(i == pos);
       i +=15 ;
     }
   }
 
   else if (direction == 'G') {
-    i -= 1;
+
     while ( getIndice(pos).first == getIndice(i).first
             && b->getLetter(i) != 0) {
+
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
 
       l.push_back(temp);
-      played.push_back(false);
+      played.push_back(i == pos);
       i -= 1 ;
     }
   }
 
   else { //direction == 'D'
-    i += 1;
+
     while ( getIndice(pos).first == getIndice(i).first
             && b->getLetter(i) != 0) {
       if (board->isJoker(i))
-        temp = couple(i,'*');
+        temp = couple(i,'*');     //la lettre sur le plateau était un joker
       else
         temp = couple(i,b->getLetter(i));
+
       l.push_back(temp);
-      played.push_back(false);
+      played.push_back(i == pos);
       i += 1;
     }
   }
@@ -217,12 +197,18 @@ unsigned short int Game::score(const Board * b, const int & pos,
 
 unsigned short int Game::bonusScore(const unsigned char & board_pos,
                                     const char & temp_word,
-                                    const char & direction) const {
+                                    const char & direction,
+                                    const int fq) const {
   unsigned short int pts = 0;
+  int i = fq;
+  if (i > 224)
+    i = static_cast<int>(board_pos);
 
+  //copie du plateau, insertion de la lettre et calcul du score bonus
   Board * b_copy = new Board(*this->board);
   b_copy->setLetter(board_pos,temp_word);
-  pts =  score(b_copy, board_pos, direction);
+
+  pts =  score(b_copy,i,direction);
   delete b_copy;
   return pts;
 }
@@ -261,15 +247,16 @@ unsigned short int Game::score (const Move & m) const {
         if ( getIndice(board_pos).first == getIndice(board_pos - 1).first
               && board->getLetter(board_pos - 1) != 0) { //lettre à gauche
           temp_pos = board_pos;
-          while ( getIndice(pos).first == getIndice(temp_pos + 1).first
+          while ( getIndice(board_pos).first == getIndice(temp_pos + 1).first
                   && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
-          points += bonusScore(board_pos,temp_word,'G');
+          points += bonusScore(board_pos,temp_word,'G',temp_pos);
         }
-        else if ( getIndice(pos).first == getIndice(board_pos + 1).first
+        else if ( getIndice(board_pos).first == getIndice(board_pos + 1).first
                   && board->getLetter(board_pos + 1) != 0) {   //lettre à droite uniquement
           points += bonusScore(board_pos,temp_word,'D');
+
         }
 
       }
@@ -306,11 +293,11 @@ unsigned short int Game::score (const Move & m) const {
         if ( getIndice(board_pos).first == getIndice(board_pos - 1).first
             &&  board->getLetter(board_pos - 1) != 0) { //lettre à gauche
           temp_pos = board_pos;
-          while ( getIndice(pos).first == getIndice(temp_pos + 1).first
+          while ( getIndice(board_pos).first == getIndice(temp_pos + 1).first
                   && board->getLetter(temp_pos + 1) != 0 ) { //tant que lettre à droite
             temp_pos++;
           }
-          points += bonusScore(board_pos,temp_word,'G');
+          points += bonusScore(board_pos,temp_word,'G', temp_pos);
         }
 
         else if ( getIndice(board_pos).first == getIndice(board_pos + 1).first
@@ -356,7 +343,7 @@ unsigned short int Game::score (const Move & m) const {
                     && board->getLetter(temp_pos + 15) != 0 ) {   //tant que lettre en bas
               temp_pos += 15;
             }
-          points += bonusScore(board_pos,temp_word,'H');
+          points += bonusScore(board_pos,temp_word,'H',temp_pos);
         }
 
         else if ( board_pos < 210
@@ -404,7 +391,7 @@ unsigned short int Game::score (const Move & m) const {
                   && board->getLetter(temp_pos + 15) != 0 ) {   //tant que lettre en bas
             temp_pos += 15;
           }
-          points += bonusScore(board_pos,temp_word,'H');
+          points += bonusScore(board_pos,temp_word,'H',temp_pos);
         }
         else if ( board_pos < 210
                   && board->getLetter(board_pos + 15) != 0) { //lettre  en bas uniquement
@@ -431,6 +418,7 @@ unsigned short int Game::score (const Move & m) const {
 
 }
 
+//calcul de la valeur du rack, méthode de Gordon
 
 float Game::grade(const char rack[]) const {
 
@@ -438,8 +426,6 @@ float Game::grade(const char rack[]) const {
   int letters_used[27] = {0};
   int nb_vowels = 0;
   int nb_letters_used = 0;
-
-
 
   for (unsigned int i = 0; i < 7 ; i++) {
 
@@ -453,19 +439,8 @@ float Game::grade(const char rack[]) const {
     }
 
     else {
-      /*if (i == 4)
-        std::cout << grade << "+ (" << bag->getWeight1(rack[i])
-                  << ") = " << std::flush;*/
       grade += bag->getWeight1(rack[i]);
-      /*if (i == 4) {
-        std::cout << grade << std::endl;
-        std::cout << grade << "+ (" << letters_used[rack[i] - 'A']
-                  << ")*(" << bag->getWeight2(rack[i]) << ")"
-                  << std::flush;
-      }*/
       grade += letters_used[rack[i] - 'A'] * bag->getWeight2(rack[i]);
-      /*if (i == 4)
-        std::cout << grade << std::endl;*/
       nb_letters_used++;
       letters_used[rack[i] - 'A']++;
     }
@@ -491,25 +466,17 @@ void Game::makeMove(const Move & m) {
   unsigned short int board_pos = static_cast<unsigned short int>(m.first_square);
   bool joker;
 
-  /*
-  std::cout << std::endl << "Les deux jokers sont à : "
-            << static_cast<int>(m.j1) << " et "
-            << static_cast<int>(m.j2) << std::endl;
-  std::cout << "Les deux jokers devrait être à : (205 ou 209) ET à 208" << std::endl;
-  */
-
-
   if (m.direction == 'H') {  // On joue vers le HAUT
     int word_pos = static_cast<int>(m.word.size() - 1);
     while (word_pos >= 0) {
       if (board->getLetter(board_pos) == 0) {
-        joker = (board_pos != m.j1 && board_pos != m.j2);
-        board->setLetter(board_pos,m.word[word_pos],joker);
-        if (joker) {
-          draw(m.word[word_pos]);
+        joker = (board_pos != m.j1 && board_pos != m.j2);  // teste si un joker est utilisé pour formé le mot
+        board->setLetter(board_pos,m.word[word_pos],joker); 
+        if (joker) {          
+          draw(m.word[word_pos]);   //on tire une lettre pour remplacer celle jouée
         }
         else {
-          draw('*');
+          draw('*');   //on tire une lettre pour remplacer le joker
         }
       }
       word_pos--;
@@ -957,36 +924,18 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
   unsigned char y = (getIndice(square)).second;
   char letter = b->getLetter(square);
 
-  //std::cout<<"je rentre dans la fontion Gen"<<std::endl;
-  // si la case sur laquelle je me positionne n'est pas vide, j'avance dans
-  // le gaddag en lisant la lettre présnte sur la case
-  if(letter != 0)
-  {
-    //std::cout<<"la case contient une lettre "<<std::endl;
+  if(letter != 0) {
     Node* next_arc = arc->getNode(letter);
     GoOn(square, pos,letter, word, rack, next_arc, arc, direction, b, points, move, j1, j2);
-
   }
   else
   {
     char tab_horizontal[26];
     char tab_vertical[26];
-    //std::cout<<"la case ne contient pas de lettre  "<<std::endl;
-    // si direction = 1 -> je me déplace horizontalement, et donc les cross sets
-    // verticals doivent être des lettres finales
+
     if(direction == 'H'){
       getCrossSetsHorizontal(square,tab_horizontal, false, b);
       getCrossSetsVertical(square,tab_vertical, true, b);
-      /*std::cout<<"le getCrossSetsHorizontal "<<std::endl;
-      for (int i = 0; i < 26; i++){
-        std::cout<<tab_horizontal[i]<< " ";
-      }
-      std::cout<<std::endl;
-      std::cout<<"le getCrossSetsVertical "<<std::endl;
-      for (int i = 0; i < 26; i++){
-        std::cout<<tab_vertical[i]<< " ";
-      }
-      std::cout<<std::endl;*/
     }
     // sinon je me déplace verticalement et donc les cross sets horizontales
     // doivent être des lettres finales
@@ -994,16 +943,6 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
     {
       getCrossSetsHorizontal(square,tab_horizontal, true, b);
       getCrossSetsVertical(square,tab_vertical, false, b);
-      /*std::cout<<"le getCrossSetsVertical "<<std::endl;
-      for (int i = 0; i < 26; i++){
-        std::cout<<tab_vertical[i]<< " ";
-      }
-      std::cout<<std::endl;
-      std::cout<<"le getCrossSetsHorizontal "<<std::endl;
-      for (int i = 0; i < 26; i++){
-        std::cout<<tab_horizontal[i]<< " ";
-      }
-      std::cout<<std::endl;*/
     }
 
     // Je copie mes paramètres de fonctions afin de ne pas les perdre dans les
@@ -1026,10 +965,6 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
 
 
     for (i = 0; i < 7; i++) {
-      /*std::cout<<"je suis à "<< i << "eme case du rack" <<std::endl;
-      std::cout<<"le rack contient "<< rack[i]<<std::endl;
-      std::cout<<"tab horizontale contitent "<< tab_horizontal[i]<<std::endl;
-      std::cout<<"tab_vertical contient  "<< tab_vertical[i]<<std::endl;*/
 
       // Je remets les paramètres à leur état initial avant chaque itération
       square = square_copy;
@@ -1056,17 +991,6 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
             j2 = 255;
           }
         }
-
-        //std::cout<<"je rentre dans la cata "<<std::endl;
-        /*if(j1 != 255 && j2 != 255){
-          std::cout<<"le mot est "<<word<<std::endl;
-          for (k = 0; k < 7; k++) {
-            std::cout<<rack[k]<< " ";
-          }
-          std::cout<<std::endl;
-          std::cout<< static_cast<int>(j1) << " "<< static_cast<int>(j2) << std::endl;
-
-        }*/
 
         if (j1 != 255) // Si j1 == 255, cela veut dire qu'on a utilisé aucun joker
           j2 = square; // Je sauvegarde la position du joker
@@ -1105,7 +1029,6 @@ void Game::Gen(unsigned char square, int pos, std::string& word,
       else if((rack[i] != '/')
               && (tab_horizontal[rack[i] - 'A'] != '/')
               && (tab_vertical[rack[i] - 'A'] != '/')){
-          //std::cout<<"je rentre dans le if pour la lettre "<< i <<std::endl;
           temp = rack[i]; // Je copie la lettre que je joue avant la supprimer
           rack[i] = '/'; // Je supprime la lettre du rack
           Node* next_arc = arc->getNode(temp - 'A'); // J'avance sur le gaddag
@@ -1128,17 +1051,12 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
   unsigned char x = (getIndice(square)).first;
   unsigned char y = (getIndice(square)).second;
 
-  //std::cout<<"je rentre dans la fontion GoOn"<<std::endl;
-
   if(pos <= 0 ){ // se déplacer à gauche
-      //std::cout<<"pos est <= 0 "<<std::endl;
-      //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à gauche"<<std::endl;
 
       // Je concatène la lettre jouée à gauche du mot
       word = L + word;
 
       if(new_arc != nullptr){
-        //std::cout<<"new_arc n'est pas vide "<<std::endl;
         //j'avance dans le gaddag et le plateau simultanément
         if(direction == 'H'){
           if(y-1 >= 0){
@@ -1149,10 +1067,6 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
 
            // Je change de direction
           new_arc = new_arc->getNode('+');
-          //std::cout<<"Je change de direction "<<std::endl;
-          //std::cout<<"y - 1 = "<< y-1<<std::endl;
-          //std::cout<<"y - pos + 1 = "<< y- pos + 1<<std::endl;
-          //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
 
           // Si la nouvelle branche du gaddag n'est pas vide et la case directement
           // à gauche est vide
@@ -1168,14 +1082,13 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                   && (b->getLetter(x,y-pos+1) == 0)))){
 
                     Move new_move (word,getIndice(x, y),'D', j1, j2);
-                    //std::cout << "Dun coup possible " << word << " à partir de " << getIndice(x, y)<<std::endl;
-                    //        << " ; qui donne : " << std::flush;
-                    //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
-                    //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
                     // Appel de la fonction qui calcule le score
-                    float new_points = grade(rack) + score(new_move);
-                    //std::cout << points <<  " points" << std::endl;
+                    float new_points;
+                    if (ia)
+                      new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+                    else
+                      new_points = score(new_move);
 
                     // Si le score calculé est meilleur, on garde le dernier coup
                     if (new_points > points){
@@ -1203,9 +1116,7 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
           j1 = j1_copy;
           j2 = j2_copy;
           new_arc = new_arc->getNode('+');
-          //std::cout<<"x - 1 = "<< x-1<<std::endl;
-          //std::cout<<"x - pos + 1 = "<< x - pos + 1<<std::endl;
-          //if(new_arc == nullptr) std::cout<<"new_arc est vide"<<std::endl;
+
           if ((new_arc != nullptr)
               && (((x-1 >= 0)
               && (b->getLetter(x-1,y) == 0))
@@ -1216,12 +1127,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
                   && (b->getLetter(x-pos+1,y) == 0)))){
 
                     Move new_move(word,getIndice(x, y),'B', j1, j2);
-                    //std::cout << "Bun coup possible " << word
-                    //        << " ; qui donne : " << std::flush;
-                    //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
-                    //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
-                    float new_points = grade(rack) + score(new_move); // = l'appel récursif
-                    //std::cout << new_points <<  " points" << std::endl;
+                    float new_points;
+                    if (ia)
+                      new_points =  grade(rack) + 2*score(new_move); // = l'appel récursif
+                    else
+                      new_points = score(new_move);
                     if (new_points > points){
                       move = new_move;
                       points = new_points;
@@ -1237,14 +1147,11 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
       }
   }
   else if (pos > 0){ // Se déplacer à droite
-    //std::cout<<"pos est > 0 "<<std::endl;
-    //std::cout<<"j'ajoute à mon mot la lettre: "<< L << " à droite"<<std::endl;
 
     // Je concatène la lettre jouée à gauche du mot
     word = word + L;
 
     if((new_arc != nullptr) && (new_arc->isFinal())){
-      //std::cout<<"je rentre avec la lettre "<< L <<" et elle est finale" <<std::endl;
 
       // Si la branche est finale , et qu'il n'y a pas de case non vide
       // directement à droite, j'enregistre un coup possible
@@ -1255,14 +1162,13 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(y + 1 > 14)){
 
               Move new_move (word,square,'G', j1, j2);
-              //std::cout << "Gun coup possible " << word << " à partir de " << getIndice(x, y)
-              //         << " ; qui donne : " << std::flush;
-              //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
-              //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              float new_points = grade(rack) + score(new_move); // = l'appel récursif
-            //  std::cout << new_points <<  " points" << std::endl;
+              float new_points;
+              if (ia)
+                new_points =  grade(rack) + 2*score(new_move);
+              else
+                new_points = score(new_move);
 
               // Si le score calculé est meilleur, on garde le dernier coup
               if (new_points > points){
@@ -1277,14 +1183,13 @@ void Game::GoOn(unsigned char  square, int pos, char L,std:: string& word,
             ||(x + 1 > 14)){
 
               Move new_move = Move (word,getIndice(x, y),'H', j1, j2);
-              //std::cout << "Hun coup possible " << word
-              //          << " ; qui donne : " << std::flush;
-              //std::cout << "j1  : " <<static_cast<int>(j1) << std::endl;
-              //std::cout << "j2  : " <<static_cast<int>(j2) << std::endl;
 
               // Appel de la fonction qui calcule le score
-              float new_points = grade(rack) + score(new_move); // = l'appel récursif
-              //std::cout << new_points <<  " points" << std::endl;
+              float new_points;
+              if (ia)
+                new_points =  grade(rack) + 2*score(new_move);
+              else
+                new_points = score(new_move);
 
               // Si le score calculé est meilleur, on garde le dernier coup
               if (new_points > points){
@@ -1334,7 +1239,9 @@ void Game::print() const {
   std:: cout << std::endl << "Rack : " << std::flush;
   player->printHand();
   std::cout << std::endl << *board << std::endl;
-  std::cout << "Score : " << player->getPoints() << std::endl << std::endl;
+  std::cout << "Score : " << player->getPoints() << std::endl
+            << std::endl << std::endl;
+
 }
 
 
@@ -1369,7 +1276,6 @@ void Game::moveTurn() {
 
   // Si le plateau est vide (au début de la partie), je génère le meilleur coup
   // en partant du milieu
-  //Gen(116,0,word,table,parcours,'H',&b,s,m,j1,j2);
 
   if (anchor_squares.empty()){
     Gen(112,0,word,table,parcours,'H',&b,s,m, j1, j2);
@@ -1403,18 +1309,21 @@ void Game::moveTurn() {
     anchor_squares.pop_back();
   }
 
-  // Si le meilleur coup rapporte un score nul, cela veut dire que la partie est terminée
+  // Si le meilleur coup rapporte un score de -10000 , cela veut dire que la partie est terminée
   if(s == -10000){
     ended = true;
   }
+  else {
+    s = score(m);
 
-  std::cout<<"le meilleur coup est "<<m.word
-            << " et ça raporte "<<s <<" points, jouable à partir de la case "
-            <<static_cast<int>(m.first_square)<<" vers "<<m.direction<<std::endl;
+    std::cout << "Le coup joué est " << m.word
+              << " à partir de " << static_cast<int>(m.first_square)
+              <<" vers "<< m.direction << " et il rapporte " << s
+              <<" points" << std::endl;
 
-  player->addPoints(score(m)); // Ajouter les points rapportées par le coup au score
-  makeMove(m); // Jouer le mot sur le plateau
-  //draw(); // Attribuer des lettres au joueur
+    player->addPoints(s); // Ajouter les points rapportées par le coup au score
+    makeMove(m); // Jouer le mot sur le plateau
+  }
 
 }
 
@@ -1425,57 +1334,13 @@ void Game::finalPrint() const {
               << std::endl;
   }
   else {
-    std::cout << "Le joueur est bloqué ! (nul...)"
-              << std::endl;
+    std::cout << "Le joueur est bloqué !"
+              << std::endl << std::endl 
+              << "Lettres restantes" << std::endl;
     printBag();
+    std::cout << std::endl;
   }
   std::cout << "Partie terminée..." << std::endl
             << "Le joueur termine avec un score de "
             << player->getPoints() << std::endl;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- void Game::attribueLettre(const std::string & s,const std::string & s2) {
-  unsigned int i = 0;
-  unsigned int size = s.size();
-
-  for (i = 0; i < s2.size(); i++) {
-    bag->removeLetter(s2[i]);
-  }
-
-  for (i = 0; i < size; i++) {
-    player->setLetter(i,s[i]);
-    bag->removeLetter(s[i]);
-  }
-
-  while (i < 7) {
-    player->removeLetterIndice(i);
-    i++;
-  }
-
-
-  for (unsigned int i = 0; i < 225; i++) {
-    if (board->getLetter(i) != 0)
-      bag->removeLetter(board->getLetter(i));
-  }
-
 }

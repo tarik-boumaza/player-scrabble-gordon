@@ -1,8 +1,9 @@
-#pragma once
-
 /**
  * @file scrabbleTXT.hpp
 */
+
+
+#pragma once
 
 
 class Game;
@@ -21,13 +22,20 @@ private:
   */
   Game * g;
 
+  /**
+   * @brief Indique si le jeu se déroule en slow motion
+  */
+  bool sm;
+
 
 public:
 
   /**
    * @brief Constructeur par défault
+   * @param[in] _sm ( \e bool) : indique si le jeu se déroule en slow_motion
+   * @param[in] _ia ( \e bool) : indique si le joueur recherche les coups intelligents
   */
-  ScrabbleTXT();
+  ScrabbleTXT(const bool _sm = false, const bool _ia = false);
 
   /**
    * @brief Destructeur
@@ -36,9 +44,8 @@ public:
 
   /**
    * @brief Fonction principale qui déroule le jeu
-   * @param[in] b ( \e bool) : est à true si le jeu est lancé au ralenti ou pas
   */
-  void play(const bool & b);
+  void play();
 
 
 };

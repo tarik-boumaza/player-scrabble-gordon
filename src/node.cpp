@@ -62,7 +62,7 @@ void Node::addNode(const std::string & s) {
     else        // il s'agit d'une lettre
       c = s[i] - 'A';
     
-    if (tmp->tab[c] == nullptr)
+    if (tmp->tab[c] == nullptr)  //le chemin vers cette case n'existe pas encore
       tmp->tab[c] = addNode( (i == size - 1) );
 
     tmp = tmp->tab[c];

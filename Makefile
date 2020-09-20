@@ -7,37 +7,19 @@ SRC_DIR = src
 CC = g++
 LD = g++
 
-CC_FLAGS = -g -Wextra -Werror -std=c++11 -pedantic -c
-LD_FLAGS = -g -Wextra -Werror -std=c++11 -pedantic
+CC_FLAGS = -O2 -Wextra -Werror -std=c++11 -pedantic -c
+LD_FLAGS = -O2 -Wextra -Werror -std=c++11 -pedantic
 
 CLEAN_FLAGS = -v -r
 
-all : main test_board
+
+all : scrabbleTXT
+
+scrabbleTXT: bin/scrabbleTXT
 
 
-main: bin/main
-
-test_board : bin/test_board
-
-bordel : bin/bordel
-
-bin/main : obj/bag.o obj/player.o obj/bonus.o obj/spot.o obj/board.o obj/node.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o obj/main.o
+bin/scrabbleTXT : obj/bag.o obj/player.o obj/bonus.o obj/spot.o obj/board.o obj/node.o obj/gaddag.o obj/game.o obj/scrabbleTXT.o obj/main.o
 	$(LD) $(LD_FLAGS) $^ -o $@
-
-
-
-bin/bordel : obj/bordel.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
-	$(LD) $(LD_FLAGS) $^ -o $@
-
-bin/test_board : obj/test_board.o obj/bonus.o obj/bag.o obj/player.o obj/gaddag.o obj/node.o obj/spot.o obj/game.o obj/board.o
-	$(LD) $(LD_FLAGS) $^ -o $@
-
-
-obj/bordel.o : src/bordel.cpp src/game.hpp
-	$(CC) $(CC_FLAGS) $< -o $@
-
-obj/test_board.o : src/test_board.cpp src/game.hpp
-	$(CC) $(CC_FLAGS) $< -o $@
 
 
 obj/bag.o : src/bag.cpp src/bag.hpp
